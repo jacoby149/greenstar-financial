@@ -13,7 +13,6 @@ import pyalgotrade #– PyAlgoTrade is an event driven algorithmic trading Pytho
 import empyrical #– Common financial risk and performance metrics. Used by zipline and pyfolio.
 
 # Time Series
-import arch #– ARCH and other tools for financial econometrics in Python
 import statsmodels #– Python module that allows users to explore data, estimate statistical models, and perform statistical tests.
 import dynts #– A statistic package for python with emphasis on time series analysis. Built around numpy, it provides several back-end time series classes including R-based objects via rpy2.
 
