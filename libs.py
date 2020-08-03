@@ -10,7 +10,6 @@ import pyalgotrade #– PyAlgoTrade is an event driven algorithmic trading Pytho
 #import pandas_talib #– A Python Pandas implementation of technical analysis indicators
 
 #Risk Analysis
-import pyfolio #– pyfolio is a Python library for performance and risk analysis of financial portfolios. It works well with the Zipline open source backtesting library.
 import empyrical #– Common financial risk and performance metrics. Used by zipline and pyfolio.
 
 # Time Series
