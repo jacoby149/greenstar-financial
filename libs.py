@@ -12,7 +12,6 @@ import vollib
 #– vollib is a python library for calculating option prices, implied volatility and greeks using Black, Black-Scholes, and Black-Scholes-Merton. vollib implements both analytical and numerical greeks for each of the three pricing formulae.
 
 #Trading & Backtesting
-import talib #– TA-Lib is widely used by trading software developers requiring to perform technical analysis of financial market data. It has an open-source API for python.
 import zipline #– Zipline is a Pythonic algorithmic trading library. It is an event-driven system that supports both backtesting and live trading.
 import QSTK #– Python-based open source software framework designed to support portfolio construction and management. It is built the QSToolKit primarily for finance students, computing students, and quantitative analysts with programming experience.
 import pyalgotrade #– PyAlgoTrade is an event driven algorithmic trading Python library. Although the initial focus was on backtesting, paper trading is now possible
