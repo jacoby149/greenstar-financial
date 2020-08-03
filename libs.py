@@ -8,7 +8,6 @@ import talib #– TA-Lib is widely used by trading software developers requiring
 import QSTK #– Python-based open source software framework designed to support portfolio construction and management. It is built the QSToolKit primarily for finance students, computing students, and quantitative analysts with programming experience.
 import pyalgotrade #– PyAlgoTrade is an event driven algorithmic trading Python library. Although the initial focus was on backtesting, paper trading is now possible
 #import pandas_talib #– A Python Pandas implementation of technical analysis indicators
-import algobroker #– This is an execution engine for algo trading. The idea is that this python server gets requests from clients and then forwards them to the broker API.
 
 #Risk Analysis
 import pyfolio #– pyfolio is a Python library for performance and risk analysis of financial portfolios. It works well with the Zipline open source backtesting library.
