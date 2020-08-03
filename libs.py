@@ -4,9 +4,10 @@
 
 #Trading & Backtesting
 import zipline #– Zipline is a Pythonic algorithmic trading library. It is an event-driven system that supports both backtesting and live trading.
+import talib #– TA-Lib is widely used by trading software developers requiring to perform technical analysis of financial market data. It has an open-source API for python.
 import QSTK #– Python-based open source software framework designed to support portfolio construction and management. It is built the QSToolKit primarily for finance students, computing students, and quantitative analysts with programming experience.
 import pyalgotrade #– PyAlgoTrade is an event driven algorithmic trading Python library. Although the initial focus was on backtesting, paper trading is now possible
-import pandas_talib #– A Python Pandas implementation of technical analysis indicators
+#import pandas_talib #– A Python Pandas implementation of technical analysis indicators
 import algobroker #– This is an execution engine for algo trading. The idea is that this python server gets requests from clients and then forwards them to the broker API.
 
 #Risk Analysis
