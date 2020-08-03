@@ -1,3 +1,4 @@
+# coding: utf-8
 #idea
 #Make a bank on the dark web with 3% interest per year in USD.
 
