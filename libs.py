@@ -10,7 +10,6 @@ import pandas #– The pandas library provides high-performance, easy-to-use dat
 #Financial Instruments
 import vollib
 #– vollib is a python library for calculating option prices, implied volatility and greeks using Black, Black-Scholes, and Black-Scholes-Merton. vollib implements both analytical and numerical greeks for each of the three pricing formulae.
-import pynance #– PyNance is open-source software for retrieving, analyzing and visualizing data from stock and derivatives markets. It includes tools for generating features and labels for machine learning algorithms.
 
 #Trading & Backtesting
 import talib #– TA-Lib is widely used by trading software developers requiring to perform technical analysis of financial market data. It has an open-source API for python.
