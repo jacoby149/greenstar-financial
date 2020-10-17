@@ -33,7 +33,8 @@ RUN pip install ta-lib
 RUN pip install pyalgotrade
 
 #fancy black scholes stuff
-RUN pip install py_vollib
+RUN apt-get -y install swig
+RUN pip install vollib
 
 COPY . /app
 
