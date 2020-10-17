@@ -20,11 +20,6 @@ import talib #– TA-Lib is widely used by trading software developers requiring
 
 import pyalgotrade #– PyAlgoTrade is an event driven algorithmic trading Python library. Although the initial focus was on backtesting, paper trading is now possible incorporating TALIB
 
-
-#3. Georgia Tech Library
-import QSTK #– Python-based open source software framework designed to support portfolio construction and management. It is built the QSToolKit primarily for finance students, computing students, and quantitative analysts with programming experience.
-
-
 #Financial Instruments
 import vollib
 #– vollib is a python library for calculating option prices, implied volatility and greeks using Black, Black-Scholes, and Black-Scholes-Merton. vollib implements both analytical and numerical greeks for each of the three pricing formulae.

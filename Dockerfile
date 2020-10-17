@@ -28,16 +28,12 @@ COPY /ta-lib /app
 RUN ./configure --prefix=/usr
 RUN make
 RUN sudo make install
-RUN sudo apt upgrade
 RUN pip install ta-lib 
 
 RUN pip install pyalgotrade
 
-#univeristy of ___ packs
-RUN pip install QSTK
-
 #fancy black scholes stuff
-RUN pip install vollib
+RUN pip install py_vollib
 
 COPY . /app
 
