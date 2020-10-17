@@ -8,8 +8,10 @@ import zipline #– Zipline is a Pythonic algorithmic trading library. It is an 
 #Risk Analysis
 import empyrical #– Common financial risk and performance metrics. Used by zipline and pyfolio.
 
+#pyfolio is a Python library for performance and risk analysis of financial portfolios
 import pyfolio
 
+#library with alpha indicators compatible with zipline
 import alphalens
 
 

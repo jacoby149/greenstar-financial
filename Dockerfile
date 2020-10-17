@@ -1,25 +1,48 @@
-FROM python:2.7-buster
+FROM python:3.5-buster
 
 WORKDIR /app
-
-COPY requirements.txt /app
-
-RUN pip install numpy
-
-RUN pip install -r requirements.txt
 
 RUN apt-get update
 
 RUN apt-get -y install sudo
 
-#RUN sudo apt-get -y install tesseract-ocr
+COPY requirements.txt /app
+
+#stats packs
+RUN pip install numpy scipy pandas statsmodels matplotlib
+
+#zipline dependencies
+RUN sudo apt-get -y install libatlas-base-dev python-dev gfortran pkg-config libfreetype6-dev hdf5-tools libhdf5-serial-dev
+
+#zipline related stuff
+RUN pip install zipline
+RUN pip install empyrical 
+RUN pip install pyfolio 
+RUN pip install alphalens
+
+#talibs stuff
+RUN sudo apt-get install build-essential
+RUN apt-get install python-dev
+RUN sudo pip install -U setuptools
+COPY /ta-lib /app
+RUN ./configure --prefix=/usr
+RUN make
+RUN sudo make install
+RUN sudo apt upgrade
+RUN pip install ta-lib 
+
+RUN pip install pyalgotrade
+
+#univeristy of ___ packs
+RUN pip install QSTK
+
+#fancy black scholes stuff
+RUN pip install vollib
 
 COPY . /app
 
-#RUN git clone --depth=1 https://majinghoozie:ghooziemajin1@github.com/jacoby149/tlibs
+RUN python libs.py
 
-#RUN git clone --depth=1 https://majinghoozie:ghooziemajin1@github.com/jacoby149/initiald
+#EXPOSE 8000
 
-EXPOSE 8000
-
-CMD flask run --host=0.0.0.0 --port=80
+#CMD flask run --host=0.0.0.0 --port=80
