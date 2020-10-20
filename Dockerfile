@@ -1,4 +1,4 @@
-FROM python:3.5-buster
+FROM python:3.6-buster
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ RUN apt-get update
 
 RUN apt-get -y install sudo
 
-COPY requirements.txt /app
+RUN pip install --upgrade pip
 
 #stats packs
 RUN pip install numpy scipy pandas statsmodels matplotlib
@@ -36,9 +36,17 @@ RUN pip install pyalgotrade
 RUN apt-get -y install swig
 RUN pip install vollib
 
+RUN pip install cvxopt matplotlib
+
+
+#download data
+RUN export QUANDL_API_KEY="GL6R8mpKFfHJWvpmkNxV" && zipline ingest -b quandl
+
 COPY . /app
 
-RUN python libs.py
+#RUN python libs.py
+
+RUN python markowitz.py
 
 #EXPOSE 8000
 
