@@ -228,14 +228,6 @@ bundle = 'quandl'
 bundle_data = bundles.load(bundle) # , environ, timestamp)
 
 
-# Create a data portal
-data_portal = DataPortal(
-    bundle_data.asset_finder,
-    trading_calendar=trading_calendar,
-    first_trading_day=bundle_data.equity_daily_bar_reader.first_trading_day,
-    equity_daily_reader=bundle_data.equity_daily_bar_reader,
-    adjustment_reader=bundle_data.adjustment_reader)
-
 # Implement Quantopian's get_pricing
 def get_pricing(assets, start_date, end_date, fields='close', trading_calendar=None):
     """
@@ -244,7 +236,16 @@ def get_pricing(assets, start_date, end_date, fields='close', trading_calendar=N
     """
     if trading_calendar is None:
         trading_calendar = get_calendar("NYSE")
-    
+
+    # Create a data portal
+    data_portal = DataPortal(
+        bundle_data.asset_finder,
+        trading_calendar=trading_calendar,
+        first_trading_day=bundle_data.equity_daily_bar_reader.first_trading_day,
+        equity_daily_reader=bundle_data.equity_daily_bar_reader,
+        adjustment_reader=bundle_data.adjustment_reader)
+
+
     # Set the given start and end dates to Timestamps.
     end_date = pd.Timestamp(end_date, tz='utc')
     start_date = pd.Timestamp(start_date, tz='utc')
@@ -265,7 +266,7 @@ def get_pricing(assets, start_date, end_date, fields='close', trading_calendar=N
                             field=fields,
                             data_frequency='daily')
 
-tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT', 'TLT', 'SHY']
+tickers = ['IBM', 'AAPL', 'MSFT',]
 data = get_pricing(
     tickers,
     start_date='2005-01-01',
@@ -275,8 +276,8 @@ data = get_pricing(
 
 # In[ ]:
 
-
-data.loc['price', :, :].plot()
+print(data)
+data.plot()
 plt.ylabel('price in $')
 plt.legend(tickers);
 
@@ -360,8 +361,7 @@ def handle_data(context, data):
         pass
         
 # Instantinate algorithm        
-algo = TradingAlgorithm(initialize=initialize, 
-                        handle_data=handle_data)
+algo = TradingAlgorithm(initialize=initialize, handle_data=handle_data)
 # Run algorithm
 results = algo.run(data.swapaxes(2, 0, 1))
 results.portfolio_value.plot();
