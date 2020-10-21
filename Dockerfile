@@ -42,11 +42,13 @@ RUN pip install cvxopt matplotlib
 #download data
 RUN export QUANDL_API_KEY="GL6R8mpKFfHJWvpmkNxV" && zipline ingest -b quandl
 
+RUN pip install flask 
+RUN pip install flask_cors
+
 COPY . /app
 
 #RUN python libs.py
-
-RUN python markowitz.py
+CMD python app.py
 
 #EXPOSE 8000
 
