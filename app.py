@@ -18,8 +18,9 @@ cors = CORS(app)
 # Do machine Learning Autograding.
 @app.route("/", methods=["GET", "POST"])
 def markowitz_print():
+
     images,weights,returns,risks = markowitz.rand_data()
-    return "".join(images)+ "\n" + str(weights)#+str(returns)+str(risks)
+    return markowitz.normal() + "".join(images)+ "\n" + str(weights)#+str(returns)+str(risks)
 
 # start flask
 if __name__ == "__main__":
