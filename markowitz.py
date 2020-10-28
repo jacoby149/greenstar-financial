@@ -107,9 +107,9 @@ def optimal_portfolio(returns):
     m1 = np.polyfit(returns, risks, 2)
     x1 = np.sqrt(m1[2] / m1[0])
     # CALCULATE THE OPTIMAL PORTFOLIO
-    wt = solvers.qp(opt.matrix(x1 * S), -pbar, G, h, A, b)['x']
-    return np.asarray(wt), returns, risks
-
+    #wt = solvers.qp(opt.matrix(x1 * S), -pbar, G, h, A, b)['x']
+    #return np.asarray(wt), returns, risks
+    return portfolios,returns,risks
 
 def rand_data():
     images = []
@@ -250,7 +250,10 @@ def rand_data():
 
 
     
-    weights, returns, risks = optimal_portfolio(return_vec)
+    portfolios, returns, risks = optimal_portfolio(return_vec)
+    
+    #get the highest risk option
+    weights = portfolios[0]
 
     plt.plot(stds, means, 'o')
     plt.ylabel('mean')
@@ -363,7 +366,7 @@ def backtest():
         # Set the commission model (Interactive Brokers Commission)
         set_commission(commission.PerShare(cost=0.01, min_trade_cost=1.0))
         context.tick = 0
-        context.assets = symbols('IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT')
+        context.assets = symbols(*tickers)
         
     return_weights = []
     def handle_data(context, data):
@@ -386,16 +389,21 @@ def backtest():
         # Allow history to accumulate 100 days of prices before trading
         # and rebalance every day thereafter.
         context.tick += 1
+        look_back = 365
         rebalance_increment = 365
         if context.tick % rebalance_increment :
             return
         # Get rolling window of past prices and compute returns
-        prices = data.history(context.assets, 'price', 100, '1d').dropna()
+        prices = data.history(context.assets, 'price', look_back, '1d').dropna()
         returns = prices.pct_change().dropna()
         try:
             # Perform Markowitz-style portfolio optimization
-            weights, _, _ = optimal_portfolio(returns.T)
-            weights = [w[0] for w in weights] #get the weights as an array
+            portfolios, _, _ = optimal_portfolio(returns.T)
+            
+            #least risk portfolio
+            weights = portfolios[-1]
+
+            #weights = [w[0] for w in weights] #get the weights as an array
             #print("Calculated Weights : ",weights)
             # Rebalance portfolio accordingly
             return_weights.append(weights)
@@ -410,9 +418,9 @@ def backtest():
     #algo = zipline.run({},initialize=initialize, handle_data=handle_data)
     # Run algorithm
     #results = algo.run(data.swapaxes(2, 0, 1))
-    start = pd.Timestamp(2008, 1, 1)
+    start = pd.Timestamp(2005, 1, 1)
     start = start.tz_localize(tz='UTC')
-    end = pd.Timestamp(2012, 1, 1)
+    end = pd.Timestamp(2015, 1, 1)
     end = end.tz_localize(tz='UTC')
     capital_base = 1000000
     results = zipline.utils.run_algo.run_algorithm(start,end,initialize,capital_base,handle_data)
@@ -422,9 +430,12 @@ def backtest():
     stock_plot = plt_to_img(plt)
     weights = results.portfolio_value.plot()
     weight_plot = plt_to_img(plt)
-
-    return stock_plot + weight_plot + str(return_weights) 
-
+    weights = "<h1>Weights</h1><br><br>"
+    for w in return_weights:
+        weights = weights + "<br>"
+        for i in range(len(tickers)):
+            weights = weights + " || {} : {}".format(tickers[i],w[i])
+    return str(weights) + stock_plot + weight_plot 
 
     # As you can see, the performance here is quite good, even through the 2008 financial crisis. This is most likey due to our universe selection and shouldn't always be expected. Increasing the number of stocks in the universe might reduce the volatility as well. Please let us know in the comments section if you had any success with this strategy and how many stocks you used.
 
