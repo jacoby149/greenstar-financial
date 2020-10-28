@@ -22,6 +22,14 @@ def markowitz_print():
     images,weights,returns,risks = markowitz.rand_data()
     return markowitz.normal() + "".join(images)+ "\n" + str(weights)#+str(returns)+str(risks)
 
+
+@app.route("/backtest", methods=["GET", "POST"])
+def backtest():
+
+    image = markowitz.backtest()
+    return image
+
+
 # start flask
 if __name__ == "__main__":
     # Threaded option to enable multiple instances for multiple user access support

@@ -1,27 +1,44 @@
-#!/usr/bin/env python
-# coding: utf-8
+#adapted quantopian markowitz code
 
-# #The Efficient Frontier: Markowitz Portfolio optimization in Python
-# By Dr. Thomas Starke, David Edwards, Dr. Thomas Wiecki
-# 
-# Notebook released under the Creative Commons Attribution 4.0 License.
-# 
-# ---
-# 
-# ## Introduction
-# In this blog post you will learn about the basic idea behind Markowitz portfolio optimization and how to do it in Python. We will then show a simple backtest that rebalances its portfolio in a Markowitz-optimal way. We hope you enjoy it and find it enlightening.
-# 
-# We will start by using random data and save actual stock data for later. This will hopefully help you get a sense of how to use modelling and simulation to improve your understanding of the theoretical concepts. Don‘t forget that the skill of an algo-trader is to put mathematical models into code, and this example is great practice.
-# 
-# Let's start with importing a few modules which we need later, and producing a series of normally distributed returns. `cvxopt` is a convex solver which we will use for the optimization of the portfolio.
-# 
-# ## Simulations
+#graph requirements
+import io
+import base64
+#import numpy as np
+#import matplotlib.pyplot as plt
+from scipy.stats import norm
 
-# In[1]:
+
+#markowitz requirements.
+import numpy as np
+import matplotlib.pyplot as plt
+import cvxopt as opt
+from cvxopt import blas, solvers
+solvers.options['show_progress'] = False
+
+import pandas as pd
+
+# backtesting requirements
+import matplotlib.pyplot as plt
+import pandas as pd
+import os
+from zipline.data import bundles
+from zipline.data.data_portal import DataPortal
+from trading_calendars import get_calendar
+
+import zipline
+from zipline.api import (
+    set_slippage, 
+    slippage,
+    set_commission, 
+    commission, 
+    order_target_percent,
+    symbols,
+    )
+
+
 
 def plt_to_img(plt):
-    import io
-    import base64
+
     s = io.BytesIO()
     plt.savefig(s, format='png', bbox_inches="tight")
     plt.close()
@@ -31,9 +48,6 @@ def plt_to_img(plt):
 
 def normal():
     # normal_curve.py
-    import numpy as np
-    import matplotlib.pyplot as plt
-    from scipy.stats import norm
     # if using a Jupyter notebook, inlcude:
 
     # define constants
@@ -66,14 +80,39 @@ def normal():
 
     return plt_to_img(plt)
 
+def optimal_portfolio(returns):
+    n = len(returns)
+    returns = np.asmatrix(returns)
+    
+    N = 100
+    mus = [10**(5.0 * t/N - 1.0) for t in range(N)]
+    
+    # Convert to cvxopt matrices
+    S = opt.matrix(np.cov(returns))
+    pbar = opt.matrix(np.mean(returns, axis=1))
+    
+    # Create constraint matrices
+    G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
+    h = opt.matrix(0.0, (n ,1))
+    A = opt.matrix(1.0, (1, n))
+    b = opt.matrix(1.0)
+    
+    # Calculate efficient frontier weights using quadratic programming
+    portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] 
+                for mu in mus]
+    ## CALCULATE RISKS AND RETURNS FOR FRONTIER
+    returns = [blas.dot(pbar, x) for x in portfolios]
+    risks = [np.sqrt(blas.dot(x, S*x)) for x in portfolios]
+    ## CALCULATE THE 2ND DEGREE POLYNOMIAL OF THE FRONTIER CURVE
+    m1 = np.polyfit(returns, risks, 2)
+    x1 = np.sqrt(m1[2] / m1[0])
+    # CALCULATE THE OPTIMAL PORTFOLIO
+    wt = solvers.qp(opt.matrix(x1 * S), -pbar, G, h, A, b)['x']
+    return np.asarray(wt), returns, risks
+
 
 def rand_data():
     images = []
-    import numpy as np
-    import matplotlib.pyplot as plt
-    import cvxopt as opt
-    from cvxopt import blas, solvers
-    import pandas as pd
 
     np.random.seed(123)
 
@@ -210,36 +249,7 @@ def rand_data():
     # In[8]:
 
 
-    def optimal_portfolio(returns):
-        n = len(returns)
-        returns = np.asmatrix(returns)
-        
-        N = 100
-        mus = [10**(5.0 * t/N - 1.0) for t in range(N)]
-        
-        # Convert to cvxopt matrices
-        S = opt.matrix(np.cov(returns))
-        pbar = opt.matrix(np.mean(returns, axis=1))
-        
-        # Create constraint matrices
-        G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
-        h = opt.matrix(0.0, (n ,1))
-        A = opt.matrix(1.0, (1, n))
-        b = opt.matrix(1.0)
-        
-        # Calculate efficient frontier weights using quadratic programming
-        portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] 
-                    for mu in mus]
-        ## CALCULATE RISKS AND RETURNS FOR FRONTIER
-        returns = [blas.dot(pbar, x) for x in portfolios]
-        risks = [np.sqrt(blas.dot(x, S*x)) for x in portfolios]
-        ## CALCULATE THE 2ND DEGREE POLYNOMIAL OF THE FRONTIER CURVE
-        m1 = np.polyfit(returns, risks, 2)
-        x1 = np.sqrt(m1[2] / m1[0])
-        # CALCULATE THE OPTIMAL PORTFOLIO
-        wt = solvers.qp(opt.matrix(x1 * S), -pbar, G, h, A, b)['x']
-        return np.asarray(wt), returns, risks
-
+    
     weights, returns, risks = optimal_portfolio(return_vec)
 
     plt.plot(stds, means, 'o')
@@ -264,14 +274,9 @@ def rand_data():
 
 
 def backtest():
-    import os
     environ = os.environ
     environ['QUANDL_API_KEY'] = "GL6R8mpKFfHJWvpmkNxV"
 
-
-    from zipline.data import bundles
-    from zipline.data.data_portal import DataPortal
-    from trading_calendars import get_calendar
     bundle = 'quandl'
 
     # Load ingested data bundle
@@ -316,7 +321,7 @@ def backtest():
                                 field=fields,
                                 data_frequency='daily')
 
-    tickers = ['IBM', 'AAPL', 'MSFT',]
+    tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
     data = get_pricing(
         tickers,
         start_date='2005-01-01',
@@ -338,20 +343,6 @@ def backtest():
 
     # In[ ]:
 
-
-    import zipline
-    from zipline.api import (
-        set_slippage, 
-        slippage,
-        set_commission, 
-        commission, 
-        order_target_percent,
-        symbols
-    )
-
-    from zipline import TradingAlgorithm
-
-
     def initialize(context):
         '''
         Called once at the very beginning of a backtest (and live trading). 
@@ -372,8 +363,9 @@ def backtest():
         # Set the commission model (Interactive Brokers Commission)
         set_commission(commission.PerShare(cost=0.01, min_trade_cost=1.0))
         context.tick = 0
-        context.assets = symbols('IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT', 'TLT', 'SHY')
+        context.assets = symbols('IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT')
         
+    return_weights = []
     def handle_data(context, data):
         '''
         Called when a market event occurs for any of the algorithm's 
@@ -394,7 +386,8 @@ def backtest():
         # Allow history to accumulate 100 days of prices before trading
         # and rebalance every day thereafter.
         context.tick += 1
-        if context.tick < 100:
+        rebalance_increment = 365
+        if context.tick % rebalance_increment :
             return
         # Get rolling window of past prices and compute returns
         prices = data.history(context.assets, 'price', 100, '1d').dropna()
@@ -402,7 +395,10 @@ def backtest():
         try:
             # Perform Markowitz-style portfolio optimization
             weights, _, _ = optimal_portfolio(returns.T)
+            weights = [w[0] for w in weights] #get the weights as an array
+            #print("Calculated Weights : ",weights)
             # Rebalance portfolio accordingly
+            return_weights.append(weights)
             for stock, weight in zip(prices.columns, weights):
                 order_target_percent(stock, weight)
         except ValueError as e:
@@ -411,10 +407,23 @@ def backtest():
             pass
             
     # Instantinate algorithm        
-    algo = TradingAlgorithm(initialize=initialize, handle_data=handle_data)
+    #algo = zipline.run({},initialize=initialize, handle_data=handle_data)
     # Run algorithm
-    results = algo.run(data.swapaxes(2, 0, 1))
-    results.portfolio_value.plot();
+    #results = algo.run(data.swapaxes(2, 0, 1))
+    start = pd.Timestamp(2008, 1, 1)
+    start = start.tz_localize(tz='UTC')
+    end = pd.Timestamp(2012, 1, 1)
+    end = end.tz_localize(tz='UTC')
+    capital_base = 1000000
+    results = zipline.utils.run_algo.run_algorithm(start,end,initialize,capital_base,handle_data)
+    print("Ran Algorithm!")
+    #print(results)
+    #print("Plotted portfolio!")
+    stock_plot = plt_to_img(plt)
+    weights = results.portfolio_value.plot()
+    weight_plot = plt_to_img(plt)
+
+    return stock_plot + weight_plot + str(return_weights) 
 
 
     # As you can see, the performance here is quite good, even through the 2008 financial crisis. This is most likey due to our universe selection and shouldn't always be expected. Increasing the number of stocks in the universe might reduce the volatility as well. Please let us know in the comments section if you had any success with this strategy and how many stocks you used.
