@@ -6,8 +6,6 @@ services:
       context: ../
     ports:
       - "5000:5000"
-
-
 #  testing:
 #    restart: always
 #    build:
