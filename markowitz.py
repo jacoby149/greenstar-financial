@@ -51,29 +51,49 @@ def normal():
     # if using a Jupyter notebook, inlcude:
 
     # define constants
-    mu = 998.8 
-    sigma = 73.10
+    mu = 110 
+    sigma = 7.10
     x1 = 900
     x2 = 1100
 
     # calculate the z-transform
-    z1 = ( x1 - mu ) / sigma
-    z2 = ( x2 - mu ) / sigma
+    z1 = -2#( x1 - mu ) / sigma
+    z2 = 2#( x2 - mu ) / sigma
+    l1 = -10
+    l2 = 10
+    d = .001
 
-    x = np.arange(z1, z2, 0.001) # range of x in spec
-    x_all = np.arange(-10, 10, 0.001) # entire range of x, both in and out of spec
+    x = np.arange(z1, z2, d) # range of x in spec
+    x_all = np.arange(l1, l2, d) # entire range of x, both in and out of spec
+    x_rev = np.arange(mu+z1*sigma,mu+z2*sigma,d*sigma)
+    x_all_rev = np.arange(mu+l1*sigma,mu+l2*sigma,d*sigma)
     # mean = 0, stddev = 1, since Z-transform was calculated
-    y = norm.pdf(x,0,1)
-    y2 = norm.pdf(x_all,0,1)
+    
+    #y = norm.pdf(x,0,1)
+    #y2 = norm.pdf(x_all,0,1)
+
+    y = norm.pdf(x_rev,mu,sigma)
+    y2 = norm.pdf(x_all_rev,mu,sigma)
+
 
     # build the plot
     fig, ax = plt.subplots(figsize=(9,6))
     plt.style.use('fivethirtyeight')
-    ax.plot(x_all,y2)
 
-    ax.fill_between(x,y,0, alpha=0.3, color='b')
-    ax.fill_between(x_all,y2,0, alpha=0.1)
-    ax.set_xlim([-4,4])
+    #stdev marks
+    #ax.plot(x_all,y2)
+    #ax.fill_between(x,y,0, alpha=0.3, color='b')
+    #ax.fill_between(x_all,y2,0, alpha=0.1)
+    #ax.set_xlim([-4,4])
+
+
+    #revenue marks
+    ax.plot(x_all_rev,y2)
+    ax.fill_between(x_rev,y,0, alpha=0.3, color='b')
+    ax.fill_between(x_all_rev,y2,0, alpha=0.1)
+    ax.set_xlim([mu-4*sigma,mu+4*sigma])
+
+
     ax.set_xlabel('# of Standard Deviations Outside the Mean')
     ax.set_yticklabels([])
     ax.set_title('Normal Gaussian Curve')
