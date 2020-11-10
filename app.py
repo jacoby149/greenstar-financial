@@ -6,8 +6,9 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # imports
 import markowitz
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify,render_template
 from flask_cors import CORS
+import sys
 
 
 # Initialize the Flask application
@@ -16,17 +17,34 @@ cors = CORS(app)
 
 # Do machine Learning Autograding.
 @app.route("/", methods=["GET", "POST"])
-def markowitz_print():
+def load_home():
+    return render_template('index.html') #"Hello World!":
 
+@app.route("/mark", methods=["GET", "POST"])
+def mark():
+    params = request.get_json()
     images,weights,returns,risks = markowitz.rand_data()
-    return markowitz.normal() + "".join(images)+ "\n" + str(weights)#+str(returns)+str(risks)
+    vals = dict() 
+    vals["normal"]= str(markowitz.normal())
+    vals["images"]= "".join(images)
+    vals["weights"]= str(weights)
+    vals["returns"]= str(returns)
+    vals["risks"]= str(risks)
+    #print("DONE")
+    #print("VALS : ",vals)
+    print("PARAMS :",params)
+    sys.stdout.flush()
+    return vals
 
+@app.route("/back", methods=["GET", "POST"])
+def back():
+    params = request.get_json()
+    vals = dict() 
+    vals["backtest"] = markowitz.backtest()
+    print("PARAMS :",params)
+    sys.stdout.flush()
+    return vals
 
-@app.route("/backtest", methods=["GET", "POST"])
-def backtest():
-
-    image = markowitz.backtest()
-    return image
 
 
 # start flask
