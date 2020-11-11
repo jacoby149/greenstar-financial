@@ -10,6 +10,7 @@ from scipy.stats import norm
 
 #markowitz requirements.
 import numpy as np
+from numpy import array
 import matplotlib.pyplot as plt
 import cvxopt as opt
 from cvxopt import blas, solvers
@@ -45,35 +46,29 @@ def plt_to_img(plt):
     s = base64.b64encode(s.getvalue()).decode("utf-8").replace("\n", "")
     return '<img align="left" src="data:image/png;base64,%s">' % s
 
+def calc_norm(mu,sigma,z):
+    d = .001
+    x = np.arange(mu-z*sigma,mu+z*sigma,d*sigma)
+    y = norm.pdf(x,mu,sigma)
+    return x,y
 
 def normal(mu=110,sigma=7.10):
-    # normal_curve.py
-    # if using a Jupyter notebook, inlcude:
 
-    # calculate the z-transform
-    z1 = -2#( x1 - mu ) / sigma
-    z2 = 2#( x2 - mu ) / sigma
-    l1 = -10
-    l2 = 10
-    d = .001
-
-    x = np.arange(z1, z2, d) # range of x in spec
-    x_all = np.arange(l1, l2, d) # entire range of x, both in and out of spec
-    x_rev = np.arange(mu+z1*sigma,mu+z2*sigma,d*sigma)
-    x_all_rev = np.arange(mu+l1*sigma,mu+l2*sigma,d*sigma)
-    # mean = 0, stddev = 1, since Z-transform was calculated
-    
-    y = norm.pdf(x_rev,mu,sigma)
-    y2 = norm.pdf(x_all_rev,mu,sigma)
+    x_t,y_t = calc_norm(mu,sigma,1)
+    x,y = calc_norm(mu,sigma,2)
+    x_all,y_all = calc_norm(mu,sigma,10)
 
     # build the plot
     fig, ax = plt.subplots(figsize=(9,6))
     plt.style.use('fivethirtyeight')
 
     #revenue marks
-    ax.plot(x_all_rev,y2)
-    ax.fill_between(x_rev,y,0, alpha=0.3, color='b')
-    ax.fill_between(x_all_rev,y2,0, alpha=0.1)
+    ax.plot(x_all,y_all)
+
+    ax.fill_between(x_t,y_t,0, alpha=0.3, color='g')
+    ax.fill_between(x,y,0, alpha=0.3, color='b')
+    ax.fill_between(x_all,y_all,0, alpha=0.1)
+
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
 
     ax.set_xlabel('# of Standard Deviations Outside the Mean')
@@ -117,13 +112,20 @@ def optimal_portfolio(returns):
 
 #number of assets - number of stocks
 #number of observations - number of days
-def random_assets(n_assets=4,n_obs=1000):
+#g - rate of average daily growth in positions 
+def random_assets(n_assets=4,n_obs=1000, g=1.00026):
+    #TODO add g in here
     np.random.seed(123)
     # Turn off progress printing 
     solvers.options['show_progress'] = False
     # Assume that we have 4 assets, each with a return series of length 1000. We can use `numpy.random.randn` to sample returns from a normal distribution.
     # In[2]:
-    return_vec = np.random.randn(n_assets, n_obs)
+
+    return_vec = np.random.randn(n_assets, n_obs)/4 + 1
+    return_vec[return_vec < 0] = 0
+    gain_vector = [g**n for n in range(n_obs)]
+    return_vec = return_vec*gain_vector
+    #print(return_vec)
     return return_vec
 
 
@@ -154,21 +156,23 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # In[5]:
 
 
-    def random_portfolio(returns):
+    def random_portfolio(returns,weights=None):
         ''' 
         Returns the mean and standard deviation of returns for a random portfolio
         '''
-
+        if (weights == None): weights = rand_weights(returns.shape[0])
         p = np.asmatrix(np.mean(returns, axis=1))
-        w = np.asmatrix(rand_weights(returns.shape[0]))
+        w = np.asmatrix(weights)
         C = np.asmatrix(np.cov(returns))
             
+        #calculates earning and 
         mu = w * p.T
         sigma = np.sqrt(w * C * w.T)
         
         # This recursion reduces outliers to keep plots pretty
-        if sigma > 2:
-            return random_portfolio(returns)
+        #re draws a random portfolio
+        #if sigma > 2:
+        #    return random_portfolio(returns)
         return mu, sigma
 
 
@@ -243,9 +247,9 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
 
     
     portfolios, returns, risks = optimal_portfolio(return_vec)
+    #2d list instead of numpy array
+    portfolios = [array(p).tolist() for p in portfolios][0]
     
-    #get the highest risk option
-    weights = portfolios[0]
     plt.plot(stds, means, 'o')
     plt.ylabel('mean')
     plt.xlabel('std')
@@ -260,7 +264,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # In[9]:
 
 
-    return images,weights,returns,risks
+    return images,portfolios,returns,risks
 
 
     # ## Backtesting on real market data

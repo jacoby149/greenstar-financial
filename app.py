@@ -26,17 +26,26 @@ def mark():
     print(risk)
     risk=int(risk)
     print("RISK_LEVEL :",risk)
-    images,weights,returns,risks = markowitz.markowitz_run(risk_level=risk)
-    vals = dict() 
-    vals["normal"]= str(markowitz.normal())
+    images,portfolios,returns,risks = markowitz.markowitz_run(risk_level=risk)
+    vals=dict()
     vals["images"]= "".join(images)
-    vals["weights"]= str(weights)
+    vals["portfolios"]= str(portfolios)
     vals["returns"]= str(returns)
     vals["risks"]= str(risks)
     #print("DONE")
     #print("VALS : ",vals)
     sys.stdout.flush()
     return vals
+
+@app.route("/norm", methods=["GET", "POST"])
+def norm():
+    mu,std = float(request.form.get('mu')),float(request.form.get('std'))
+    print("MU,STD:",mu,std)
+    vals = dict() 
+    vals["normal"]= str(markowitz.normal(mu,std))
+    sys.stdout.flush()
+    return vals
+
 
 @app.route("/back", methods=["GET", "POST"])
 def back():
