@@ -257,7 +257,11 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     
     portfolios, returns, risks = optimal_portfolio(return_vec)
     #2d list instead of numpy array
-        
+
+    portfolios.reverse()
+    returns.reverse()
+    risks.reverse()
+
     plt.plot(stds, means, 'o')
     plt.ylabel('mean')
     plt.xlabel('std')
@@ -272,9 +276,6 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # In[9]:
 
     portfolios = neat(portfolios)
-    portfolios.reverse()
-    returns.reverse()
-    risks.reverse()
     return images,portfolios,returns,risks
 
 
