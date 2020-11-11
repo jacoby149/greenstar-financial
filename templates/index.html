@@ -13,11 +13,12 @@
             </td>
             <td>
                 <div class="slidecontainer">
-                    <input type="range" min="1" max="50" value="25" class="slider" id="risk">
+                    <input type="range" min="1" max="80" value="25" class="slider" id="risk">
                 </div>
             </td>
             <td id="std">Sigma : .2 |</td>
             <td id="mean">| Mu : 1.05</td>
+            <td id="weight"> Sim. Port. : [.25,.25,.25,.25]
         </tr>
     </table>
 
@@ -25,6 +26,7 @@
     <div id="graphs"></div>
     <div id="norm"></div>
     <div id="backtest"></div>
+    <div id="weights"></div>
 
 </body>
 
@@ -32,28 +34,32 @@
 
 <script>
 
+    function update_vals() {
+        std = stds[risk]
+        mean = means[risk]
+        portfolio = portfolios[risk]
+        console.log(portfolios)
+        document.getElementById("std").innerHTML = "SIMGA : " + Math.round(std * 100) / 100
+        document.getElementById("mean").innerHTML = "MU :" + Math.round(mean * 100) / 100
+        document.getElementById("weight").innerHTML = portfolio
+    }
+
     function setRisk() {
         console.log("adjusting risk");
         risk = $(this).val();
-        console.log(risk + " of " + 50)
+        console.log(risk + " of " + 80)
         if (portfolios.length == 0) {
             console.log("Please load graphs first ");
             return;
         }
-        std = stds[risk]
-        mean = means[risk]
-        document.getElementById("std").innerHTML = "SIMGA : " + Math.round(std * 100) / 100
-        document.getElementById("mean").innerHTML = "MU :" + Math.round(mean * 100) / 100
+        update_vals();
         //set variables that will post to flask to select risk level
         //display this risk level on the screen.
 
     }
 
     function norm() {
-        std = stds[risk]
-        mean = means[risk]
-        console.log("STD :", std)
-        console.log("MEAN :", mean)
+        update_vals()
         postOnClick("/norm", load_norm, { "std": std, "mu": mean })
 
     }
@@ -77,6 +83,7 @@
 
     function load_backtest(data) {
         document.getElementById("backtest").innerHTML = data["backtest"]
+        document.getElementById("weights").innerHTML = data["weights"]
     }
 
     function backtest() {

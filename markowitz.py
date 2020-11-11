@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 import cvxopt as opt
 from cvxopt import blas, solvers
 solvers.options['show_progress'] = False
-
+import copy
 import pandas as pd
 
 # backtesting requirements
@@ -127,6 +127,15 @@ def random_assets(n_assets=4,n_obs=1000, g=1.00026):
     return_vec = return_vec*gain_vector
     #print(return_vec)
     return return_vec
+
+def neat(portfolios):
+    def n(p):
+        p = array(p)
+        p = np.round(p,2)
+        p = p.tolist()
+        return p
+    portfolios = [n(p) for p in portfolios]
+    return portfolios
 
 
 #risk level, a number from 1 to 100
@@ -248,8 +257,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     
     portfolios, returns, risks = optimal_portfolio(return_vec)
     #2d list instead of numpy array
-    portfolios = [array(p).tolist() for p in portfolios][0]
-    
+        
     plt.plot(stds, means, 'o')
     plt.ylabel('mean')
     plt.xlabel('std')
@@ -263,7 +271,10 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
 
     # In[9]:
 
-
+    portfolios = neat(portfolios)
+    portfolios.reverse()
+    returns.reverse()
+    risks.reverse()
     return images,portfolios,returns,risks
 
 
@@ -273,7 +284,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
 
 
-def backtest():
+def backtest(risk_level=50):
     environ = os.environ
     environ['QUANDL_API_KEY'] = "GL6R8mpKFfHJWvpmkNxV"
 
@@ -396,14 +407,16 @@ def backtest():
         try:
             # Perform Markowitz-style portfolio optimization
             portfolios, _, _ = optimal_portfolio(returns.T)
-            
             #least risk portfolio
-            weights = portfolios[-1]
+            portfolios.reverse()
+            weights = portfolios[risk_level]
+
+            r_w = neat(copy.deepcopy(portfolios))[risk_level]
 
             #weights = [w[0] for w in weights] #get the weights as an array
             #print("Calculated Weights : ",weights)
             # Rebalance portfolio accordingly
-            return_weights.append(weights)
+            return_weights.append(r_w)
             for stock, weight in zip(prices.columns, weights):
                 order_target_percent(stock, weight)
         except ValueError as e:
@@ -427,12 +440,12 @@ def backtest():
     stock_plot = plt_to_img(plt)
     weights = results.portfolio_value.plot()
     weight_plot = plt_to_img(plt)
-    weights = "<h1>Weights</h1><br><br>"
+    weights = "<h1>Weights</h1>"
     for w in return_weights:
         weights = weights + "<br>"
         for i in range(len(tickers)):
             weights = weights + " || {} : {}".format(tickers[i],w[i])
-    return str(weights) + stock_plot + weight_plot 
+    return weights,stock_plot + weight_plot  #arr[arr > 255] = x
 
     # As you can see, the performance here is quite good, even through the 2008 financial crisis. This is most likey due to our universe selection and shouldn't always be expected. Increasing the number of stocks in the universe might reduce the volatility as well. Please let us know in the comments section if you had any success with this strategy and how many stocks you used.
 
