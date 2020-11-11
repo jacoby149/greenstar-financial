@@ -46,15 +46,9 @@ def plt_to_img(plt):
     return '<img align="left" src="data:image/png;base64,%s">' % s
 
 
-def normal():
+def normal(mu=110,sigma=7.10):
     # normal_curve.py
     # if using a Jupyter notebook, inlcude:
-
-    # define constants
-    mu = 110 
-    sigma = 7.10
-    x1 = 900
-    x2 = 1100
 
     # calculate the z-transform
     z1 = -2#( x1 - mu ) / sigma
@@ -69,23 +63,12 @@ def normal():
     x_all_rev = np.arange(mu+l1*sigma,mu+l2*sigma,d*sigma)
     # mean = 0, stddev = 1, since Z-transform was calculated
     
-    #y = norm.pdf(x,0,1)
-    #y2 = norm.pdf(x_all,0,1)
-
     y = norm.pdf(x_rev,mu,sigma)
     y2 = norm.pdf(x_all_rev,mu,sigma)
-
 
     # build the plot
     fig, ax = plt.subplots(figsize=(9,6))
     plt.style.use('fivethirtyeight')
-
-    #stdev marks
-    #ax.plot(x_all,y2)
-    #ax.fill_between(x,y,0, alpha=0.3, color='b')
-    #ax.fill_between(x_all,y2,0, alpha=0.1)
-    #ax.set_xlim([-4,4])
-
 
     #revenue marks
     ax.plot(x_all_rev,y2)
@@ -93,12 +76,12 @@ def normal():
     ax.fill_between(x_all_rev,y2,0, alpha=0.1)
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
 
-
     ax.set_xlabel('# of Standard Deviations Outside the Mean')
     ax.set_yticklabels([])
     ax.set_title('Normal Gaussian Curve')
 
     return plt_to_img(plt)
+
 
 def optimal_portfolio(returns):
     n = len(returns)
@@ -131,35 +114,28 @@ def optimal_portfolio(returns):
     #return np.asarray(wt), returns, risks
     return portfolios,returns,risks
 
-def rand_data():
-    images = []
 
+#number of assets - number of stocks
+#number of observations - number of days
+def random_assets(n_assets=4,n_obs=1000):
     np.random.seed(123)
-
     # Turn off progress printing 
     solvers.options['show_progress'] = False
-
-
     # Assume that we have 4 assets, each with a return series of length 1000. We can use `numpy.random.randn` to sample returns from a normal distribution.
-
     # In[2]:
-
-
-    ## NUMBER OF ASSETS
-    n_assets = 4
-
-    ## NUMBER OF OBSERVATIONS
-    n_obs = 1000
-
     return_vec = np.random.randn(n_assets, n_obs)
+    return return_vec
 
 
-    # In[3]:
-
+#risk level, a number from 1 to 100
+def markowitz_run(return_vec = random_assets(),risk_level=50):
+    images = []
 
     plt.plot(return_vec.T, alpha=.4);
     plt.xlabel('time')
     plt.ylabel('returns');
+    plt.title('Daily Performance of Simulated Stocks');
+
     images.append(plt_to_img(plt))
 
     # These return series can be used to create a wide range of portfolios. We will produce random weight vectors and plot those portfolios. As we want all our capital to be invested, the weights will have to sum to one.
@@ -171,10 +147,6 @@ def rand_data():
         ''' Produces n random weights that sum to 1 '''
         k = np.random.rand(n)
         return k / sum(k)
-
-    print (rand_weights(n_assets))
-    print (rand_weights(n_assets))
-
 
     # Next, let's evaluate how these random portfolios would perform by calculating the mean returns and the volatility (here we are using standard deviation). You can see that there is
     # a filter so that we only plot portfolios with a standard deviation of < 2 for better illustration.
@@ -246,7 +218,7 @@ def rand_data():
     plt.xlabel('std')
     plt.ylabel('mean')
     plt.title('Mean and standard deviation of returns of randomly generated portfolios');
-    images.append(plt_to_img(plt))
+    #images.append(plt_to_img(plt))
 
 
     # ## Markowitz optimization and the Efficient Frontier
@@ -274,11 +246,12 @@ def rand_data():
     
     #get the highest risk option
     weights = portfolios[0]
-
     plt.plot(stds, means, 'o')
     plt.ylabel('mean')
     plt.xlabel('std')
     plt.plot(risks, returns, 'y-o');
+    risk,ret = [risks[risk_level]],[returns[risk_level]]
+    plt.plot(risk,ret,'o',color='b',zorder=2)
     images.append(plt_to_img(plt))
 
 

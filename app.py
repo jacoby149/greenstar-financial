@@ -22,8 +22,11 @@ def load_home():
 
 @app.route("/mark", methods=["GET", "POST"])
 def mark():
-    params = request.get_json()
-    images,weights,returns,risks = markowitz.rand_data()
+    risk = request.form.get('risk')
+    print(risk)
+    risk=int(risk)
+    print("RISK_LEVEL :",risk)
+    images,weights,returns,risks = markowitz.markowitz_run(risk_level=risk)
     vals = dict() 
     vals["normal"]= str(markowitz.normal())
     vals["images"]= "".join(images)
@@ -32,7 +35,6 @@ def mark():
     vals["risks"]= str(risks)
     #print("DONE")
     #print("VALS : ",vals)
-    print("PARAMS :",params)
     sys.stdout.flush()
     return vals
 

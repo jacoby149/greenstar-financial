@@ -2,23 +2,58 @@
 
 <body>
     <h1>Markowitz Model</h1>
+
+    <table>
+        <tr>
+            <td>
+                <button onclick="basic()">Load Graphs</button>
+            </td>
+            <td>
+                <button onclick="backtest()"> Load Backtest</button>
+            </td>
+            <td>
+                <div class="slidecontainer">
+                    <input type="range" min="1" max="100" value="50" class="slider" id="risk">
+                </div>
+            </td>
+            <td id="risk">Sigma : .2 |</td>
+            <td id="meanreturn">| Mu : 1.05</td>
+        </tr>
+    </table>
+
+
     <div id="graphs"></div>
     <div id="norm"></div>
     <div id="backtest"></div>
-    <button onclick="basic()">Load Graphs</button>
-    <button onclick="backtest()"> Load Backtest</button>
-
 
 </body>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 <script>
+    var portfolios = []
+    var risk = 0
+    function setRisk() {
+        console.log("adjusting risk")
+        risk = $(this).val();
+        console.log(risk + " of " + 100)
+        if (portfolios.length == 0) {
+            console.log("Please load graphs first ")
+        }
+        //set variables that will post to flask to select risk level
+        //display this risk level on the screen.
+
+    }
+
+    $("#risk").on("change", setRisk);
+
     function load_basic(data) {
         console.log(data)
         document.getElementById("graphs").innerHTML = data["images"]
         document.getElementById("norm").innerHTML = data["normal"]
     }
     function basic() {
-        postOnClick("/mark", load_basic, { "fish": "blue" })
+        postOnClick("/mark", load_basic, { "risk": risk })
     }
 
     function load_backtest(data) {
@@ -26,7 +61,7 @@
     }
 
     function backtest() {
-        postOnClick("/back", load_backtest, { "fish": "blue" })
+        postOnClick("/back", load_backtest, { "risk": risk })
     }
 </script>
 
@@ -36,7 +71,7 @@
     }
 
     img {
-        height: 200px;
+        height: 300px;
         float: left;
     }
 
@@ -45,9 +80,6 @@
         padding: 10px;
     }
 </style>
-
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>//libs.js
 
