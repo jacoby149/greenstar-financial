@@ -48,10 +48,17 @@ RUN export QUANDL_API_KEY="GL6R8mpKFfHJWvpmkNxV" && zipline ingest
 RUN pip install flask 
 RUN pip install flask_cors
 
+RUN sudo apt-get -y install texlive texlive-latex-extra texlive-fonts-recommended dvipng
+RUN pip install latex
+
+RUN pip install yfinance
+
 COPY . /app
 
 #RUN python libs.py
-CMD python app.py
+#CMD python app.py
+CMD python multipdf.py
+#CMD python yf.py
 
 #EXPOSE 8000
 
