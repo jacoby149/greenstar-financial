@@ -11,6 +11,7 @@ from scipy.stats import norm
 #markowitz requirements.
 import numpy as np
 from numpy import array
+
 import matplotlib.pyplot as plt
 import cvxopt as opt
 from cvxopt import blas, solvers

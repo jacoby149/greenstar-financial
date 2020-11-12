@@ -15,6 +15,8 @@ RUN pip install numpy scipy pandas statsmodels matplotlib
 RUN sudo apt-get -y install libatlas-base-dev python-dev gfortran pkg-config libfreetype6-dev hdf5-tools libhdf5-serial-dev
 
 #zipline related stuff
+RUN pip install yfinance
+
 RUN pip install zipline
 RUN pip install empyrical 
 RUN pip install pyfolio 
@@ -50,14 +52,14 @@ RUN pip install flask_cors
 
 RUN sudo apt-get -y install texlive texlive-latex-extra texlive-fonts-recommended dvipng
 RUN pip install latex
-
-RUN pip install yfinance
-
+RUN pip install html5lib
+RUN pip install BeautifulSoup4
+RUN pip install pandas==0.23
 COPY . /app
 
 #RUN python libs.py
-#CMD python app.py
-CMD python multipdf.py
+CMD pip freeze > requirements.txt | python yf.py
+#CMD python multipdf.py
 #CMD python yf.py
 
 #EXPOSE 8000
