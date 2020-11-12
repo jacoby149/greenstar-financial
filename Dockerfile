@@ -58,7 +58,7 @@ RUN pip install pandas==0.23
 COPY . /app
 
 #RUN python libs.py
-CMD pip freeze > requirements.txt | python yf.py
+CMD pip freeze > requirements.txt | python app.py
 #CMD python multipdf.py
 #CMD python yf.py
 

@@ -13,6 +13,8 @@ import numpy as np
 from numpy import array
 
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+
 import cvxopt as opt
 from cvxopt import blas, solvers
 solvers.options['show_progress'] = False
@@ -37,12 +39,31 @@ from zipline.api import (
     symbols,
     )
 
+def init_pdf():
+    #reload(matplotlib)
+    title = "graphs"
 
+    pdf = PdfPages("pdfs/"+title + '.pdf')
+    #pdf.attach_note(note)  # you can add a pdf note toa
 
-def plt_to_img(plt):
+    # We can also set the file's metadata via the PdfPages object:
+    d = pdf.infodict()
+    d['Title'] = 'Multipage PDF Example'
+    d['Author'] = 'Jouni K. Sepp\xe4nen'
+    d['Subject'] = 'How to create a multipage pdf file and set its metadata'
+    d['Keywords'] = 'PdfPages multipage keywords author title subject'
+    return pdf
 
+def plt_to_img(plt,pdf):
+    #pdf appending 
     s = io.BytesIO()
     plt.savefig(s, format='png', bbox_inches="tight")
+    
+                                # attach metadata to a page
+    #add the graph to the pdf
+    if pdf!=None:
+        pdf.savefig()
+
     plt.close()
     s = base64.b64encode(s.getvalue()).decode("utf-8").replace("\n", "")
     return '<img align="left" src="data:image/png;base64,%s">' % s
@@ -53,7 +74,7 @@ def calc_norm(mu,sigma,z):
     y = norm.pdf(x,mu,sigma)
     return x,y
 
-def normal(mu=110,sigma=7.10):
+def normal(mu=110,sigma=7.10,pdf=None):
 
     x_t,y_t = calc_norm(mu,sigma,1)
     x,y = calc_norm(mu,sigma,2)
@@ -76,7 +97,7 @@ def normal(mu=110,sigma=7.10):
     ax.set_yticklabels([])
     ax.set_title('Normal Gaussian Curve')
 
-    return plt_to_img(plt)
+    return plt_to_img(plt,pdf)
 
 
 def optimal_portfolio(returns):
@@ -140,7 +161,7 @@ def neat(portfolios):
 
 
 #risk level, a number from 1 to 100
-def markowitz_run(return_vec = random_assets(),risk_level=50):
+def markowitz_run(return_vec = random_assets(),risk_level=50,pdf=None):
     images = []
 
     plt.plot(return_vec.T, alpha=.4);
@@ -148,7 +169,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     plt.ylabel('returns');
     plt.title('Daily Performance of Simulated Stocks');
 
-    images.append(plt_to_img(plt))
+    images.append(plt_to_img(plt,pdf))
 
     # These return series can be used to create a wide range of portfolios. We will produce random weight vectors and plot those portfolios. As we want all our capital to be invested, the weights will have to sum to one.
 
@@ -232,7 +253,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     plt.xlabel('std')
     plt.ylabel('mean')
     plt.title('Mean and standard deviation of returns of randomly generated portfolios');
-    #images.append(plt_to_img(plt))
+    #images.append(plt_to_img(plt,pdf))
 
 
     # ## Markowitz optimization and the Efficient Frontier
@@ -269,7 +290,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     plt.plot(risks, returns, 'y-o');
     risk,ret = [risks[risk_level]],[returns[risk_level]]
     plt.plot(risk,ret,'o',color='b',zorder=2)
-    images.append(plt_to_img(plt))
+    images.append(plt_to_img(plt,pdf))
 
 
     # In yellow you can see the optimal portfolios for each of the desired returns (i.e. the `mus`). In addition, we get the weights for one optimal portfolio:
@@ -286,7 +307,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
 
 
-def backtest(risk_level=50):
+def backtest(risk_level=50,pdf=None):
     environ = os.environ
     environ['QUANDL_API_KEY'] = "GL6R8mpKFfHJWvpmkNxV"
 
@@ -439,9 +460,9 @@ def backtest(risk_level=50):
     print("Ran Algorithm!")
     #print(results)
     #print("Plotted portfolio!")
-    stock_plot = plt_to_img(plt)
+    stock_plot = plt_to_img(plt,pdf)
     weights = results.portfolio_value.plot()
-    weight_plot = plt_to_img(plt)
+    weight_plot = plt_to_img(plt,pdf)
     weights = "<h1>Weights</h1>"
     for w in return_weights:
         weights = weights + "<br>"
