@@ -7,6 +7,7 @@ import base64
 #import matplotlib.pyplot as plt
 from scipy.stats import norm
 
+from urllib.request import urlopen
 
 #markowitz requirements.
 import numpy as np
@@ -44,6 +45,11 @@ from zipline.api import (
 def plt_to_img(plt):
     importlib.reload(matplotlib)
     s = io.BytesIO()
+    #filename = "https://rb.gy/fp0ydm"
+    #f = urlopen(filename)
+    # read the image file in a numpy array
+    #a = plt.imread(f)
+    #plt.imshow(a,extent=(1,1,1,1))
     plt.savefig(s, format='png', dpi=200,facecolor="white")
     plt.clf()
     plt.cla()
