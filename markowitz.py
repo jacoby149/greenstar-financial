@@ -12,6 +12,8 @@ from scipy.stats import norm
 import numpy as np
 from numpy import array
 
+import importlib
+import matplotlib
 import matplotlib.pyplot as plt
 import cvxopt as opt
 from cvxopt import blas, solvers
@@ -40,8 +42,11 @@ from zipline.api import (
 
 
 def plt_to_img(plt):
+    importlib.reload(matplotlib)
     s = io.BytesIO()
-    plt.savefig(s, format='png', dpi=400,facecolor="white")
+    plt.savefig(s, format='png', dpi=200,facecolor="white")
+    plt.clf()
+    plt.cla()
     plt.close()
     s = base64.b64encode(s.getvalue()).decode("utf-8").replace("\n", "")
     return "data:image/png;base64,%s" % s

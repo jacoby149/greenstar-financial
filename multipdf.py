@@ -15,9 +15,7 @@ def readb64(uri):
    img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
    return img
 
-def make_pdf(images,title):
-    importlib.reload(matplotlib)
-    
+def make_pdf(images,title):    
     with PdfPages("pdfs/"+title + ".pdf") as pdf:
         for image in images:
 
@@ -31,7 +29,7 @@ def make_pdf(images,title):
             plt.imshow(image[...,::-1],interpolation="nearest",aspect='auto')
             #img.set_cmap('hot')
             plt.axis('off')
-            pdf.savefig(dpi=400,facecolor="white")
+            pdf.savefig(dpi=250,facecolor="white")
             plt.close()
 
         d = pdf.infodict()
@@ -39,3 +37,4 @@ def make_pdf(images,title):
         d['Author'] = 'Jouni K. Sepp\xe4nen'
         d['Subject'] = 'How to create a multipage pdf file and set its metadata'
         d['Keywords'] = 'PdfPages multipage keywords author title subject'
+    importlib.reload(matplotlib)
