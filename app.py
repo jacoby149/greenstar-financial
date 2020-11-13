@@ -14,7 +14,6 @@ import sys
 # Initialize the Flask application
 app = Flask(__name__)
 cors = CORS(app)
-pdf = None
 
 # Do machine Learning Autograding.
 @app.route("/", methods=["GET", "POST"])
@@ -23,13 +22,11 @@ def load_home():
 
 @app.route("/mark", methods=["GET", "POST"])
 def mark():
-    global pdf
-    pdf = markowitz.init_pdf()
     risk = request.form.get('risk')
     print(risk)
     risk=int(risk)
     print("RISK_LEVEL :",risk)
-    images,portfolios,returns,risks = markowitz.markowitz_run(risk_level=risk,pdf=pdf)
+    images,portfolios,returns,risks = markowitz.markowitz_run(risk_level=risk)
     vals=dict()
     vals["images"]= "".join(images)
     vals["portfolios"]= str(portfolios)
@@ -42,12 +39,10 @@ def mark():
 
 @app.route("/norm", methods=["GET", "POST"])
 def norm():
-    global pdf
     mu,std = float(request.form.get('mu')),float(request.form.get('std'))
     print("MU,STD:",mu,std)
     vals = dict() 
-    vals["normal"]= str(markowitz.normal(mu,std,pdf=pdf))
-    pdf.close()
+    vals["normal"]= str(markowitz.normal(mu,std))
     sys.stdout.flush()
     return vals
 
