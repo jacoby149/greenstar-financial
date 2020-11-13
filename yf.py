@@ -1,5 +1,6 @@
 import yfinance as yf
 
+# ^RUT, ^RUJ, ^SGX, ^SVX, ^SP400, ^SPOT,^NAREIT
 msft = yf.Ticker("MSFT")
 
 # get stock info
