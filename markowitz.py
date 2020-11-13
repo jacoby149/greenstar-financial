@@ -40,12 +40,11 @@ from zipline.api import (
 
 
 def plt_to_img(plt):
-
     s = io.BytesIO()
-    plt.savefig(s, format='png', bbox_inches="tight")
+    plt.savefig(s, format='png', dpi=400,facecolor="white")
     plt.close()
     s = base64.b64encode(s.getvalue()).decode("utf-8").replace("\n", "")
-    return '<img align="left" src="data:image/png;base64,%s">' % s
+    return "data:image/png;base64,%s" % s
 
 def calc_norm(mu,sigma,z):
     d = .001

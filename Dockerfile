@@ -55,10 +55,12 @@ RUN pip install latex
 RUN pip install html5lib
 RUN pip install BeautifulSoup4
 RUN pip install pandas==0.23
+RUN pip install fpdf
+RUN pip install opencv-python
 COPY . /app
 
 #RUN python libs.py
-CMD pip freeze > requirements.txt | python yf.py
+CMD pip freeze > requirements.txt | python app.py
 #CMD python multipdf.py
 #CMD python yf.py
 
