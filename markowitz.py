@@ -457,7 +457,7 @@ def backtest(risk_level=50):
         weights = weights + "<br>"
         for i in range(len(tickers)):
             weights = weights + " || {} : {}".format(tickers[i],w[i])
-    return weights,stock_plot + weight_plot  #arr[arr > 255] = x
+    return weights,[stock_plot, weight_plot]  #arr[arr > 255] = x
 
     # As you can see, the performance here is quite good, even through the 2008 financial crisis. This is most likey due to our universe selection and shouldn't always be expected. Increasing the number of stocks in the universe might reduce the volatility as well. Please let us know in the comments section if you had any success with this strategy and how many stocks you used.
 

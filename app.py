@@ -62,9 +62,15 @@ def norm():
 
 @app.route("/back", methods=["GET", "POST"])
 def back():
+    global images
+    images = []
     risk_level = int(request.form.get('risk'))
     vals=dict() 
-    vals["weights"],vals["backtest"] = markowitz.backtest(risk_level=risk_level)
+    vals["weights"],images = markowitz.backtest(risk_level=risk_level)
+    html_images = [img_form.format(i) for i in images]
+    multipdf.make_pdf(images,"back")
+    vals["backtest"]= "".join(html_images)
+
     print("RISK :",risk_level)
     sys.stdout.flush()
     return vals
