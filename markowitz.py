@@ -88,6 +88,23 @@ def normal(mu=110,sigma=7.10):
 
     return plt_to_img(plt)
 
+#gets the pbar matrix of daily data, (mean profit?)
+def get_pbar(returns):
+    return opt.matrix(np.mean(returns, axis=1))
+
+#gets the covariance matrix S
+def get_s(returns):
+    return opt.matrix(np.cov(returns))
+
+#gets the returns of a portfolio given daily data and portfolio
+def get_ret(returns,portfolio):
+    pbar = get_pbar(returns)
+    return blas.dot(pbar, portfolio)
+
+#gets the risk of a portfolio given daily data and portfolio
+def get_risk(returns,portfolio):
+    S = get_s(returns)
+    return np.sqrt(blas.dot(portfolio, S*portfolio))
 
 def optimal_portfolio(returns):
     n = len(returns)
@@ -110,8 +127,8 @@ def optimal_portfolio(returns):
     portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] 
                 for mu in mus]
     ## CALCULATE RISKS AND RETURNS FOR FRONTIER
-    returns = [blas.dot(pbar, x) for x in portfolios]
-    risks = [np.sqrt(blas.dot(x, S*x)) for x in portfolios]
+    returns = [blas.dot(pbar, p) for p in portfolios]
+    risks = [np.sqrt(blas.dot(p, S*p)) for p in portfolios]
     ## CALCULATE THE 2ND DEGREE POLYNOMIAL OF THE FRONTIER CURVE
     m1 = np.polyfit(returns, risks, 2)
     x1 = np.sqrt(m1[2] / m1[0])
@@ -156,7 +173,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     plt.plot(return_vec.T, alpha=.4);
     plt.xlabel('time')
     plt.ylabel('returns');
-    plt.title('Daily Performance of Simulated Stocks');
+    plt.title('Daily Performance Of Chosen Assets');
 
     images.append(plt_to_img(plt))
 
@@ -238,10 +255,10 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # In[7]:
 
 
-    plt.plot(stds, means, 'o', markersize=5)
-    plt.xlabel('std')
-    plt.ylabel('mean')
-    plt.title('Mean and standard deviation of returns of randomly generated portfolios');
+    #plt.plot(stds, means, 'o', markersize=5)
+    #plt.xlabel('std')
+    #plt.ylabel('mean')
+    #plt.title('Expected Return and Risk Of Portfolios');
     #images.append(plt_to_img(plt))
 
 
@@ -273,12 +290,13 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     returns.reverse()
     risks.reverse()
 
-    plt.plot(stds, means, 'o')
+    plt.plot(stds, means, 'o',color="grey")
     plt.ylabel('mean')
     plt.xlabel('std')
     plt.plot(risks, returns, 'y-o');
     risk,ret = [risks[risk_level]],[returns[risk_level]]
-    plt.plot(risk,ret,'o',color='b',zorder=2)
+    plt.plot(risk,ret,'o',color='gold',zorder=2)
+    plt.title('Expected Return and Risk Of Portfolios');
     images.append(plt_to_img(plt))
 
 
