@@ -14,9 +14,15 @@ import numpy as np
 from numpy import array
 
 import importlib
+
+#matplotlib necessary imports
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.ticker as mtick
+from matplotlib.patches import Patch
+from matplotlib.lines import Line2D
+
+
 import cvxopt as opt
 from cvxopt import blas, solvers
 solvers.options['show_progress'] = False
@@ -308,6 +314,14 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     ax = fig.add_subplot(1,1,1)
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+
+    #custom legend
+    legend_elements = [Line2D([0], [0], color='b', lw=4, label='Line'),
+                   Line2D([0], [0], marker='o', color='w', label='Scatter',
+                          markerfacecolor='g', markersize=15),
+                   Patch(facecolor='orange', edgecolor='r',
+                         label='Color Patch')]
+    ax.legend(handles=legend_elements)#, loc='center')
 
     #plot the random portfolios
     plt.plot([r*s for r in stds], [r*s for r in means], 'o',color="wheat",markersize=ms)
