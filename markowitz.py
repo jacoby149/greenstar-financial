@@ -102,6 +102,9 @@ def normal(mu=110,sigma=7.10):
     ax.set_ylabel('Probability Distribution')
 
     ax.set_yticklabels([])
+    plt.xticks(np.arange(min(x), max(x)+1, sigma))
+
+
     ax.set_title('Bell Curve Of Returns')
 
     return plt_to_img(plt)
