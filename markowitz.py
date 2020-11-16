@@ -201,9 +201,9 @@ def portfolio_performance(daily_data,weights=None):
 def markowitz_run(daily_data = random_assets(),risk_level=50):
     images = []
 
-    plt.plot(daily_data.T, alpha=.4);
-    plt.xlabel('time')
-    plt.ylabel('returns');
+    plt.plot(daily_data.T*100, alpha=.4);
+    plt.xlabel('Time (Date)')
+    plt.ylabel('Price (%)')
     plt.title('Daily Performance Of Chosen Assets');
 
     images.append(plt_to_img(plt))
