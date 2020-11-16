@@ -40,6 +40,8 @@ from zipline.api import (
     symbols,
     )
 
+import yfinance as yf
+
 
 
 def plt_to_img(plt):
@@ -363,12 +365,17 @@ def backtest(risk_level=50):
                                 data_frequency='daily')
 
     tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
-    data = get_pricing(
-        tickers,
-        start_date='2005-01-01',
-        end_date='2015-01-01'
-    )
 
+    start_date='2005-01-01'
+    end_date='2015-01-01'
+    data = yf.download(" ".join(tickers), start=start_date, end=end_date)['Adj Close']
+
+
+    #data_old = get_pricing(
+    #    tickers,
+    #    start_date='2005-01-01',
+    #    end_date='2015-01-01'
+    #)
 
     # In[ ]:
 
