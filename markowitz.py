@@ -95,10 +95,10 @@ def optimal_portfolio(daily_data):
     n = len(daily_data)
     daily_data = np.asmatrix(daily_data)
     
-    N = 200
+    N = 250#selecting an appropriate number
     power = 5.0
     #the first 20 porfolios are
-    mus = [10**(power * t/N - 1.0) for t in range(0,N//2)]
+    mus = [10**(power * t/N - 1.0) for t in range(0,100)]
     
     # Convert to cvxopt matrices
     S = opt.matrix(np.cov(daily_data))
