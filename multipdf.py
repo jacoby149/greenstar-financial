@@ -29,7 +29,7 @@ def make_pdf(images,title):
             plt.imshow(image[...,::-1],interpolation="nearest",aspect='auto')
             #img.set_cmap('hot')
             plt.axis('off')
-            pdf.savefig(dpi=250,facecolor="white")
+            pdf.savefig(dpi=400,facecolor="white")
             plt.close()
 
         d = pdf.infodict()

@@ -27,9 +27,11 @@
                     <input type="range" min="0" max="99" value="25" class="slider" id="risk">
                 </div>
             </td>
-            <td id="std">Sigma : .2 |</td>
-            <td id="mean">| Mu : 1.05</td>
-            <td id="weight"> Sim. Port. : [.25,.25,.25,.25]
+            <td id="std">Std. : 20%</td>
+            <td> | </td>
+            <td id="mean">Return : 105%</td>
+            <td> | </td>
+            <td id="weight"> Portfolio : FB : 25% , NT : 25% , NVD : 25% , LSA : 25%
         </tr>
     </table>
 
@@ -50,9 +52,9 @@
         mean = means[risk]
         portfolio = portfolios[risk]
         console.log(portfolios)
-        document.getElementById("std").innerHTML = "SIGMA : " + Math.round(std * 100) / 100
-        document.getElementById("mean").innerHTML = "MU :" + Math.round(mean * 100) / 100
-        document.getElementById("weight").innerHTML = portfolio
+        document.getElementById("std").innerHTML = "Std. : " + Math.round(std * 10000) / 100 + "%"
+        document.getElementById("mean").innerHTML = "Return :" + Math.round(mean * 10000) / 100 + "%"
+        document.getElementById("weight").innerHTML = "Portfolio : " + portfolio + "%"
     }
 
     function setRisk() {
@@ -71,7 +73,7 @@
 
     function norm() {
         update_vals()
-        postOnClick("/norm", load_norm, { "std": std, "mu": mean })
+        postOnClick("/norm", load_norm, { "std": std * 100, "mu": mean * 100 })
 
     }
 
