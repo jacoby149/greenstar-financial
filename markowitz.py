@@ -90,34 +90,19 @@ def normal(mu=110,sigma=7.10):
 
     return plt_to_img(plt)
 
-#gets the pbar matrix of daily data, (mean profit?)
-def get_pbar(returns):
-    return opt.matrix(np.mean(returns, axis=1))
 
-#gets the covariance matrix S
-def get_s(returns):
-    return opt.matrix(np.cov(returns))
-
-#gets the returns of a portfolio given daily data and portfolio
-def get_ret(returns,portfolio):
-    pbar = get_pbar(returns)
-    return blas.dot(pbar, portfolio)
-
-#gets the risk of a portfolio given daily data and portfolio
-def get_risk(returns,portfolio):
-    S = get_s(returns)
-    return np.sqrt(blas.dot(portfolio, S*portfolio))
-
-def optimal_portfolio(returns):
-    n = len(returns)
-    returns = np.asmatrix(returns)
+def optimal_portfolio(daily_data):
+    n = len(daily_data)
+    daily_data = np.asmatrix(daily_data)
     
-    N = 100
-    mus = [10**(5.0 * t/N - 1.0) for t in range(N)]
+    N = 200
+    power = 5.0
+    #the first 20 porfolios are
+    mus = [10**(power * t/N - 1.0) for t in range(0,N//2)]
     
     # Convert to cvxopt matrices
-    S = opt.matrix(np.cov(returns))
-    pbar = opt.matrix(np.mean(returns, axis=1))
+    S = opt.matrix(np.cov(daily_data))
+    pbar = opt.matrix(np.mean(daily_data, axis=1))
     
     # Create constraint matrices
     G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
@@ -128,15 +113,19 @@ def optimal_portfolio(returns):
     # Calculate efficient frontier weights using quadratic programming
     portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] 
                 for mu in mus]
-    ## CALCULATE RISKS AND RETURNS FOR FRONTIER
+    ## CALCULATE RISKS AND RETURNS FOR FRONTIER using linear algebra solving
     returns = [blas.dot(pbar, p) for p in portfolios]
     risks = [np.sqrt(blas.dot(p, S*p)) for p in portfolios]
     ## CALCULATE THE 2ND DEGREE POLYNOMIAL OF THE FRONTIER CURVE
-    m1 = np.polyfit(returns, risks, 2)
-    x1 = np.sqrt(m1[2] / m1[0])
+    
+    
+    #Calculates "optimal" portfolio, but better to let customer choose
+    #m1 = np.polyfit(returns, risks, 2)
+    #x1 = np.sqrt(m1[2] / m1[0])
     # CALCULATE THE OPTIMAL PORTFOLIO
     #wt = solvers.qp(opt.matrix(x1 * S), -pbar, G, h, A, b)['x']
     #return np.asarray(wt), returns, risks
+    
     return portfolios,returns,risks
 
 
@@ -151,12 +140,11 @@ def random_assets(n_assets=4,n_obs=1000, g=1.00026):
     # Assume that we have 4 assets, each with a return series of length 1000. We can use `numpy.random.randn` to sample returns from a normal distribution.
     # In[2]:
 
-    return_vec = np.random.randn(n_assets, n_obs)/4 + 1
-    return_vec[return_vec < 0] = 0
+    daily_data = np.random.randn(n_assets, n_obs)/4 + 1
+    daily_data[daily_data < 0] = 0
     gain_vector = [g**n for n in range(n_obs)]
-    return_vec = return_vec*gain_vector
-    #print(return_vec)
-    return return_vec
+    daily_data = daily_data*gain_vector
+    return daily_data
 
 def neat(portfolios):
     def n(p):
@@ -167,12 +155,37 @@ def neat(portfolios):
     portfolios = [n(p) for p in portfolios]
     return portfolios
 
+def rand_weights(n):
+    ''' Produces n random weights that sum to 1 '''
+    k = np.random.rand(n)
+    return k / sum(k)
+
+
+def portfolio_performance(daily_data,weights=None):
+    ''' 
+    Returns the mean and standard deviation of returns for a random portfolio
+    '''
+    if (weights == None): weights = rand_weights(daily_data.shape[0])
+    p = np.asmatrix(np.mean(daily_data, axis=1))
+    w = np.asmatrix(weights)
+    C = np.asmatrix(np.cov(daily_data))
+        
+    #calculates earning and 
+    mu = w * p.T
+    sigma = np.sqrt(w * C * w.T)
+    
+    # This recursion reduces outliers to keep plots pretty
+    #re draws a random portfolio
+    #if sigma > 2:
+    #    return random_portfolio(returns)
+    return mu, sigma
+
 
 #risk level, a number from 1 to 100
-def markowitz_run(return_vec = random_assets(),risk_level=50):
+def markowitz_run(daily_data = random_assets(),risk_level=50):
     images = []
 
-    plt.plot(return_vec.T, alpha=.4);
+    plt.plot(daily_data.T, alpha=.4);
     plt.xlabel('time')
     plt.ylabel('returns');
     plt.title('Daily Performance Of Chosen Assets');
@@ -184,35 +197,12 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     # In[4]:
 
 
-    def rand_weights(n):
-        ''' Produces n random weights that sum to 1 '''
-        k = np.random.rand(n)
-        return k / sum(k)
-
     # Next, let's evaluate how these random portfolios would perform by calculating the mean returns and the volatility (here we are using standard deviation). You can see that there is
     # a filter so that we only plot portfolios with a standard deviation of < 2 for better illustration.
 
     # In[5]:
 
 
-    def random_portfolio(returns,weights=None):
-        ''' 
-        Returns the mean and standard deviation of returns for a random portfolio
-        '''
-        if (weights == None): weights = rand_weights(returns.shape[0])
-        p = np.asmatrix(np.mean(returns, axis=1))
-        w = np.asmatrix(weights)
-        C = np.asmatrix(np.cov(returns))
-            
-        #calculates earning and 
-        mu = w * p.T
-        sigma = np.sqrt(w * C * w.T)
-        
-        # This recursion reduces outliers to keep plots pretty
-        #re draws a random portfolio
-        #if sigma > 2:
-        #    return random_portfolio(returns)
-        return mu, sigma
 
 
     # We calculate the return using
@@ -242,10 +232,10 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
 
     # In[6]:
 
-
+   #leaving weights blank in port. perf. makes it a random portfolio. 
     n_portfolios = 500
     means, stds = np.column_stack([
-        random_portfolio(return_vec) 
+        portfolio_performance(daily_data) 
         for _ in range(n_portfolios)
     ])
 
@@ -285,21 +275,31 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
 
 
     
-    portfolios, returns, risks = optimal_portfolio(return_vec)
+    portfolios, returns, risks = optimal_portfolio(daily_data)
     #2d list instead of numpy array
 
     portfolios.reverse()
     returns.reverse()
     risks.reverse()
 
-    plt.plot(stds, means, 'o',color="grey")
+    plt.plot(stds, means, 'o',color="wheat")
     plt.ylabel('mean')
     plt.xlabel('std')
     plt.plot(risks, returns, 'y-o');
+    
+    
     risk,ret = [risks[risk_level]],[returns[risk_level]]
     plt.plot(risk,ret,'o',color='red',zorder=2)
+
+    weights = [.3,.1,.2,.4,]
+    ret,risk = portfolio_performance(daily_data,weights=weights)
+    plt.plot(risk,ret,'o',color='blue',zorder=3)
+
     plt.title('Expected Return and Risk Of Portfolios');
     images.append(plt_to_img(plt))
+
+
+
 
 
     # In yellow you can see the optimal portfolios for each of the desired returns (i.e. the `mus`). In addition, we get the weights for one optimal portfolio:
