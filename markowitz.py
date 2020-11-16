@@ -297,7 +297,7 @@ def markowitz_run(return_vec = random_assets(),risk_level=50):
     plt.xlabel('std')
     plt.plot(risks, returns, 'y-o');
     risk,ret = [risks[risk_level]],[returns[risk_level]]
-    plt.plot(risk,ret,'o',color='gold',zorder=2)
+    plt.plot(risk,ret,'o',color='red',zorder=2)
     plt.title('Expected Return and Risk Of Portfolios');
     images.append(plt_to_img(plt))
 
