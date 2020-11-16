@@ -53,7 +53,7 @@ def plt_to_img(plt):
     # read the image file in a numpy array
     #a = plt.imread(f)
     #plt.imshow(a,extent=(1,1,1,1))
-    plt.savefig(s, format='png', dpi=400,facecolor="white",bbox_inches='tight')
+    plt.savefig(s, format='png', dpi=100,facecolor="white",bbox_inches='tight')
     plt.clf()
     plt.cla()
     plt.close()
@@ -74,7 +74,17 @@ def normal(mu=110,sigma=7.10):
 
     # build the plot
     fig, ax = plt.subplots(figsize=(9,6))
-    plt.style.use('fivethirtyeight')
+
+    #adjust the graph so the x axis is zero
+    ax.spines['bottom'].set_position('zero')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.spines['left'].set_smart_bounds(True)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+
+
+    #plt.style.use('fivethirtyeight')
 
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
@@ -93,7 +103,6 @@ def normal(mu=110,sigma=7.10):
 
     ax.set_yticklabels([])
     ax.set_title('Bell Curve Of Returns')
-    ax.spines['bottom'].set_position('zero')
 
     return plt_to_img(plt)
 
@@ -290,7 +299,7 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     risks.reverse()
 
     s = 100 #percentage plot rather than decimal plot
-
+    ms = 2
     #format the figure axes
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
@@ -298,21 +307,21 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     #plot the random portfolios
-    plt.plot([r*s for r in stds], [r*s for r in means], 'o',color="wheat")
+    plt.plot([r*s for r in stds], [r*s for r in means], 'o',color="wheat",markersize=ms)
     
     #plot the optimal portfolios
     plt.ylabel('Return (Percentage)')
     plt.xlabel('Risk (Standard Deviation)')
-    plt.plot([r*s for r in risks], [r*s for r in returns], 'y-o')
+    plt.plot([r*s for r in risks], [r*s for r in returns], 'y-o',markersize=ms)
     
     #plot the slider selected portfolio
     risk,ret = [risks[risk_level]*s],[returns[risk_level]*s]
-    plt.plot(risk,ret,'o',color='red',zorder=2)
+    plt.plot(risk,ret,'o',color='red',zorder=2,markersize=ms)
 
     #plot the customer original portfolio
     weights = [.3,.1,.2,.4,]
     ret,risk = portfolio_performance(daily_data,weights=weights)
-    plt.plot(risk*s,ret*s,'o',color='blue',zorder=3)
+    plt.plot(risk*s,ret*s,'o',color='blue',zorder=3,markersize=ms)
 
     plt.title('Expected Return and Risk Of Portfolios')
     images.append(plt_to_img(plt))
