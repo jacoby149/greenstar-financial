@@ -56,6 +56,7 @@ RUN pip install html5lib
 RUN pip install BeautifulSoup4
 RUN pip install pandas==0.23
 RUN pip install fpdf
+RUN pip install latex
 RUN pip install opencv-python
 COPY . /app
 

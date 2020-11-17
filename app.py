@@ -75,6 +75,11 @@ def back():
     sys.stdout.flush()
     return vals
 
+import report
+@app.route("/report", methods=["GET", "POST"])
+def make_report():
+    report.make_report()
+    return "pdf made"
 
 
 # start flask
