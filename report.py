@@ -9,3 +9,4 @@ def make_report():
 
     # this builds a pdf-file inside a temporary directory
     pdf = build_pdf(min_latex)
+    pdf.save_to('pdfs/ex1.pdf')
