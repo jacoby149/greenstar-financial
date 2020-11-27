@@ -120,17 +120,29 @@ def pie():
     import matplotlib.pyplot as plt
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
-    labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+    labels = 'FB', 'MSFT', 'AMZN', 'GOOG'
     sizes = [15, 30, 45, 10]
     explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
 
     fig1, ax1 = plt.subplots()
-    #ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
+    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt)
 
+def line():   
+    Data = {'Year': [2020,2021,2022,2023,2024,2025,2026],
+            'Return': [100,105,111,118,127,137,148]
+        }
+    
+    df = pd.DataFrame(Data,columns=['Year','Return'])
+    
+    plt.plot(df['Year'], df['Return'], color='black', marker='o')
+    plt.title('Expected Returns For 7 Years', fontsize=14)
+    plt.xlabel('Year', fontsize=14)
+    plt.ylabel('Return', fontsize=14)
+    plt.grid(True)
+    return plt_to_img(plt)
 
 
 def optimal_portfolio(daily_data):
@@ -359,6 +371,7 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
 
     plt.title('Expected Return and Risk Of Portfolios')
     images.append(plt_to_img(plt))
+    images.append(pie())
 
 
 

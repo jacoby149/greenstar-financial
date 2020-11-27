@@ -36,6 +36,12 @@ def mark():
     vals=dict()
     #multipdf.make_pdf(images,"graphs")
     html_images = [img_form.format(i) for i in images]
+
+    line = markowitz.line()
+    html_img = img_form.format(line)
+    html_images.append(html_img)
+
+
     vals["images"]= "".join(html_images)
     vals["portfolios"]= str(portfolios)
     vals["returns"]= str(returns)
@@ -51,9 +57,11 @@ def norm():
     mu,std = float(request.form.get('mu')),float(request.form.get('std'))
     print("MU,STD:",mu,std)
     vals = dict() 
-    norm = markowitz.normal(mu,std)
+    
+    norm = markowitz.normal(mu,std)    
     html_img = img_form.format(norm)
-    images.append(norm)
+    #images.append(norm)
+
     multipdf.make_pdf(images,"graphs")
     vals["normal"]= str(html_img)
     sys.stdout.flush()
