@@ -17,6 +17,12 @@
     <table>
         <tr>
             <td>
+                <button onclick="showhide()">Show/Hide Form</button>
+            </td>
+            <td>
+                <input type="submit">
+            </td>
+            <td>
                 <button onclick="basic()">Load Graphs</button>
             </td>
             <td>
@@ -34,7 +40,22 @@
             <td id="weight"> Portfolio : FB : 25% , NT : 25% , NVD : 25% , LSA : 25%
         </tr>
     </table>
-    <div class="captable">
+
+    <div class="captable" id="captable">
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Birthday</th>
+                <th>Term (yrs.)</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="name" size="13"></input></td>
+                <td><input type="text" name="birthday" size="8"></input></td>
+                <td><input type="text" name="time" size="4"></input></td>
+            </tr>
+        </table>
+
+
         <table>
             <tr>
                 <th>Lg. Cap G.</th>
@@ -46,16 +67,18 @@
                 <th>Em. Mkt. Stock</th>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
             </tr>
         </table>
-        <br>
+
+
+
         <table>
             <tr>
                 <th>Int. Gov. Bonds</th>
@@ -67,16 +90,16 @@
                 <th>Em. Mkt. Debt</th>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="9"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="9"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
             </tr>
         </table>
-        <br>
+
         <table>
             <tr>
                 <th>Real Estate</th>
@@ -85,15 +108,16 @@
                 <th>Cash</th>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="name" size="8"></input></td>
             </tr>
         </table>
-
-
     </div>
+
+
+
     <div id="graphs"></div>
     <div id="norm"></div>
     <div id="backtest"></div>
@@ -104,6 +128,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
+    function showhide() {
+        cap = document.getElementById("captable")
+        if (cap.style.display == "none") cap.style.display = "block";
+        else cap.style.display = "none";
+    }
 
     function update_vals() {
         std = stds[risk]
@@ -196,8 +225,16 @@
         padding: 10px;
     }
 
+    .captable {
+        width: 60%;
+    }
+
     .captable table {
         border: 1px solid black;
+        float: left;
+        margin-bottom: 10px;
+        margin-right: 10px;
+
     }
 
     .captable td {
