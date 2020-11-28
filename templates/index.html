@@ -14,117 +14,133 @@
         </tr>
     </table>
 
-    <table>
-        <tr>
-            <td>
-                <button onclick="showhide()">Show/Hide Form</button>
-            </td>
-            <td>
-                <input type="submit">
-            </td>
-            <td>
-                <button onclick="basic()">Load Graphs</button>
-            </td>
-            <td>
-                <button onclick="backtest()"> Load Backtest</button>
-            </td>
-            <td>
-                <div class="slidecontainer">
-                    <input type="range" min="0" max="99" value="25" class="slider" id="risk">
-                </div>
-            </td>
-            <td id="std">Std. : 20%</td>
-            <td> | </td>
-            <td id="mean">Return : 105%</td>
-            <td> | </td>
-            <td id="weight"> Portfolio : FB : 25% , NT : 25% , NVD : 25% , LSA : 25%
-        </tr>
-    </table>
-
-    <form class="captable" id="captable">
-        <p>
-            Add the dollar amounts invested within the current portfolio. <br>
-            To add an asset class in the prescribed portfolio that is not in the current one, input 0 invested rather
-            than
-            leaving it blank.<br>
-            To remove an asset class in the prescribed portfolio that is in the current one, add an 'X' at the end<br>
-            Otherwise, leave the field blank.<br>
-        </p>
+    <div class="controltable">
         <table>
             <tr>
-                <th>Name</th>
-                <th>Birthday</th>
-                <th>Term (yrs.)</th>
-            </tr>
-            <tr>
-                <td><input type="text" name="name" placeholder="John Smith" size="13"></input></td>
-                <td><input type="text" name="birthday" placeholder="12/28/1960" size="8"></input></td>
-                <td><input type="text" name="time" placeholder="8" size="4"></input></td>
-            </tr>
-        </table>
-
-
-        <table>
-            <tr>
-                <th>Lg. Cap G.</th>
-                <th>Lg. Cap V.</th>
-                <th>Sm. Cap G.</th>
-                <th>Sm. Cap V</th>
-                <th>Med. Cap </th>
-                <th>IN. Stock</th>
-                <th>Em. Mkt. Stock</th>
-            </tr>
-            <tr>
-
-                <td><input type="text" name="LargeG" size="8" placeholder="32456.12X"></input></td>
-                <td><input type="text" name="LargeV" size="8" placeholder="32456.12"></input></td>
-                <td><input type="text" name="SmallG" size="8" placeholder="32456.12X"></input></td>
-                <td><input type="text" name="SmallV" size="8" placeholder="32456.12X"></input></td>
-                <td><input type="text" name="Med" size="8" placeholder=""></input></td>
-                <td><input type="text" name="Inter" size="8" placeholder="0"></input></td>
-                <td><input type="text" name="Emerging" size="8" placeholder="32456.12"></input></td>
-            </tr>
-        </table>
-
-
-
-        <table>
-            <tr>
-                <th>Int. Gov. Bonds</th>
-                <th>Long Gov Bonds</th>
-                <th>Corp. Bonds</th>
-                <th>High Yield Bonds</th>
-                <th>Muni. Bonds</th>
-                <th>Foreign Bonds</th>
-                <th>Em. Mkt. Debt</th>
-            </tr>
-            <tr>
-                <td><input type="text" name="Inter" size="8" placeholder=""></input></td>
-                <td><input type="text" name="Long" size="9" placeholder=""></input></td>
-                <td><input type="text" name="Corp" size="8" placeholder=""></input></td>
-                <td><input type="text" name="Highyield" size="9" placeholder="0"></input></td>
-                <td><input type="text" name="Muni" size="8" placeholder="32456.12"></input></td>
-                <td><input type="text" name="Foreignbonds" size="8" placeholder="32456.12"></input></td>
-                <td><input type="text" name="Debt" size="8" placeholder="32456.12"></input></td>
+                <td>
+                    <button onclick="showhide()">Show/Hide Form</button>
+                </td>
+                <td>
+                    <input type="submit" value="Generate Report">
+                </td>
+                <td>
+                    <button onclick="basic()">Load Graphs</button>
+                </td>
+                <td>
+                    <button onclick="backtest()"> Load Backtest</button>
+                </td>
             </tr>
         </table>
 
         <table>
             <tr>
-                <th>Real Estate</th>
-                <th>V.C.</th>
-                <th>Commodities</th>
-                <th>Cash</th>
-            </tr>
-            <tr>
-                <td><input type="text" name="Realestate" size="8" placeholder="32456.12"></input></td>
-                <td><input type="text" name="V.C." size="8" placeholder="32456.12"></input></td>
-                <td><input type="text" name="Commodities" size="8" placeholder="32456.12"></input></td>
-                <td><input type="text" name="Cash" size="8" placeholder="32456.12"></input></td>
+                <td>
+                    <div class="slidecontainer">
+                        <input type="range" min="0" max="99" value="25" class="slider" id="risk">
+                    </div>
+                </td>
+                <td id="std">Std. : 20%</td>
+                <td> | </td>
+                <td id="mean">Return : 105%</td>
+                <td> | </td>
             </tr>
         </table>
-    </form>
+        <table>
+            <tr>
+                <td>
+                <td id="weight"> Portfolio : FB : 25% , NT : 25% , NVD : 25% , LSA : 25%
+            </tr>
+        </table>
+    </div>
 
+
+    <div>
+        <form class="captable" id="captable">
+            <p>
+                Add the dollar amounts invested within the current portfolio. <br>
+                To add an asset class in the prescribed portfolio that is not in the current one, input 0 invested
+                rather
+                than
+                leaving it blank.<br>
+                To remove an asset class in the prescribed portfolio that is in the current one, add an 'X' at the
+                end<br>
+                Otherwise, leave the field blank.<br>
+            </p>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Birthday</th>
+                    <th>Term (yrs.)</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="name" placeholder="John Smith" size="13"></input></td>
+                    <td><input type="text" name="birthday" placeholder="12/28/1960" size="8"></input></td>
+                    <td><input type="text" name="time" placeholder="8" size="4"></input></td>
+                </tr>
+            </table>
+
+
+            <table>
+                <tr>
+                    <th>Lg. Cap G.</th>
+                    <th>Lg. Cap V.</th>
+                    <th>Sm. Cap G.</th>
+                    <th>Sm. Cap V</th>
+                    <th>Med. Cap </th>
+                    <th>IN. Stock</th>
+                    <th>Em. Mkt. Stock</th>
+                </tr>
+                <tr>
+
+                    <td><input type="text" name="LargeG" size="8" placeholder="32456.12X"></input></td>
+                    <td><input type="text" name="LargeV" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="SmallG" size="8" placeholder="32456.12X"></input></td>
+                    <td><input type="text" name="SmallV" size="8" placeholder="32456.12X"></input></td>
+                    <td><input type="text" name="Med" size="8" placeholder=""></input></td>
+                    <td><input type="text" name="Inter" size="8" placeholder="0"></input></td>
+                    <td><input type="text" name="Emerging" size="8" placeholder="32456.12"></input></td>
+                </tr>
+            </table>
+
+
+
+            <table>
+                <tr>
+                    <th>Int. Gov. Bonds</th>
+                    <th>Long Gov Bonds</th>
+                    <th>Corp. Bonds</th>
+                    <th>High Yield Bonds</th>
+                    <th>Muni. Bonds</th>
+                    <th>Foreign Bonds</th>
+                    <th>Em. Mkt. Debt</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="Inter" size="8" placeholder=""></input></td>
+                    <td><input type="text" name="Long" size="9" placeholder=""></input></td>
+                    <td><input type="text" name="Corp" size="8" placeholder=""></input></td>
+                    <td><input type="text" name="Highyield" size="9" placeholder="0"></input></td>
+                    <td><input type="text" name="Muni" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="Foreignbonds" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="Debt" size="8" placeholder="32456.12"></input></td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th>Real Estate</th>
+                    <th>V.C.</th>
+                    <th>Commodities</th>
+                    <th>Cash</th>
+                </tr>
+                <tr>
+                    <td><input type="text" name="Realestate" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="V.C." size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="Commodities" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="Cash" size="8" placeholder="32456.12"></input></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
 
     <div id="graphs"></div>
@@ -187,6 +203,25 @@
     .captable th {
         border: 1px solid black;
         font-size: 10pt;
+    }
+
+    .controltable {
+        width: 90%;
+    }
+
+    .controltable table {
+        float: left;
+        margin-bottom: 10px;
+        margin-right: 10px;
+    }
+
+    .controltable td {
+        /*border: 1px solid black;*/
+        vertical-align: top;
+    }
+
+    .slidecontainer {
+        margin-top: -10px;
     }
 </style>
 
