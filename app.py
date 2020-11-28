@@ -19,6 +19,9 @@ cors = CORS(app)
 images = []
 img_form = "<img src = '{}'>"
 
+form_params =                     ["name","birthday","time","LargeG","LargeV","SmallG","SmallV","Med","Inter","Emerging","InterBond","Long","Corp","Highyield","Muni","Foreignbonds","Debt","Muni","ForeignBonds","Debt","Realestate","V.C.","Commodities","Cash",]
+
+
 # Do machine Learning Autograding.
 @app.route("/", methods=["GET", "POST"])
 def load_home():
