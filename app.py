@@ -19,7 +19,30 @@ cors = CORS(app)
 images = []
 img_form = "<img src = '{}'>"
 
-form_params =                     ["name","birthday","time","LargeG","LargeV","SmallG","SmallV","Med","Inter","Emerging","InterBond","Long","Corp","Highyield","Muni","Foreignbonds","Debt","Muni","ForeignBonds","Debt","Realestate","V.C.","Commodities","Cash",]
+form_params = dict()
+#stock_symbols
+form_params["LargeG"] = "FSPGX"
+form_params["LargeV"] = "^SVX"
+form_params["SmallG"] = "^RUT"
+form_params["SmallV"] = "^SVX"
+form_params["Med"] = "^SP400"
+form_params["Inter"] = "VTIAX"
+form_params["Emerging"] = "VEMAX"
+form_params["InterBond"] = "GVI"
+form_params["Long"] = "ILTB"
+form_params["Corp"] = "^SPBDACPT"
+form_params["Highyield"] = "HYG"
+form_params["Muni"] = "MUB"
+form_params["Foreignbonds"] = "BNDX"
+form_params["Debt"] = "JEDAX"
+form_params["Realestate"] = "^DJUSRE"
+form_params["V.C."] = "^AMZX"
+form_params["Commodities"] = "^DJCI"
+form_params["Cash"] = "BIL"
+#clientinfo
+form_params["name"] = "John Smith"
+form_params["birthday"] = "12/28/1960"
+form_params["time"] = "7"
 
 
 # Do machine Learning Autograding.
