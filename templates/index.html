@@ -41,7 +41,15 @@
         </tr>
     </table>
 
-    <div class="captable" id="captable">
+    <form class="captable" id="captable">
+        <p>
+            Add the dollar amounts invested within the current portfolio. <br>
+            To add an asset class in the prescribed portfolio that is not in the current one, input 0 invested rather
+            than
+            leaving it blank.<br>
+            To remove an asset class in the prescribed portfolio that is in the current one, add an 'X' at the end<br>
+            Otherwise, leave the field blank.<br>
+        </p>
         <table>
             <tr>
                 <th>Name</th>
@@ -49,9 +57,9 @@
                 <th>Term (yrs.)</th>
             </tr>
             <tr>
-                <td><input type="text" name="name" size="13"></input></td>
-                <td><input type="text" name="birthday" size="8"></input></td>
-                <td><input type="text" name="time" size="4"></input></td>
+                <td><input type="text" name="name" placeholder="John Smith" size="13"></input></td>
+                <td><input type="text" name="birthday" placeholder="12/28/1960" size="8"></input></td>
+                <td><input type="text" name="time" placeholder="8" size="4"></input></td>
             </tr>
         </table>
 
@@ -67,13 +75,14 @@
                 <th>Em. Mkt. Stock</th>
             </tr>
             <tr>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
+
+                <td><input type="text" name="LargeG" size="8" placeholder="32456.12X"></input></td>
+                <td><input type="text" name="LargeV" size="8" placeholder="32456.12"></input></td>
+                <td><input type="text" name="SmallG" size="8" placeholder="32456.12X"></input></td>
+                <td><input type="text" name="SmallV" size="8" placeholder="32456.12X"></input></td>
+                <td><input type="text" name="Med" size="8" placeholder=""></input></td>
+                <td><input type="text" name="Inter" size="8" placeholder="0"></input></td>
+                <td><input type="text" name="Emerging" size="8" placeholder="32456.12"></input></td>
             </tr>
         </table>
 
@@ -90,13 +99,13 @@
                 <th>Em. Mkt. Debt</th>
             </tr>
             <tr>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="9"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="9"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="Inter" size="8" placeholder=""></input></td>
+                <td><input type="text" name="Long" size="9" placeholder=""></input></td>
+                <td><input type="text" name="Corp" size="8" placeholder=""></input></td>
+                <td><input type="text" name="Highyield" size="9" placeholder="0"></input></td>
+                <td><input type="text" name="Muni" size="8" placeholder="32456.12"></input></td>
+                <td><input type="text" name="Foreignbonds" size="8" placeholder="32456.12"></input></td>
+                <td><input type="text" name="Debt" size="8" placeholder="32456.12"></input></td>
             </tr>
         </table>
 
@@ -108,13 +117,13 @@
                 <th>Cash</th>
             </tr>
             <tr>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
-                <td><input type="text" name="name" size="8"></input></td>
+                <td><input type="text" name="Realestate" size="8" placeholder="32456.12"></input></td>
+                <td><input type="text" name="V.C." size="8" placeholder="32456.12"></input></td>
+                <td><input type="text" name="Commodities" size="8" placeholder="32456.12"></input></td>
+                <td><input type="text" name="Cash" size="8" placeholder="32456.12"></input></td>
             </tr>
         </table>
-    </div>
+    </form>
 
 
 
@@ -127,78 +136,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-<script>
-    function showhide() {
-        cap = document.getElementById("captable")
-        if (cap.style.display == "none") cap.style.display = "block";
-        else cap.style.display = "none";
-    }
-
-    function update_vals() {
-        std = stds[risk]
-        mean = means[risk]
-        portfolio = portfolios[risk]
-        console.log(portfolios)
-        document.getElementById("std").innerHTML = "Std. : " + Math.round(std * 10000) / 100 + "%"
-        document.getElementById("mean").innerHTML = "Return :" + Math.round(mean * 10000) / 100 + "%"
-        document.getElementById("weight").innerHTML = "Portfolio : " + portfolio + "%"
-    }
-
-    function setRisk() {
-        console.log("adjusting risk");
-        risk = $(this).val();
-        console.log(risk + " of " + 100)
-        if (portfolios.length == 0) {
-            console.log("Please load graphs first ");
-            return;
-        }
-        update_vals();
-        //set variables that will post to flask to select risk level
-        //display this risk level on the screen.
-
-    }
-
-    function norm() {
-        update_vals()
-        postOnClick("/norm", load_norm, { "std": std * 100, "mu": mean * 100 })
-
-    }
-
-    function load_norm(data) {
-        document.getElementById("norm").innerHTML = data["normal"]
-    }
-
-    function load_basic(data) {
-        console.log(data)
-        document.getElementById("graphs").innerHTML = data["images"]
-        stds = eval(data["risks"])
-        means = eval(data["returns"])
-        portfolios = eval(data["portfolios"])
-        norm()
-    }
-
-    function basic() {
-        postOnClick("/mark", load_basic, { "risk": risk });
-    }
-
-    function load_backtest(data) {
-        document.getElementById("backtest").innerHTML = data["backtest"]
-        document.getElementById("weights").innerHTML = data["weights"]
-    }
-
-    function backtest() {
-        postOnClick("/back", load_backtest, { "risk": risk })
-    }
-
-    //execution
-    var portfolios = []
-    var risk = document.getElementById("risk").value;
-    var means = []
-    var stds = []
-    console.log("Default risk is " + risk);
-    $("#risk").on("change", setRisk);
-
-</script>
+<script src="request.js"></script>
 
 <style>
     body {
@@ -214,6 +152,11 @@
         clear: left;
         padding: 10px;
     }
+
+    span {
+        padding-bottom: 10px;
+    }
+
 
     .logo {
         height: 50pt;
@@ -244,62 +187,8 @@
     .captable th {
         border: 1px solid black;
         font-size: 10pt;
-
     }
 </style>
 
-<script>//libs.js
-
-    //repeatedly makes get requests to a server, until a zero is returned.
-    function streamData(url, func) {
-        function fetchData() {
-            $.get(url, {}, cd);
-        }
-        //fetches data from server and runs func on the data over and over until it returns done.
-        function cd(data) {
-            if (func(data) == "done") return
-            wait = 1000;
-            setTimeout(fetchData, wait);
-        }
-        fetchData();
-    }
-
-    function getFormSubmitForUrl(url, func) {
-        function formSubmit(event) {
-            event.target.action = url;
-            hidden = '<input type="hidden" name="clientTime" value="' + clientTime + ' >'
-            event.target.innerHtml += hidden
-            console.log(event.target)
-            var request = new XMLHttpRequest();
-            request.open('POST', url, true);
-            request.onload = function () { // request successful
-                // we can use server response to our request now
-                event.target.reset();
-                //            console.log("responseText: " + request.responseText);
-                func(request.responseText);
-            };
-            request.onerror = function () {
-                // request failed
-            };
-            request.send(new FormData(event.target)); // create FormData from form that triggered event
-            event.preventDefault();
-        }
-        return formSubmit
-    }
-
-
-    // and you can attach form submit event like this for example
-    function attachFormSubmitEvent(formId, url, func) {
-        document.getElementById(formId).addEventListener("submit", getFormSubmitForUrl(url, func));
-    }
-
-
-    //  Data is a dictionary
-    function postOnClick(url, func, data) {
-        data['hidden_tiger'] = 5;
-        var encoded_data = JSON.stringify(data);
-        $.post(url, data, func);
-    }
-</script>
 
 </html>
