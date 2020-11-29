@@ -399,8 +399,9 @@ import pytz
 
 def make_csvs(yahoo,tickers):
     for t in tickers:
-        dest = "/csvs" + t + ".csv"
+        dest = "csvs/" + t + ".csv"
         yahoo[t].to_csv(dest)
+        print("added csv for "+t,flush=True)
 
     
 def register_ingest():
@@ -410,15 +411,18 @@ def register_ingest():
         'custom-csvdir-bundle',
         csvdir_equities(
             ['daily'],
-            '/csvs',
+            '/app/csvs',
         ),
         calendar_name='NYSE', # US equities
         start_session=start_session,
         end_session=end_session
     )
+    print("Bundle Registered",flush=True)
     import os
+    print("Ingesting Bundle",flush=True)
     cmd = "zipline ingest -b custom-csvdir-bundle"
     os.system(cmd)
+    print("Bundle Ingested",flush=True)
     
 
 def backtest(risk_level=50):
@@ -434,6 +438,8 @@ def backtest(risk_level=50):
     
     make_csvs(yahoo,tickers)
     register_ingest()
+    
+    #bundle_data = bundles.load("custom-csvdir-bundle")
     #print(data['MSFT'])
     #print(data['AAPL'])
     #yahoo.plot()
