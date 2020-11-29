@@ -17,7 +17,7 @@ RUN sudo apt-get -y install libatlas-base-dev python-dev gfortran pkg-config lib
 #zipline related stuff
 RUN pip install yfinance
 
-RUN pip install zipline
+RUN pip install zipline==1.3.0
 RUN pip install empyrical 
 RUN pip install pyfolio 
 RUN pip install alphalens

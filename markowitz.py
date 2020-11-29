@@ -491,7 +491,7 @@ def backtest(risk_level=50):
     end = pd.Timestamp(2015, 1, 1)
     end = end.tz_localize(tz='UTC')
     capital_base = 1000000
-    results = zipline.utils.run_algo.run_algorithm(start,end,initialize,capital_base,handle_data)
+    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,data=data)
     print("Ran Algorithm!")
     #print(results)
     #print("Plotted portfolio!")
