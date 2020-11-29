@@ -390,30 +390,18 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     # 
     # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
 
-from collections import OrderedDict
-import pytz
 
 def backtest(risk_level=50):
     environ = os.environ
 
     tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
-    
+
     start_date='2005-01-01'
     end_date='2015-01-01'
-    
-    yahoo = yf.download(" ".join(tickers),group_by = 'ticker',start=start_date, end=end_date)
-    yahoo.columns.set_levels(['adj close','close','high','low','open','volume',],level=1,inplace=True)
-    
-    d = OrderedDict()
-    for t in tickers:
-        d[t] = yahoo[t][["open","high","low","close","volume"]]
-    panel = pd.Panel(d)
-    panel.minor_axis = ["open","high","low","close","volume"]
-    panel.major_axis = panel.major_axis.tz_localize(pytz.utc)
+    data = yf.download(" ".join(tickers), start=start_date, end=end_date)['Adj Close']
 
-    #print(data['MSFT'])
-    #print(data['AAPL'])
-    #yahoo.plot()
+    print(data)
+    data.plot()
     plt.ylabel('price in $')
     plt.legend(tickers);
 
@@ -503,7 +491,7 @@ def backtest(risk_level=50):
     end = pd.Timestamp(2015, 1, 1)
     end = end.tz_localize(tz='UTC')
     capital_base = 1000000
-    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,data=panel)
+    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,data=data)
     print("Ran Algorithm!")
     #print(results)
     #print("Plotted portfolio!")
