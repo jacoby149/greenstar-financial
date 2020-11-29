@@ -390,8 +390,36 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     # 
     # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
 
+
+from zipline.data.bundles import register
+from zipline.data.bundles.csvdir import csvdir_equities
+
 from collections import OrderedDict
 import pytz
+
+def make_csvs(yahoo,tickers):
+    for t in tickers:
+        dest = "/csvs" + t + ".csv"
+        yahoo[t].to_csv(dest)
+
+    
+def register_ingest():
+    start_session = pd.Timestamp('2016-1-1', tz='utc')
+    end_session = pd.Timestamp('2018-1-1', tz='utc')
+    register(
+        'custom-csvdir-bundle',
+        csvdir_equities(
+            ['daily'],
+            '/csvs',
+        ),
+        calendar_name='NYSE', # US equities
+        start_session=start_session,
+        end_session=end_session
+    )
+    import os
+    cmd = "zipline ingest -b custom-csvdir-bundle"
+    os.system(cmd)
+    
 
 def backtest(risk_level=50):
     environ = os.environ
@@ -404,18 +432,13 @@ def backtest(risk_level=50):
     yahoo = yf.download(" ".join(tickers),group_by = 'ticker',start=start_date, end=end_date)
     yahoo.columns.set_levels(['adj close','close','high','low','open','volume',],level=1,inplace=True)
     
-    d = OrderedDict()
-    for t in tickers:
-        d[t] = yahoo[t][["open","high","low","close","volume"]]
-    panel = pd.Panel(d)
-    panel.minor_axis = ["open","high","low","close","volume"]
-    panel.major_axis = panel.major_axis.tz_localize(pytz.utc)
-
+    make_csvs(yahoo,tickers)
+    register_ingest()
     #print(data['MSFT'])
     #print(data['AAPL'])
     #yahoo.plot()
-    plt.ylabel('price in $')
-    plt.legend(tickers);
+    #plt.ylabel('price in $')
+    #plt.legend(tickers);
 
 
     # Next, we'll create a `zipline` algorithm by defining two functions: `initialize()`, which is called once before the simulation starts, and `handle_data()`, which is called for every trading bar. We then instantiate the algorithm object.
@@ -503,7 +526,7 @@ def backtest(risk_level=50):
     end = pd.Timestamp(2015, 1, 1)
     end = end.tz_localize(tz='UTC')
     capital_base = 1000000
-    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,data=panel)
+    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,bundle="custom-csvdir-bundle")
     print("Ran Algorithm!")
     #print(results)
     #print("Plotted portfolio!")
