@@ -21,7 +21,6 @@ function update_vals() {
 function setRisk() {
     console.log("adjusting risk");
     risk = $(this).val();
-    console.log("risk : " + risk)
     console.log(risk + " of " + 100)
     if (portfolios.length == 0) {
         console.log("Please load graphs first ");
