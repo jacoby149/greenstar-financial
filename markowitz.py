@@ -393,66 +393,12 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
 
 def backtest(risk_level=50):
     environ = os.environ
-    environ['QUANDL_API_KEY'] = "GL6R8mpKFfHJWvpmkNxV"
-
-    bundle = 'quandl'
-
-    # Load ingested data bundle
-    bundle_data = bundles.load(bundle) # , environ, timestamp)
-
-
-    # Implement Quantopian's get_pricing
-    def get_pricing(assets, start_date, end_date, fields='close', trading_calendar=None):
-        """
-        Approximate Quantopian function `get_pricing` available
-        in online environment at quantopian.com
-        """
-        if trading_calendar is None:
-            trading_calendar = get_calendar("NYSE")
-
-        # Create a data portal
-        data_portal = DataPortal(
-            bundle_data.asset_finder,
-            trading_calendar=trading_calendar,
-            first_trading_day=bundle_data.equity_daily_bar_reader.first_trading_day,
-            equity_daily_reader=bundle_data.equity_daily_bar_reader,
-            adjustment_reader=bundle_data.adjustment_reader)
-
-
-        # Set the given start and end dates to Timestamps.
-        end_date = pd.Timestamp(end_date, tz='utc')
-        start_date = pd.Timestamp(start_date, tz='utc')
-
-        # Get the locations of the start and end dates
-        sessions = trading_calendar.sessions_in_range(start_date, end_date)
-        bar_count = len(sessions)
-        
-        # Get identifiers for asset symbols
-        equities = bundle_data.asset_finder.lookup_symbols(assets, start_date)
-
-        # return the historical data for the given window
-        return data_portal.get_history_window(
-                                assets=equities,
-                                end_dt=end_date,
-                                bar_count=bar_count,
-                                frequency='1d',
-                                field=fields,
-                                data_frequency='daily')
 
     tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
 
     start_date='2005-01-01'
     end_date='2015-01-01'
     data = yf.download(" ".join(tickers), start=start_date, end=end_date)['Adj Close']
-
-
-    #data_old = get_pricing(
-    #    tickers,
-    #    start_date='2005-01-01',
-    #    end_date='2015-01-01'
-    #)
-
-    # In[ ]:
 
     print(data)
     data.plot()

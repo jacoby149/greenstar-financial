@@ -40,13 +40,6 @@ RUN pip install vollib
 
 RUN pip install cvxopt matplotlib
 
-
-#download data
-RUN export QUANDL_API_KEY="GL6R8mpKFfHJWvpmkNxV" && zipline ingest -b quandl
-
-RUN export QUANDL_API_KEY="GL6R8mpKFfHJWvpmkNxV" && zipline ingest
-
-
 RUN pip install flask 
 RUN pip install flask_cors
 
