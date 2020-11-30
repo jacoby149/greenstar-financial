@@ -192,10 +192,12 @@ def aseet_classes():
     from datetime import date,timedelta
 
     end_date = date.today()
-    d = datetime.timedelta(days = 400)
+    d = timedelta(days = 400)
     start_date = end_date - d
     
-    yahoo = yf.download(" ".join(tickers),group_by = 'ticker',start=start_date, end=end_date)["Adj Close"]
+    yahoo = yf.download(" ".join(tickers),start=start_date, end=end_date)
+    #for k in yahoo:print(k)
+    yahoo = yahoo["Adj Close"]
     print(yahoo)
     return yahoo
 
@@ -250,6 +252,7 @@ def portfolio_performance(daily_data,weights=None):
 
 
 #risk level, a number from 1 to 100
+#daily_data = random_assets()aseet_classes()
 def markowitz_run(daily_data = random_assets(),risk_level=50):
     images = []
 
@@ -414,30 +417,15 @@ import pytz
 
 def make_csvs(yahoo,tickers):
     for t in tickers:
-        dest = "csvs/" + t + ".csv"
+        dest = "csvs/daily/" + t + ".csv"
         yahoo[t].to_csv(dest)
         print("added csv for "+t,flush=True)
 
     
 def register_ingest():
-    """
-    start_session = pd.Timestamp('2005-1-1', tz='utc')
-    end_session = pd.Timestamp('2015-1-1', tz='utc')
-    register(
-        'provins_bundle',
-        csvdir_equities(
-            ['daily'],
-            '/app/csvs',
-        ),
-        calendar_name='NYSE', # US equities
-        start_session=start_session,
-        end_session=end_session
-    )
-    print("Bundle Registered",flush=True)
-    """
     import os
     print("Ingesting Bundle",flush=True)
-    cmd = "python reg.py && zipline ingest -b provins_bundle"
+    cmd = "zipline -e reg.py ingest -b provins_bundle"
     os.system(cmd)
     print("Bundle Ingested",flush=True)
     
@@ -447,8 +435,8 @@ def backtest(risk_level=50):
 
     tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
     
-    start_date='2005-01-01'
-    end_date='2015-01-01'
+    start_date='2005-01-02'
+    end_date='2015-01-02'
     
     yahoo = yf.download(" ".join(tickers),group_by = 'ticker',start=start_date, end=end_date)
     yahoo.columns.set_levels(['adj close','close','high','low','open','volume',],level=1,inplace=True)
