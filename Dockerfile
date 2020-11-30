@@ -52,8 +52,6 @@ RUN pip install fpdf
 RUN pip install latex
 RUN pip install opencv-python
 RUN zipline --help
-RUN find / -type d -name ".zipline" 
-
 COPY . /app
 
 #RUN python libs.py
