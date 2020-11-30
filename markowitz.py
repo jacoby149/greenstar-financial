@@ -391,6 +391,7 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
 
 
+
 from zipline.data.bundles import register
 from zipline.data.bundles.csvdir import csvdir_equities
 
@@ -405,10 +406,10 @@ def make_csvs(yahoo,tickers):
 
     
 def register_ingest():
-    start_session = pd.Timestamp('2016-1-1', tz='utc')
-    end_session = pd.Timestamp('2018-1-1', tz='utc')
+    start_session = pd.Timestamp('2005-1-1', tz='utc')
+    end_session = pd.Timestamp('2015-1-1', tz='utc')
     register(
-        'custom-csvdir-bundle',
+        'provins_bundle',
         csvdir_equities(
             ['daily'],
             '/app/csvs',
@@ -420,7 +421,7 @@ def register_ingest():
     print("Bundle Registered",flush=True)
     import os
     print("Ingesting Bundle",flush=True)
-    cmd = "zipline ingest -b custom-csvdir-bundle"
+    cmd = "python reg.py && zipline ingest -b provins_bundle"
     os.system(cmd)
     print("Bundle Ingested",flush=True)
     
@@ -532,7 +533,7 @@ def backtest(risk_level=50):
     end = pd.Timestamp(2015, 1, 1)
     end = end.tz_localize(tz='UTC')
     capital_base = 1000000
-    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,bundle="custom-csvdir-bundle")
+    results = zipline.run_algorithm(start,end,initialize,capital_base,handle_data,bundle="provins_bundle")
     print("Ran Algorithm!")
     #print(results)
     #print("Plotted portfolio!")
