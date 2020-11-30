@@ -186,6 +186,20 @@ def optimal_portfolio(daily_data):
 #number of assets - number of stocks
 #number of observations - number of days
 #g - rate of average daily growth in positions 
+
+def aseet_classes():
+    tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
+    from datetime import date,timedelta
+
+    end_date = date.today()
+    d = datetime.timedelta(days = 400)
+    start_date = end_date - d
+    
+    yahoo = yf.download(" ".join(tickers),group_by = 'ticker',start=start_date, end=end_date)["Adj Close"]
+    print(yahoo)
+    return yahoo
+
+
 def random_assets(n_assets=4,n_obs=1000, g=1.00026):
     #TODO add g in here
     np.random.seed(123)
@@ -406,6 +420,7 @@ def make_csvs(yahoo,tickers):
 
     
 def register_ingest():
+    """
     start_session = pd.Timestamp('2005-1-1', tz='utc')
     end_session = pd.Timestamp('2015-1-1', tz='utc')
     register(
@@ -419,6 +434,7 @@ def register_ingest():
         end_session=end_session
     )
     print("Bundle Registered",flush=True)
+    """
     import os
     print("Ingesting Bundle",flush=True)
     cmd = "python reg.py && zipline ingest -b provins_bundle"

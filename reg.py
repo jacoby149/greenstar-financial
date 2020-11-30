@@ -14,4 +14,3 @@ register(
     start_session=start_session,
     end_session=end_session
 )
-print("Bundle Registered",flush=True)
