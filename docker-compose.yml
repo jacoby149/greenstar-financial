@@ -3,14 +3,14 @@ services:
   flask:
     build:
       dockerfile: Dockerfile
-      context: ../
+      context: ./
     volumes:
-      - ../:/app
+      - ./:/app
     environment:
       FLASK_ENV: development
 
     ports:
-      - "5000:5000"
+      - "80:80"
 #  testing:
 #    restart: always
 #    build:
