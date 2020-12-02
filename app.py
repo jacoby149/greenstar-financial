@@ -50,10 +50,21 @@ form_params["time"] = "7"
 # Do machine Learning Autograding.
 @app.route("/", methods=["GET", "POST"])
 def load_home():
-    if session['logged_in'] is True:
+    if 'logged_in'in session:
         return render_template('index.html')
     else:
         return render_template('password_page.html')
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    passcode = request.form.get("passcode")
+    if passcode == 'Provins1!':
+        session['logged_in'] = True
+        return render_template("index.html")
+    else:
+        return render_template("password_page.html")
+
 
 @app.route("/mark", methods=["GET", "POST"])
 def mark():
