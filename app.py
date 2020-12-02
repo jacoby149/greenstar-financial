@@ -85,9 +85,8 @@ def clean_form(request):
         ticker = form_params[k]
         if val is None:
             continue
-
-        if 'X' not in val and val != '':
-            tickers.append(val)
+        if 'X'.casefold() not in val.casefold() and val != '':
+            tickers.append(ticker)
 
     return captable, tickers, risk, name, birthday, term
 

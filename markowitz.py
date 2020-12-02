@@ -27,7 +27,6 @@ import cvxopt as opt
 from cvxopt import blas, solvers
 solvers.options['show_progress'] = False
 import copy
-import pandas as pd
 
 # backtesting requirements
 import matplotlib.pyplot as plt
@@ -35,6 +34,7 @@ import pandas as pd
 import os
 
 import yfinance as yf
+import pandas_datareader as pdr
 
 
 
@@ -183,19 +183,20 @@ def optimal_portfolio(daily_data):
 
 def asset_classes(tickers):
     from datetime import date,timedelta
-
+    print("TICKERS :", tickers, flush=True)
     end_date = date.today()
     d = timedelta(days = 400)
     start_date = end_date - d
     
-    yahoo = yf.download(" ".join(tickers),start=start_date, end=end_date)
-    #for k in yahoo:print(k)
-    yahoo = yahoo["Adj Close"]
-    print(yahoo)
+    yahoo = pdr.DataReader("AAPL", start=str(start_date), end=str(end_date), data_source='yahoo')['Adj Close']
+    print("dates: ", start_date, " ... ", end_date, flush=True)
+    print("YAHOO :", yahoo.values, flush=True)
+    print('ytype :', type(yahoo), flush=True)
+    print(flush=True)
     return yahoo
 
 
-def random_assets(n_assets=4,n_obs=1000, g=1.00026):
+def random_assets(n_assets=4, n_obs=1000, g=1.00026):
     #TODO add g in here
     np.random.seed(123)
     # Turn off progress printing 
@@ -244,8 +245,8 @@ import pickle
 #risk level, a number from 1 to 100
 #daily_data = random_assets()asset_classes()
 def markowitz_run(daily_data=random_assets(), tickers=None, risk_level=50):
-    # if tickers is not None:
-    #     daily_data = asset_classes(tickers)
+    if tickers is not None:
+        daily_data = asset_classes(tickers)
 
     images = []
 

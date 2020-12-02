@@ -61,8 +61,10 @@ function load_basic(data) {
 }
 
 function basic() {
-    form = $('captable').serializeJSON()
+    form = {}
+    $('#captable').serializeArray().map(function(x) {form[x.name] = x.value})
     form["risk"] = risk
+    console.log("FORM :" + form)
     $.post("/load_graphs", form, load_basic);
 }
 
