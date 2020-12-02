@@ -61,7 +61,9 @@ function load_basic(data) {
 }
 
 function basic() {
-    $.post("/mark", { "risk": risk }, load_basic);
+    form = $('captable').serializeJSON()
+    form["risk"] = risk
+    $.post("/load_graphs", form, load_basic);
 }
 
 
@@ -88,6 +90,7 @@ $("#risk").on("change", setRisk);
 // Generate Report
 function genReport() {
     form = document.getElementById('captable')
+    form.appendChild(document.getElementById('risk'))
     response = form.submit()
     console.log("response submitted")
 }

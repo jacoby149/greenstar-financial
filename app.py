@@ -6,7 +6,7 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # imports
 import markowitz
-from flask import Flask, request, jsonify,render_template, send_file, session
+from flask import Flask, request, jsonify, render_template, send_file, session, redirect
 from flask_cors import CORS
 import sys
 
@@ -41,13 +41,9 @@ form_params["Realestate"] = "^DJUSRE"
 form_params["V.C."] = "^AMZX"
 form_params["Commodities"] = "^DJCI"
 form_params["Cash"] = "BIL"
-#clientinfo
-form_params["name"] = "John Smith"
-form_params["birthday"] = "12/28/1960"
-form_params["time"] = "7"
 
 
-# Do machine Learning Autograding.
+# Do machine Learning.
 @app.route("/", methods=["GET", "POST"])
 def load_home():
     if 'logged_in'in session:
@@ -61,21 +57,52 @@ def login():
     passcode = request.form.get("passcode")
     if passcode == 'Provins1!':
         session['logged_in'] = True
-        return render_template("index.html")
-    else:
-        return render_template("password_page.html")
+    return redirect("/")
 
 
-@app.route("/mark", methods=["GET", "POST"])
-def mark():
+
+@app.route("/logout", methods=["GET", "POST"])
+def logout():
+    session.clear()
+    return redirect("/")
+
+
+def clean_form(request):
+    risk = request.form.get('risk')
+    name = request.form.get('name')
+    birthday = request.form.get('birthday')
+    term = request.form.get('term')
+
+    captable = {}
+    for v in form_params:
+        val = request.form.get(v)
+        ticker = form_params[v]
+        captable[ticker] = val
+
+    tickers = []
+    for k in form_params:
+        val = request.form.get(k)
+        ticker = form_params[k]
+        if val is None:
+            continue
+
+        if 'X' not in val and val != '':
+            tickers.append(val)
+
+    return captable, tickers, risk, name, birthday, term
+
+
+@app.route("/load_graphs", methods=["GET", "POST"])
+def load_graphs(tickers=None):
     global images
     images = []
-    risk = request.form.get('risk')
-    print(risk)
+
+    captable, tickers, risk, name, birthday, term = clean_form(request)
+
     risk=int(risk)
     print("RISK_LEVEL :",risk)
-    images,portfolios,returns,risks = markowitz.markowitz_run(risk_level=risk)
-    vals=dict()
+    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, risk_level=risk)
+    vals = {}
     html_images = [img_form.format(i) for i in images]
 
     line = markowitz.line()
@@ -90,17 +117,14 @@ def mark():
     vals["portfolios"]= str(portfolios)
     vals["returns"]= str(returns)
     vals["risks"]= str(risks)
-    #print("DONE")
-    #print("VALS : ",vals)
-    sys.stdout.flush()
+
     return vals
 
 @app.route("/norm", methods=["GET", "POST"])
 def norm():
     global images
     mu,std = float(request.form.get('mu')),float(request.form.get('std'))
-    print("MU,STD:",mu,std)
-    vals = dict() 
+    vals = dict()
     
     norm = markowitz.normal(mu,std)    
     html_img = img_form.format(norm)
@@ -120,17 +144,15 @@ def back():
     vals["weights"],images = markowitz.backtest(risk_level=risk_level)
     html_images = [img_form.format(i) for i in images]
     vals["backtest"]= "".join(html_images)
-
-    print("RISK :",risk_level)
-    sys.stdout.flush()
     return vals
+
 
 import report
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    name = request.form.get('name')
-    print("name: ", name, flush=True)
+    _, _, _, name, _, _ = clean_form(request)
     report.make_report(name)
+
     return send_file("/app/pdfs/{} Report.pdf".format(name))
 
 

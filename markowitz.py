@@ -181,8 +181,7 @@ def optimal_portfolio(daily_data):
 #number of observations - number of days
 #g - rate of average daily growth in positions 
 
-def aseet_classes():
-    tickers = ['IBM', 'SBUX', 'XOM', 'AAPL', 'MSFT',]
+def asset_classes(tickers):
     from datetime import date,timedelta
 
     end_date = date.today()
@@ -243,8 +242,10 @@ def portfolio_performance(daily_data, weights=None):
 
 import pickle
 #risk level, a number from 1 to 100
-#daily_data = random_assets()aseet_classes()
-def markowitz_run(daily_data=random_assets(), risk_level=50):
+#daily_data = random_assets()asset_classes()
+def markowitz_run(daily_data=random_assets(), tickers=None, risk_level=50):
+    # if tickers is not None:
+    #     daily_data = asset_classes(tickers)
 
     images = []
 
