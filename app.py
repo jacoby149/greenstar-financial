@@ -6,7 +6,7 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # imports
 import markowitz
-from flask import Flask, request, jsonify,render_template, send_file
+from flask import Flask, request, jsonify,render_template, send_file, session
 from flask_cors import CORS
 import sys
 
@@ -14,6 +14,9 @@ import sys
 # Initialize the Flask application
 app = Flask(__name__)
 cors = CORS(app)
+
+# Secret key for passcodes
+app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 
 images = []
 img_form = "<img src = '{}'>"
@@ -47,7 +50,10 @@ form_params["time"] = "7"
 # Do machine Learning Autograding.
 @app.route("/", methods=["GET", "POST"])
 def load_home():
-    return render_template('index.html') #"Hello World!":
+    if session['logged_in'] is True:
+        return render_template('index.html')
+    else:
+        return render_template('password_page.html')
 
 @app.route("/mark", methods=["GET", "POST"])
 def mark():

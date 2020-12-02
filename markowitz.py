@@ -311,7 +311,6 @@ def markowitz_run(daily_data=random_assets(), risk_level=50):
             v = str(v)
         return v
 
-
     ret_curr = ret_curr.tolist()
     risk_curr = risk_curr.tolist()
 
@@ -320,7 +319,9 @@ def markowitz_run(daily_data=random_assets(), risk_level=50):
     ret_new = ret_new[0]
     risk_new = round(risk_new[0], 2)
 
-    risk_improve = round((risk_new - risk_curr), 2)
+    risk_change = round((risk_new - risk_curr), 2)
+
+    risk_change = stringit(risk_change)
     ret_improve = ret_new - ret_curr
 
     ret_new = stringit(round((ret_new - 100), 1))
@@ -329,7 +330,7 @@ def markowitz_run(daily_data=random_assets(), risk_level=50):
 
     port_vars = {"ret_curr": ret_curr, "risk_curr": risk_curr,
                  "ret_new": ret_new, "risk_new": risk_new,
-                 "risk_improve": risk_improve, "ret_improve": ret_improve}
+                 "risk_change": risk_change, "ret_improve": ret_improve}
 
     with open("port_vars.pickle", 'wb') as port_pickle:
         pickle.dump(port_vars, port_pickle)
