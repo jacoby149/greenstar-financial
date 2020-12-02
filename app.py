@@ -114,7 +114,7 @@ def make_report():
     name = request.form.get('name')
     print("name: ", name, flush=True)
     report.make_report(name)
-    return send_file("/app/pdfs/hello-" + name + ".pdf")
+    return send_file("/app/pdfs/{} Report.pdf".format(name))
 
 
 # start flask
