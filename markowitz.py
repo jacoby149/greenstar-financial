@@ -33,19 +33,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
-from zipline.data import bundles
-from zipline.data.data_portal import DataPortal
-from trading_calendars import get_calendar
-
-import zipline
-from zipline.api import (
-    set_slippage, 
-    slippage,
-    set_commission, 
-    commission, 
-    order_target_percent,
-    symbols,
-    )
 
 import yfinance as yf
 

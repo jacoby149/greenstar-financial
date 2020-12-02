@@ -1,5 +1,20 @@
 #backtest.py
 
+from zipline.data import bundles
+from zipline.data.data_portal import DataPortal
+from trading_calendars import get_calendar
+
+import zipline
+from zipline.api import (
+    set_slippage, 
+    slippage,
+    set_commission, 
+    commission, 
+    order_target_percent,
+    symbols,
+    )
+
+
 from zipline.data.bundles import register
 from zipline.data.bundles.csvdir import csvdir_equities
 
