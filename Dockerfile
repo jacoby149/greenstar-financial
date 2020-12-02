@@ -51,9 +51,10 @@ RUN pip install pandas==0.23
 RUN pip install fpdf
 RUN pip install latex
 RUN pip install opencv-python
-RUN zipline --help
 COPY . /app
-
+RUN zipline --help
+ENV ZIPLINE_HOME='/app'
+RUN ls $ZIPLINE_HOME
 #RUN python libs.py
 CMD pip freeze > requirements.txt | python app.py
 #CMD python multipdf.py

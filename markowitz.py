@@ -425,7 +425,7 @@ def make_csvs(yahoo,tickers):
 def register_ingest():
     import os
     print("Ingesting Bundle",flush=True)
-    cmd = "zipline -e reg.py ingest -b provins_bundle"
+    cmd = "zipline -e extension.py ingest -b provins_bundle && zipline bundles"
     os.system(cmd)
     print("Bundle Ingested",flush=True)
     
@@ -441,7 +441,7 @@ def backtest(risk_level=50):
     yahoo = yf.download(" ".join(tickers),group_by = 'ticker',start=start_date, end=end_date)
     yahoo.columns.set_levels(['adj close','close','high','low','open','volume',],level=1,inplace=True)
     
-    make_csvs(yahoo,tickers)
+    #make_csvs(yahoo,tickers)
     register_ingest()
     
     #bundle_data = bundles.load("custom-csvdir-bundle")
