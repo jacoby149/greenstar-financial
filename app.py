@@ -112,7 +112,7 @@ def back():
 import report
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    name = request.args.get('name')
+    name = request.form.get('name')
     print("name: ", name, flush=True)
     report.make_report(name)
     return send_file("/app/pdfs/hello-" + name + ".pdf")

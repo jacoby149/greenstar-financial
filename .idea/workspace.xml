@@ -3,16 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/expected return.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/markowitz.py" beforeDir="false" afterPath="$PROJECT_DIR$/markowitz.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfs/graphs.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/graphs.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfs/hello-alice.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/hello-alice.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfs/hello-bob.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/hello-bob.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfs/hello-carol.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/hello-carol.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.py" beforeDir="false" afterPath="$PROJECT_DIR$/report.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/template.tex" beforeDir="false" afterPath="$PROJECT_DIR$/template.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdfs/hello-ghoozie.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/hello-ghoozie.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/report.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

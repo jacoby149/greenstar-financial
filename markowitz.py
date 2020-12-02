@@ -116,7 +116,8 @@ def normal(mu=110,sigma=7.10):
     return plt_to_img(plt)
 
 
-def pie():
+def pie(ticker_dict):
+    #ticker_dict formatted as... {"TCKR": val}
     import matplotlib.pyplot as plt
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
@@ -254,7 +255,7 @@ def portfolio_performance(daily_data,weights=None):
 
 #risk level, a number from 1 to 100
 #daily_data = random_assets()aseet_classes()
-def markowitz_run(daily_data = random_assets(),risk_level=50):
+def markowitz_run(daily_data=random_assets(), risk_level=50):
     images = []
 
     plt.plot(daily_data.T*100, alpha=.4);
@@ -264,88 +265,11 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
 
     images.append(plt_to_img(plt))
 
-    # These return series can be used to create a wide range of portfolios. We will produce random weight vectors and plot those portfolios. As we want all our capital to be invested, the weights will have to sum to one.
-
-    # In[4]:
-
-
-    # Next, let's evaluate how these random portfolios would perform by calculating the mean returns and the volatility (here we are using standard deviation). You can see that there is
-    # a filter so that we only plot portfolios with a standard deviation of < 2 for better illustration.
-
-    # In[5]:
-
-
-
-
-    # We calculate the return using
-    # 
-    # $$ R = p^T w $$
-    # 
-    # where $R$ is the expected return, $p^T$ is the transpose of the vector for the mean
-    # returns for each time series and w is the weight vector of the portfolio. $p$ is a $N \times 1$
-    # column vector, so $p^T$ turns is a $1 \times N$ row vector which can be multiplied with the
-    # $N \times 1$ weight (column) vector w to give a scalar result. This is equivalent to the dot
-    # product used in the code. Keep in mind that `Python` has a reversed definition of
-    # rows and columns and the accurate `NumPy` version of the previous equation would
-    # be `R = w * p.T`
-    # 
-    # Next, we calculate the standard deviation
-    # 
-    # $$\sigma = \sqrt{w^T C w}$$
-    # 
-    # where $C$ is the $N \times N$ covariance matrix of the returns. Please
-    # note that if we simply calculated the simple standard deviation with the appropriate weighting using `std(array(ret_vec).T*w)` we would get a slightly different
-    # ’bullet’. This is because the simple standard deviation calculation would not take
-    # covariances into account. In the covariance matrix, the values on the diagonal
-    # represent the simple variances of each asset, while the off-diagonal entries are the variances between the assets. By using ordinary `std()` we effectively only regard the
-    # diagonal and miss the rest. A small but significant difference.
-    # 
-    # Lets generate the mean returns and volatility for 500 random portfolios:
-
-    # In[6]:
-
-   #leaving weights blank in port. perf. makes it a random portfolio. 
     n_portfolios = 500
     means, stds = np.column_stack([
         portfolio_performance(daily_data) 
         for _ in range(n_portfolios)
     ])
-
-
-    # Upon plotting these you will observe that they form a characteristic parabolic
-    # shape called the "Markowitz bullet" whose upper boundary is called the "efficient
-    # frontier", where we have the lowest variance for a given expected return.
-
-    # In[7]:
-
-
-    #plt.plot(stds, means, 'o', markersize=5)
-    #plt.xlabel('std')
-    #plt.ylabel('mean')
-    #plt.title('Expected Return and Risk Of Portfolios');
-    #images.append(plt_to_img(plt))
-
-
-    # ## Markowitz optimization and the Efficient Frontier
-    # 
-    # We can now calculate the efficient frontier Markowitz-style. This is done by minimizing
-    # 
-    # $$ w^T C w$$
-    # 
-    # for fixed expected portfolio return $R^T w$ while keeping the sum of all the
-    # weights equal to 1:
-    # 
-    # $$ \sum_{i}{w_i} = 1 $$
-    # 
-    # Here we parametrically run through $R^T w = \mu$ and find the minimum variance
-    # for different $\mu$‘s. This can be done with `scipy.optimise.minimize` but we have
-    # to define quite a complex problem with bounds, constraints and a Lagrange multiplier. Conveniently, the `cvxopt` package, a convex solver, does all of that for us. We used one of their [examples]() with some modifications as shown below. For more information on using this package please have a look at the `cvxopt` example.
-    # 
-    # The `mus` vector produces a non-linear series of expected return values $\mu$, for each of which we will find a minimum-variance portfolio. We will see later that we don‘t need to calculate a lot of these, as they perfectly fit a parabola which can safely be extrapolated for higher values.
-
-    # In[8]:
-
-
     
     portfolios, returns, risks = optimal_portfolio(daily_data)
     #2d list instead of numpy array
@@ -391,23 +315,8 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     images.append(plt_to_img(plt))
     images.append(pie())
 
-
-
-
-
-    # In yellow you can see the optimal portfolios for each of the desired returns (i.e. the `mus`). In addition, we get the weights for one optimal portfolio:
-
-    # In[9]:
-
     portfolios = neat(portfolios)
     return images,portfolios,returns,risks
-
-
-    # ## Backtesting on real market data
-    # This is all very interesting but not very applied. We next demonstrate how you can create a simple algorithm in [`zipline`](http://github.com/quantopian/zipline) -- the open-source backtester that powers [Quantopian](https://www.quantopian.com) -- to test this optimization on actual historical stock data.
-    # 
-    # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
-
 
 
 from zipline.data.bundles import register
