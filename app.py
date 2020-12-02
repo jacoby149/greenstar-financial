@@ -6,7 +6,6 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # imports
 import markowitz
-import multipdf
 from flask import Flask, request, jsonify,render_template, send_file
 from flask_cors import CORS
 import sys
@@ -60,7 +59,6 @@ def mark():
     print("RISK_LEVEL :",risk)
     images,portfolios,returns,risks = markowitz.markowitz_run(risk_level=risk)
     vals=dict()
-    #multipdf.make_pdf(images,"graphs")
     html_images = [img_form.format(i) for i in images]
 
     line = markowitz.line()
@@ -91,7 +89,6 @@ def norm():
     html_img = img_form.format(norm)
     #images.append(norm)
 
-    multipdf.make_pdf(images,"graphs")
     vals["normal"]= str(html_img)
     sys.stdout.flush()
     return vals
@@ -105,7 +102,6 @@ def back():
     vals=dict() 
     vals["weights"],images = markowitz.backtest(risk_level=risk_level)
     html_images = [img_form.format(i) for i in images]
-    multipdf.make_pdf(images,"back")
     vals["backtest"]= "".join(html_images)
 
     print("RISK :",risk_level)

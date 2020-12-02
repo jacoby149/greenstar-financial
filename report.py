@@ -12,7 +12,7 @@ def make_report(name):
     tpl = env.get_template('report.tex')
 
     # create a greeting for all of our friends
-    filename = 'pdfs/hello-{}.pdf'.format(name.lower())
+    filename = 'pdfs/report-{}.pdf'.format(name)#.lower())
 
     pdf = build_pdf(tpl.render(**port_vars))
     pdf.save_to(filename)
