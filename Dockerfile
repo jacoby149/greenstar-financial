@@ -29,8 +29,6 @@ RUN pip install BeautifulSoup4
 RUN pip install latex
 RUN pip install opencv-python
 COPY . /app
-CMD pip freeze > requirements.txt | python app.py
-
-#EXPOSE 8000
-
-#CMD flask run --host=0.0.0.0 --port=80
+CMD pip freeze > requirements.txt
+EXPOSE 80
+CMD flask run --host=0.0.0.0 --port=80

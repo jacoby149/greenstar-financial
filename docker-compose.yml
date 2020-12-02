@@ -10,7 +10,7 @@ services:
       FLASK_ENV: development
 
     ports:
-      - "5000:5000"
+      - "80:80"
 #  testing:
 #    restart: always
 #    build:
