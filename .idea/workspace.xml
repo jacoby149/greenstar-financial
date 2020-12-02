@@ -2,7 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/compose/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/compose/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/markowitz.py" beforeDir="false" afterPath="$PROJECT_DIR$/markowitz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdfs/graphs.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/graphs.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdfs/hello-.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/hello-.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdfs/hello-ghoozie.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/hello-ghoozie.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report.py" beforeDir="false" afterPath="$PROJECT_DIR$/report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/report.tex" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,6 +27,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1jWowJQQN8PlDsew3m0lfpNkTjQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -29,10 +39,38 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.folding" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunManager">
+    <configuration name="report" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Get-That-Money" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/report.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.report" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -46,9 +84,50 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="685" y="-986" key="SettingsEditor" timestamp="1603930432543">
-      <screen x="0" y="-1057" width="1920" height="1057" />
+    <state x="798" y="199" key="#Plugins" timestamp="1606879585709">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="798" y="199" key="#Plugins/0.23.1920.1057@0.23.1920.1057" timestamp="1606879585709" />
+    <state x="360" y="37" key="#Project_Structure" timestamp="1606869312957">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="360" y="37" key="#Project_Structure/0.23.1440.877@0.23.1440.877" timestamp="1606869312957" />
+    <state x="495" y="264" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1606876505901">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="495" y="264" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.877@0.23.1440.877" timestamp="1606876505901" />
+    <state width="1396" height="227" key="GridCell.Tab.0.bottom" timestamp="1606879587887">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1283" height="227" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1606876320257" />
+    <state width="1396" height="227" key="GridCell.Tab.0.bottom/0.23.1920.1057@0.23.1920.1057" timestamp="1606879587887" />
+    <state width="1396" height="227" key="GridCell.Tab.0.center" timestamp="1606879587886">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1283" height="227" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1606876320257" />
+    <state width="1396" height="227" key="GridCell.Tab.0.center/0.23.1920.1057@0.23.1920.1057" timestamp="1606879587886" />
+    <state width="1396" height="227" key="GridCell.Tab.0.left" timestamp="1606879587886">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1283" height="227" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1606876320256" />
+    <state width="1396" height="227" key="GridCell.Tab.0.left/0.23.1920.1057@0.23.1920.1057" timestamp="1606879587886" />
+    <state width="1396" height="227" key="GridCell.Tab.0.right" timestamp="1606879587886">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state width="1283" height="227" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1606876320257" />
+    <state width="1396" height="227" key="GridCell.Tab.0.right/0.23.1920.1057@0.23.1920.1057" timestamp="1606879587886" />
+    <state x="443" y="82" key="SettingsEditor" timestamp="1606869926978">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="685" y="-986" key="SettingsEditor/0.23.1440.877/0.-1057.1920.1057@0.-1057.1920.1057" timestamp="1603930432543" />
+    <state x="443" y="82" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1606869926978" />
+    <state x="905" y="184" width="586" height="735" key="find.popup" timestamp="1606879391483">
+      <screen x="0" y="23" width="1920" height="1057" />
+    </state>
+    <state x="905" y="184" width="586" height="735" key="find.popup/0.23.1920.1057@0.23.1920.1057" timestamp="1606879391483" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

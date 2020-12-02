@@ -21,7 +21,7 @@
                     <button onclick="showhide()">Show/Hide Form</button>
                 </td>
                 <td>
-                    <input type="submit" value="Generate Report">
+                    <button onclick="genReport()">Generate Report</button>
                 </td>
                 <td>
                     <button onclick="basic()">Load Graphs</button>
@@ -55,7 +55,7 @@
 
 
     <div>
-        <form class="captable" id="captable">
+        <form class="captable" id="captable" action="/report" target="_blank" method="POST">
             <p>
                 Add the dollar amounts invested within the current portfolio. <br>
                 To add an asset class in the prescribed portfolio that is not in the current one, input 0 invested
@@ -73,9 +73,9 @@
                     <th>Term (yrs.)</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="name" placeholder="John Smith" size="13"></input></td>
-                    <td><input type="text" name="birthday" placeholder="12/28/1960" size="8"></input></td>
-                    <td><input type="text" name="time" placeholder="8" size="4"></input></td>
+                    <td><input type="text" name="name" placeholder="John Smith" size="13"></td>
+                    <td><input type="text" name="birthday" placeholder="12/28/1960" size="8"></td>
+                    <td><input type="text" name="time" placeholder="8" size="4"></td>
                 </tr>
             </table>
 
@@ -92,13 +92,13 @@
                 </tr>
                 <tr>
 
-                    <td><input type="text" name="LargeG" size="8" placeholder="32456.12X"></input></td>
-                    <td><input type="text" name="LargeV" size="8" placeholder="32456.12"></input></td>
-                    <td><input type="text" name="SmallG" size="8" placeholder="32456.12X"></input></td>
-                    <td><input type="text" name="SmallV" size="8" placeholder="32456.12X"></input></td>
-                    <td><input type="text" name="Med" size="8" placeholder=""></input></td>
-                    <td><input type="text" name="Inter" size="8" placeholder="0"></input></td>
-                    <td><input type="text" name="Emerging" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="LargeG" size="8" placeholder="32456.12X"></td>
+                    <td><input type="text" name="LargeV" size="8" placeholder="32456.12"></td>
+                    <td><input type="text" name="SmallG" size="8" placeholder="32456.12X"></td>
+                    <td><input type="text" name="SmallV" size="8" placeholder="32456.12X"></td>
+                    <td><input type="text" name="Med" size="8" placeholder=""></td>
+                    <td><input type="text" name="Inter" size="8" placeholder="0"></td>
+                    <td><input type="text" name="Emerging" size="8" placeholder="32456.12"></td>
                 </tr>
             </table>
 
@@ -116,13 +116,13 @@
                 </tr>
                 <tr>
 
-                    <td><input type="text" name="InterBond" size="8" placeholder=""></input></td>
-                    <td><input type="text" name="Long" size="9" placeholder=""></input></td>
-                    <td><input type="text" name="Corp" size="8" placeholder=""></input></td>
-                    <td><input type="text" name="Highyield" size="9" placeholder="0"></input></td>
-                    <td><input type="text" name="Muni" size="8" placeholder="32456.12"></input></td>
-                    <td><input type="text" name="Foreignbonds" size="8" placeholder="32456.12"></input></td>
-                    <td><input type="text" name="Debt" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="InterBond" size="8" placeholder=""></td>
+                    <td><input type="text" name="Long" size="9" placeholder=""></td>
+                    <td><input type="text" name="Corp" size="8" placeholder=""></td>
+                    <td><input type="text" name="Highyield" size="9" placeholder="0"></td>
+                    <td><input type="text" name="Muni" size="8" placeholder="32456.12"></td>
+                    <td><input type="text" name="Foreignbonds" size="8" placeholder="32456.12"></td>
+                    <td><input type="text" name="Debt" size="8" placeholder="32456.12"></td>
                 </tr>
             </table>
 
@@ -134,10 +134,10 @@
                     <th>Cash</th>
                 </tr>
                 <tr>
-                    <td><input type="text" name="Realestate" size="8" placeholder="32456.12"></input></td>
-                    <td><input type="text" name="V.C." size="8" placeholder="32456.12"></input></td>
-                    <td><input type="text" name="Commodities" size="8" placeholder="32456.12"></input></td>
-                    <td><input type="text" name="Cash" size="8" placeholder="32456.12"></input></td>
+                    <td><input type="text" name="Realestate" size="8" placeholder="32456.12"></td>
+                    <td><input type="text" name="V.C." size="8" placeholder="32456.12"></td>
+                    <td><input type="text" name="Commodities" size="8" placeholder="32456.12"></td>
+                    <td><input type="text" name="Cash" size="8" placeholder="32456.12"></td>
                 </tr>
             </table>
         </form>

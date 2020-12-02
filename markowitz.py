@@ -51,26 +51,25 @@ import yfinance as yf
 
 
 
-def plt_to_img(plt):
+def plt_to_img(plt, name="ghoozie"):
     importlib.reload(matplotlib)
     s = io.BytesIO()
-    #filename = "https://rb.gy/fp0ydm"
-    #f = urlopen(filename)
-    # read the image file in a numpy array
-    #a = plt.imread(f)
-    #plt.imshow(a,extent=(1,1,1,1))
-    plt.savefig(s, format='png', dpi=100,facecolor="white",bbox_inches='tight')
+
+    plt.savefig(s, format='png', dpi=100, facecolor="white", bbox_inches='tight')
+    plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=100, facecolor="white", bbox_inches='tight')
     plt.clf()
     plt.cla()
     plt.close()
     s = base64.b64encode(s.getvalue()).decode("utf-8").replace("\n", "")
     return "data:image/png;base64,%s" % s
 
+
 def calc_norm(mu,sigma,z):
     d = .001
     x = np.arange(mu-z*sigma,mu+z*sigma,d*sigma)
     y = norm.pdf(x,mu,sigma)
-    return x,y
+    return x, y
+
 
 def normal(mu=110,sigma=7.10):
 
@@ -113,24 +112,32 @@ def normal(mu=110,sigma=7.10):
 
     ax.set_title('Bell Curve Of Returns')
 
-    return plt_to_img(plt)
+    return plt_to_img(plt, "bell")
 
 
-def pie():
+def rand_weights(n):
+    ''' Produces n random weights that sum to 1 '''
+    k = np.random.rand(n)
+    return k / sum(k)
+
+
+def pie(sizes=rand_weights(4), num=''):
+    print("type sizes", type(sizes), flush=True)
+    print("sizes", sizes, flush=True)
+    #ticker_dict formatted as... {"TCKR": val}
     import matplotlib.pyplot as plt
 
 # Pie chart, where the slices will be ordered and plotted counter-clockwise:
     labels = 'FB', 'MSFT', 'AMZN', 'GOOG'
-    sizes = [15, 30, 45, 10]
     explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
 
     fig1, ax1 = plt.subplots()
     ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    return plt_to_img(plt)
+    return plt_to_img(plt, "pie" + num)
 
-def line():   
+def line(years=''):
     Data = {'Year': [2020,2021,2022,2023,2024,2025,2026],
             'Return': [100,105,111,118,127,137,148]
         }
@@ -142,7 +149,7 @@ def line():
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
-    return plt_to_img(plt)
+    return plt_to_img(plt, "line" + str(years))
 
 
 def optimal_portfolio(daily_data):
@@ -216,6 +223,7 @@ def random_assets(n_assets=4,n_obs=1000, g=1.00026):
     daily_data = daily_data*gain_vector
     return daily_data
 
+
 def neat(portfolios):
     def n(p):
         p = array(p)
@@ -225,13 +233,8 @@ def neat(portfolios):
     portfolios = [n(p) for p in portfolios]
     return portfolios
 
-def rand_weights(n):
-    ''' Produces n random weights that sum to 1 '''
-    k = np.random.rand(n)
-    return k / sum(k)
 
-
-def portfolio_performance(daily_data,weights=None):
+def portfolio_performance(daily_data, weights=None):
     ''' 
     Returns the mean and standard deviation of returns for a random portfolio
     '''
@@ -251,9 +254,11 @@ def portfolio_performance(daily_data,weights=None):
     return mu, sigma
 
 
+import pickle
 #risk level, a number from 1 to 100
 #daily_data = random_assets()aseet_classes()
-def markowitz_run(daily_data = random_assets(),risk_level=50):
+def markowitz_run(daily_data=random_assets(), risk_level=50):
+
     images = []
 
     plt.plot(daily_data.T*100, alpha=.4);
@@ -261,90 +266,13 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     plt.ylabel('Price (%)')
     plt.title('Daily Performance Of Chosen Assets');
 
-    images.append(plt_to_img(plt))
+    images.append(plt_to_img(plt, "noise"))
 
-    # These return series can be used to create a wide range of portfolios. We will produce random weight vectors and plot those portfolios. As we want all our capital to be invested, the weights will have to sum to one.
-
-    # In[4]:
-
-
-    # Next, let's evaluate how these random portfolios would perform by calculating the mean returns and the volatility (here we are using standard deviation). You can see that there is
-    # a filter so that we only plot portfolios with a standard deviation of < 2 for better illustration.
-
-    # In[5]:
-
-
-
-
-    # We calculate the return using
-    # 
-    # $$ R = p^T w $$
-    # 
-    # where $R$ is the expected return, $p^T$ is the transpose of the vector for the mean
-    # returns for each time series and w is the weight vector of the portfolio. $p$ is a $N \times 1$
-    # column vector, so $p^T$ turns is a $1 \times N$ row vector which can be multiplied with the
-    # $N \times 1$ weight (column) vector w to give a scalar result. This is equivalent to the dot
-    # product used in the code. Keep in mind that `Python` has a reversed definition of
-    # rows and columns and the accurate `NumPy` version of the previous equation would
-    # be `R = w * p.T`
-    # 
-    # Next, we calculate the standard deviation
-    # 
-    # $$\sigma = \sqrt{w^T C w}$$
-    # 
-    # where $C$ is the $N \times N$ covariance matrix of the returns. Please
-    # note that if we simply calculated the simple standard deviation with the appropriate weighting using `std(array(ret_vec).T*w)` we would get a slightly different
-    # ’bullet’. This is because the simple standard deviation calculation would not take
-    # covariances into account. In the covariance matrix, the values on the diagonal
-    # represent the simple variances of each asset, while the off-diagonal entries are the variances between the assets. By using ordinary `std()` we effectively only regard the
-    # diagonal and miss the rest. A small but significant difference.
-    # 
-    # Lets generate the mean returns and volatility for 500 random portfolios:
-
-    # In[6]:
-
-   #leaving weights blank in port. perf. makes it a random portfolio. 
     n_portfolios = 500
     means, stds = np.column_stack([
         portfolio_performance(daily_data) 
         for _ in range(n_portfolios)
     ])
-
-
-    # Upon plotting these you will observe that they form a characteristic parabolic
-    # shape called the "Markowitz bullet" whose upper boundary is called the "efficient
-    # frontier", where we have the lowest variance for a given expected return.
-
-    # In[7]:
-
-
-    #plt.plot(stds, means, 'o', markersize=5)
-    #plt.xlabel('std')
-    #plt.ylabel('mean')
-    #plt.title('Expected Return and Risk Of Portfolios');
-    #images.append(plt_to_img(plt))
-
-
-    # ## Markowitz optimization and the Efficient Frontier
-    # 
-    # We can now calculate the efficient frontier Markowitz-style. This is done by minimizing
-    # 
-    # $$ w^T C w$$
-    # 
-    # for fixed expected portfolio return $R^T w$ while keeping the sum of all the
-    # weights equal to 1:
-    # 
-    # $$ \sum_{i}{w_i} = 1 $$
-    # 
-    # Here we parametrically run through $R^T w = \mu$ and find the minimum variance
-    # for different $\mu$‘s. This can be done with `scipy.optimise.minimize` but we have
-    # to define quite a complex problem with bounds, constraints and a Lagrange multiplier. Conveniently, the `cvxopt` package, a convex solver, does all of that for us. We used one of their [examples]() with some modifications as shown below. For more information on using this package please have a look at the `cvxopt` example.
-    # 
-    # The `mus` vector produces a non-linear series of expected return values $\mu$, for each of which we will find a minimum-variance portfolio. We will see later that we don‘t need to calculate a lot of these, as they perfectly fit a parabola which can safely be extrapolated for higher values.
-
-    # In[8]:
-
-
     
     portfolios, returns, risks = optimal_portfolio(daily_data)
     #2d list instead of numpy array
@@ -378,35 +306,32 @@ def markowitz_run(daily_data = random_assets(),risk_level=50):
     plt.plot([r*s for r in risks], [r*s for r in returns], 'y-o',markersize=ms)
     
     #plot the slider selected portfolio
-    risk,ret = [risks[risk_level]*s],[returns[risk_level]*s]
-    plt.plot(risk,ret,'o',color='red',zorder=2,markersize=ms)
+    risk_new, ret_new = [risks[risk_level]*s], [returns[risk_level]*s]
+    plt.plot(risk_new,ret_new,'o',color='red',zorder=2,markersize=ms)
 
     #plot the customer original portfolio
     weights = [.3,.1,.2,.4,]
-    ret,risk = portfolio_performance(daily_data,weights=weights)
-    plt.plot(risk*s,ret*s,'o',color='blue',zorder=3,markersize=ms)
+    ret_curr, risk_curr = portfolio_performance(daily_data,weights=weights)
+    plt.plot(risk_curr*s,ret_curr*s,'o',color='blue',zorder=3,markersize=ms)
+
+    risk_improve = risk_new - risk_curr
+    ret_improve = ret_new - ret_curr
+
+    port_vars = {"ret_curr": ret_curr, "risk_curr": risk_curr, "ret_new": ret_new, "risk_new": risk_new,
+                 "risk_improve": risk_improve, "ret_improve": ret_improve}
+
+    with open("port_vars.pickle", 'wb') as port_pickle:
+        pickle.dump(port_vars, port_pickle)
 
     plt.title('Expected Return and Risk Of Portfolios')
-    images.append(plt_to_img(plt))
+    images.append(plt_to_img(plt, "frontier"))
     images.append(pie())
 
-
-
-
-
-    # In yellow you can see the optimal portfolios for each of the desired returns (i.e. the `mus`). In addition, we get the weights for one optimal portfolio:
-
-    # In[9]:
-
     portfolios = neat(portfolios)
+
+    pie_portfolio = [v[0] for v in portfolios[risk_level]]
+    pie(pie_portfolio, 'future')
     return images,portfolios,returns,risks
-
-
-    # ## Backtesting on real market data
-    # This is all very interesting but not very applied. We next demonstrate how you can create a simple algorithm in [`zipline`](http://github.com/quantopian/zipline) -- the open-source backtester that powers [Quantopian](https://www.quantopian.com) -- to test this optimization on actual historical stock data.
-    # 
-    # First, lets load in some historical data using [Quantopian](https://www.quantopian.com)'s `get_pricing()`.
-
 
 
 from zipline.data.bundles import register
@@ -414,6 +339,7 @@ from zipline.data.bundles.csvdir import csvdir_equities
 
 from collections import OrderedDict
 import pytz
+
 
 def make_csvs(yahoo,tickers):
     for t in tickers:
