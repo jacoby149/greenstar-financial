@@ -301,10 +301,34 @@ def markowitz_run(daily_data=random_assets(), risk_level=50):
     ret_curr, risk_curr = portfolio_performance(daily_data,weights=weights)
     plt.plot(risk_curr*s,ret_curr*s,'o',color='blue',zorder=3,markersize=ms)
 
-    risk_improve = risk_new - risk_curr
+    ###   GENERATE LATEX INPUTS FOR FRONTIER PAGE
+    def stringit(v):
+        if v == 0:
+            v = "$\pm$ " + str(v)
+        elif v > 0:
+            v = "+ " + str(v)
+        else:
+            v = str(v)
+        return v
+
+
+    ret_curr = ret_curr.tolist()
+    risk_curr = risk_curr.tolist()
+
+    ret_curr = ret_curr[0][0]
+    risk_curr = risk_curr[0][0]
+    ret_new = ret_new[0]
+    risk_new = round(risk_new[0], 2)
+
+    risk_improve = round((risk_new - risk_curr), 2)
     ret_improve = ret_new - ret_curr
 
-    port_vars = {"ret_curr": ret_curr, "risk_curr": risk_curr, "ret_new": ret_new, "risk_new": risk_new,
+    ret_new = stringit(round((ret_new - 100), 1))
+    ret_improve = stringit(round((ret_improve - 100), 1))
+
+
+    port_vars = {"ret_curr": ret_curr, "risk_curr": risk_curr,
+                 "ret_new": ret_new, "risk_new": risk_new,
                  "risk_improve": risk_improve, "ret_improve": ret_improve}
 
     with open("port_vars.pickle", 'wb') as port_pickle:
