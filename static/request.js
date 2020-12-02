@@ -83,3 +83,11 @@ var means = []
 var stds = []
 console.log("Default risk is " + risk);
 $("#risk").on("change", setRisk);
+
+
+// Generate Report
+function genReport() {
+    form = document.getElementById('captable')
+    response = form.submit()
+    console.log("response submitted")
+}

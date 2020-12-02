@@ -45,6 +45,7 @@ RUN pip install flask_cors
 
 RUN sudo apt-get -y install texlive texlive-latex-extra texlive-fonts-recommended dvipng
 RUN pip install latex
+RUN sudo apt-get install -y texlive-science
 RUN pip install html5lib
 RUN pip install BeautifulSoup4
 RUN pip install pandas==0.23

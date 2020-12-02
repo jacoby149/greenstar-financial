@@ -7,7 +7,7 @@ upload full packet images to s3 with id packet grade IN packets folder
 # imports
 import markowitz
 import multipdf
-from flask import Flask, request, jsonify,render_template
+from flask import Flask, request, jsonify,render_template, send_file
 from flask_cors import CORS
 import sys
 
@@ -112,8 +112,10 @@ def back():
 import report
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    report.make_report()
-    return "pdf made"
+    name = request.args.get('name')
+    print("name: ", name, flush=True)
+    report.make_report(name)
+    return send_file("/app/pdfs/hello-" + name + ".pdf")
 
 
 # start flask

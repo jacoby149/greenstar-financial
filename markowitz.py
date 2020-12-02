@@ -216,6 +216,7 @@ def random_assets(n_assets=4,n_obs=1000, g=1.00026):
     daily_data = daily_data*gain_vector
     return daily_data
 
+
 def neat(portfolios):
     def n(p):
         p = array(p)
