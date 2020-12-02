@@ -212,9 +212,9 @@ Inter. Govt. Bonds  & GVI & Govt. bonds that mature in 5-10 years. \\\midrule
 \end{tabular} &
 \begin{tabular}[t]{c}
 (a) Current Portfolio\\
-\includegraphics[width=.45\linewidth]{/app/img/pie.png}\\
+\includegraphics[width=.45\linewidth]{/app/plts/pie.png}\\
 (b) New Portfolio\\
-\includegraphics[width=.45\linewidth]{/app/img/pie.png}
+\includegraphics[width=.45\linewidth]{/app/plts/piefuture.png}
 \end{tabular}
 \end{tabular}
 
@@ -259,11 +259,14 @@ Change in Risk : ( $- 3\%$ )
 
 \vspace{.4cm}
 \begin{center}
-\hspace*{-1cm}\includegraphics[width=.95\linewidth]{/app/img/bell.png}\par
+
+% OVERLAY BELL AND BELL7 AND LINE AND LINE7 -- generated from MATPLOTLIB as explicit images
+
+\hspace*{-1cm}\includegraphics[width=.95\linewidth]{/app/plts/bell.png}\par
 
 \vspace{.5cm}
 
-\hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/img/expected_return.png}\par
+\hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/plts/line.png}\par
 \end{center}
 
 \newpage
@@ -279,7 +282,7 @@ Change in Risk : ( $- 3\%$ )
 
 \begin{center}
   \begin{tabular}{c}
-    \includegraphics[width=.5\linewidth]{/app/img/pie.png}
+    \includegraphics[width=.5\linewidth]{/app/plts/pie.png}
   \end{tabular}
   \end{center}
 
@@ -293,8 +296,8 @@ Change in Risk : ( $- 3\%$ )
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/img/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/img/expected_return.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line.png}
   \end{tabular}
   \end{center}
 
@@ -309,8 +312,8 @@ Change in Risk : ( $- 3\%$ )
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/img/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/img/expected_return.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line7.png}
   \end{tabular}
   \end{center}
 
@@ -349,7 +352,7 @@ Sharpe Ratio : .37
 
 \begin{center}
   \begin{tabular}{c}
-    \includegraphics[width=.5\linewidth]{/app/img/pie.png}
+    \includegraphics[width=.5\linewidth]{/app/plts/piefuture.png}
   \end{tabular}
   \end{center}
 
@@ -363,8 +366,8 @@ Sharpe Ratio : .37
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/img/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/img/expected_return.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line.png}
   \end{tabular}
   \end{center}
 
@@ -379,8 +382,8 @@ Sharpe Ratio : .37
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/img/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/img/expected_return.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line7.png}
   \end{tabular}
   \end{center}
 
@@ -416,19 +419,18 @@ Harry Markowitz won a nobel prize for inventing a portfolio balancing theory. Ma
 
 \vspace{2cm}
 
-\hspace*{-1cm}\includegraphics{/app/img/curve.png}\par
+\hspace*{-1cm}\includegraphics{/app/plts/frontier.png}\par
 
 \vspace{1cm}
 
 
-Expected Risk : 1\% (\$1K)
+Risk (Std. Deviation) : {\VAR{risk_new}}
 
+Expected Return : {\VAR{ret_new}}
 
-Expected Return : 120\% (\$20K)
+Improvement in risk : {\VAR{risk_improve}}
 
-Improvement in risk: 37%
-
-Improvement in return: 37%
+Improvement in return : {\VAR{ret_improve}}
 
 
 \newpage

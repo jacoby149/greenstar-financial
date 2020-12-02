@@ -64,8 +64,11 @@ def mark():
     html_images = [img_form.format(i) for i in images]
 
     line = markowitz.line()
+    line7 = markowitz.line(7)
     html_img = img_form.format(line)
+    html_img7 = img_form.format(line7)
     html_images.append(html_img)
+    html_images.append(html_img7)
 
 
     vals["images"]= "".join(html_images)
