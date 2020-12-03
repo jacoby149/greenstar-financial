@@ -142,7 +142,9 @@ def line(years=''):
 def optimal_portfolio(daily_data):
     n = len(daily_data)
     daily_data = np.asmatrix(daily_data)
-    
+    print("npmatrix dailydata: ", daily_data, flush=True)
+    print(" dailydata shape : ", daily_data.shape, flush=True)
+
     N = 250#selecting an appropriate number
     power = 5.0
     #the first 20 porfolios are
@@ -159,8 +161,7 @@ def optimal_portfolio(daily_data):
     b = opt.matrix(1.0)
     
     # Calculate efficient frontier weights using quadratic programming
-    portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] 
-                for mu in mus]
+    portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] for mu in mus]
     ## CALCULATE RISKS AND RETURNS FOR FRONTIER using linear algebra solving
     returns = [blas.dot(pbar, p) for p in portfolios]
     risks = [np.sqrt(blas.dot(p, S*p)) for p in portfolios]
@@ -181,18 +182,25 @@ def optimal_portfolio(daily_data):
 #number of observations - number of days
 #g - rate of average daily growth in positions 
 
+# from morningstar.morningstar_client import MorningstarClient
 def asset_classes(tickers):
     from datetime import date,timedelta
     print("TICKERS :", tickers, flush=True)
     end_date = date.today()
-    d = timedelta(days = 400)
+    d = timedelta(days=531)
     start_date = end_date - d
-    
-    yahoo = pdr.DataReader("AAPL", start=str(start_date), end=str(end_date), data_source='yahoo')['Adj Close']
+
+    # client = MorningstarClient()
+    # mstar = client.get_instrument_prices(instrument='^SP400', start_date=str(start_date), end_date=str(end_date))
+
+    yahoo = yf.download(" ".join(tickers), start=str(start_date), end=str(end_date))['Adj Close']
+    print("head : ", yahoo.head(), flush=True)
     print("dates: ", start_date, " ... ", end_date, flush=True)
     print("YAHOO :", yahoo.values, flush=True)
     print('ytype :', type(yahoo), flush=True)
     print(flush=True)
+    yahoo = yahoo.to_numpy()
+    print("shape : ", yahoo.shape, flush=True)
     return yahoo
 
 
@@ -241,6 +249,13 @@ def portfolio_performance(daily_data, weights=None):
     return mu, sigma
 
 
+def get_noise_graph(daily_data):
+    vector = daily_data[0]
+    daily_data = daily_data / vector
+    print("ddata head: ", daily_data, flush=True)
+    return daily_data
+
+
 import pickle
 #risk level, a number from 1 to 100
 #daily_data = random_assets()asset_classes()
@@ -250,10 +265,13 @@ def markowitz_run(daily_data=random_assets(), tickers=None, risk_level=50):
 
     images = []
 
-    plt.plot(daily_data.T*100, alpha=.4);
+    noise_data = get_noise_graph(daily_data)
+    plt.plot(noise_data, alpha=.4);
     plt.xlabel('Time (Date)')
     plt.ylabel('Price (%)')
     plt.title('Daily Performance Of Chosen Assets');
+    plt.legend(tickers, bbox_to_anchor=(1.05, 1.0), loc='upper left')
+    plt.tight_layout()
 
     images.append(plt_to_img(plt, "noise"))
 

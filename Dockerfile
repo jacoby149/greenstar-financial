@@ -29,6 +29,7 @@ RUN pip install BeautifulSoup4
 RUN pip install latex
 RUN pip install opencv-python
 RUN pip install pandas_datareader
+#RUN pip install morningstar
 COPY . /app
 CMD pip freeze > requirements.txt
 EXPOSE 80
