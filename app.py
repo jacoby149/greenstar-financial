@@ -100,7 +100,8 @@ def load_graphs(tickers=None):
 
     risk=int(risk)
     print("RISK_LEVEL :",risk)
-    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, risk_level=risk)
+    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, captable=captable, risk_level=risk)
+    # images,portfolios,returns,risks = markowitz.markowitz_run(tickers=None, captable=None, risk_level=risk)
     vals = {}
     html_images = [img_form.format(i) for i in images]
 

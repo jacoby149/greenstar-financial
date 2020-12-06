@@ -108,18 +108,17 @@ def rand_weights(n):
     return k / sum(k)
 
 
-def pie(sizes=rand_weights(4), num=''):
-    print("type sizes", type(sizes), flush=True)
-    print("sizes", sizes, flush=True)
-    #ticker_dict formatted as... {"TCKR": val}
+def pie(sizes=rand_weights(4), tickers=None, num=''):
     import matplotlib.pyplot as plt
 
-# Pie chart, where the slices will be ordered and plotted counter-clockwise:
-    labels = 'FB', 'MSFT', 'AMZN', 'GOOG'
-    explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+    # Pie chart, where the slices will be ordered and plotted counter-clockwise:
+    if tickers is None:
+        tickers = 'FB', 'MSFT', 'AMZN', 'GOOG'
+    explode = [0 for t in tickers]
+    explode[0] = .1
 
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',shadow=True, startangle=90)
+    ax1.pie(sizes, explode=explode, labels=tickers, autopct='%1.1f%%',shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, "pie" + num)
@@ -139,11 +138,14 @@ def line(years=''):
     return plt_to_img(plt, "line" + str(years))
 
 
+from numpy import isnan
 def optimal_portfolio(daily_data):
+    findnans = isnan(daily_data)
+    daily_data[findnans] = 1
+
     n = len(daily_data)
+    print("len data: ", len(daily_data))
     daily_data = np.asmatrix(daily_data)
-    print("npmatrix dailydata: ", daily_data, flush=True)
-    print(" dailydata shape : ", daily_data.shape, flush=True)
 
     N = 250#selecting an appropriate number
     power = 5.0
@@ -152,7 +154,9 @@ def optimal_portfolio(daily_data):
     
     # Convert to cvxopt matrices
     S = opt.matrix(np.cov(daily_data))
+    print("S: ", S, type(S))
     pbar = opt.matrix(np.mean(daily_data, axis=1))
+    print("pbar: ", pbar)
     
     # Create constraint matrices
     G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
@@ -187,20 +191,28 @@ def asset_classes(tickers):
     from datetime import date,timedelta
     print("TICKERS :", tickers, flush=True)
     end_date = date.today()
-    d = timedelta(days=531)
+    d = timedelta(days=1531)
     start_date = end_date - d
 
     # client = MorningstarClient()
     # mstar = client.get_instrument_prices(instrument='^SP400', start_date=str(start_date), end_date=str(end_date))
 
     yahoo = yf.download(" ".join(tickers), start=str(start_date), end=str(end_date))['Adj Close']
-    print("head : ", yahoo.head(), flush=True)
-    print("dates: ", start_date, " ... ", end_date, flush=True)
-    print("YAHOO :", yahoo.values, flush=True)
-    print('ytype :', type(yahoo), flush=True)
-    print(flush=True)
+
+    # print("head : ", yahoo.head(), flush=True)
+    # print("dates: ", start_date, " ... ", end_date, flush=True)
+    # print("YAHOO :", yahoo.values, flush=True)
+    # print('ytype :', type(yahoo), flush=True)
+    # print(flush=True)
+
     yahoo = yahoo.to_numpy()
-    print("shape : ", yahoo.shape, flush=True)
+    yahoo = np.reshape(yahoo, (yahoo.shape[0], -1))
+    print("yahoo shape : ", yahoo.shape, flush=True)
+    vector = yahoo[0]
+    yahoo = yahoo / vector
+    yahoo = yahoo.T
+    print("T shape: ", yahoo.shape, flush=True)
+
     return yahoo
 
 
@@ -230,18 +242,21 @@ def neat(portfolios):
 
 
 def portfolio_performance(daily_data, weights=None):
-    ''' 
+    '''
     Returns the mean and standard deviation of returns for a random portfolio
     '''
     if (weights == None): weights = rand_weights(daily_data.shape[0])
     p = np.asmatrix(np.mean(daily_data, axis=1))
     w = np.asmatrix(weights)
     C = np.asmatrix(np.cov(daily_data))
-        
-    #calculates earning and 
+
+    #calculates earning and
     mu = w * p.T
     sigma = np.sqrt(w * C * w.T)
-    
+
+    # print("randweight shape: ", w.shape)
+    # print("p.T shape: ", p.T.shape)
+
     # This recursion reduces outliers to keep plots pretty
     #re draws a random portfolio
     #if sigma > 2:
@@ -249,24 +264,38 @@ def portfolio_performance(daily_data, weights=None):
     return mu, sigma
 
 
-def get_noise_graph(daily_data):
-    vector = daily_data[0]
-    daily_data = daily_data / vector
-    print("ddata head: ", daily_data, flush=True)
-    return daily_data
+def customer_port_weights(captable):
+    if captable is None:
+        return [.2, .3, .2, .3]
+
+    allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '']
+    allocations = [a / sum(allocations) for a in allocations]
+    print("allocations: ", allocations)
+    return allocations
+
 
 
 import pickle
-#risk level, a number from 1 to 100
-#daily_data = random_assets()asset_classes()
-def markowitz_run(daily_data=random_assets(), tickers=None, risk_level=50):
+import matplotlib.ticker as mtick
+
+def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50):
     if tickers is not None:
         daily_data = asset_classes(tickers)
+    else:
+        tickers = ["F", "A", "N", "g"]
 
     images = []
 
-    noise_data = get_noise_graph(daily_data)
-    plt.plot(noise_data, alpha=.4);
+    plt.plot(daily_data.T, alpha=.4);
+
+    def pct_format(x):
+        if x <= 0:
+            return '{:.0f}%'.format(x)
+        else:
+            return '+{:.0f}%'.format(x)
+
+    plt.gca().set_yticklabels([pct_format(x*100 - 100) for x in plt.gca().get_yticks()])
+
     plt.xlabel('Time (Date)')
     plt.ylabel('Price (%)')
     plt.title('Daily Performance Of Chosen Assets');
@@ -317,7 +346,7 @@ def markowitz_run(daily_data=random_assets(), tickers=None, risk_level=50):
     plt.plot(risk_new,ret_new,'o',color='red',zorder=2,markersize=ms)
 
     #plot the customer original portfolio
-    weights = [.3,.1,.2,.4,]
+    weights = customer_port_weights(captable)
     ret_curr, risk_curr = portfolio_performance(daily_data,weights=weights)
     plt.plot(risk_curr*s,ret_curr*s,'o',color='blue',zorder=3,markersize=ms)
 
@@ -357,12 +386,10 @@ def markowitz_run(daily_data=random_assets(), tickers=None, risk_level=50):
 
     plt.title('Expected Return and Risk Of Portfolios')
     images.append(plt_to_img(plt, "frontier"))
-    images.append(pie())
+    images.append(pie(weights, tickers))
 
     portfolios = neat(portfolios)
 
-    pie_portfolio = [v[0] for v in portfolios[risk_level]]
-    pie(pie_portfolio, 'future')
     return images,portfolios,returns,risks
 
 
