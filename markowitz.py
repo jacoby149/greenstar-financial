@@ -154,10 +154,8 @@ def optimal_portfolio(daily_data):
     
     # Convert to cvxopt matrices
     S = opt.matrix(np.cov(daily_data))
-    print("S: ", S, type(S))
     pbar = opt.matrix(np.mean(daily_data, axis=1))
-    print("pbar: ", pbar)
-    
+
     # Create constraint matrices
     G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
     h = opt.matrix(0.0, (n ,1))
@@ -191,13 +189,14 @@ def asset_classes(tickers):
     from datetime import date,timedelta
     print("TICKERS :", tickers, flush=True)
     end_date = date.today()
-    d = timedelta(days=1531)
+    d = timedelta(days=531)
     start_date = end_date - d
 
     # client = MorningstarClient()
     # mstar = client.get_instrument_prices(instrument='^SP400', start_date=str(start_date), end_date=str(end_date))
 
-    yahoo = yf.download(" ".join(tickers), start=str(start_date), end=str(end_date))['Adj Close']
+    labels = " ".join(tickers)
+    yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
 
     # print("head : ", yahoo.head(), flush=True)
     # print("dates: ", start_date, " ... ", end_date, flush=True)
@@ -208,12 +207,14 @@ def asset_classes(tickers):
     yahoo = yahoo.to_numpy()
     yahoo = np.reshape(yahoo, (yahoo.shape[0], -1))
     print("yahoo shape : ", yahoo.shape, flush=True)
+
     vector = yahoo[0]
     yahoo = yahoo / vector
+
     yahoo = yahoo.T
     print("T shape: ", yahoo.shape, flush=True)
 
-    return yahoo
+    return yahoo, labels
 
 
 def random_assets(n_assets=4, n_obs=1000, g=1.00026):
@@ -254,13 +255,14 @@ def portfolio_performance(daily_data, weights=None):
     mu = w * p.T
     sigma = np.sqrt(w * C * w.T)
 
+    print("random weights: ", weights)
     # print("randweight shape: ", w.shape)
     # print("p.T shape: ", p.T.shape)
 
     # This recursion reduces outliers to keep plots pretty
-    #re draws a random portfolio
-    #if sigma > 2:
-    #    return random_portfolio(returns)
+    # re-draws a random portfolio
+    # if sigma > 2:
+    #    return portfolio_performance(daily_data)
     return mu, sigma
 
 
@@ -280,9 +282,10 @@ import matplotlib.ticker as mtick
 
 def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50):
     if tickers is not None:
-        daily_data = asset_classes(tickers)
+        daily_data, labels = asset_classes(tickers)
+        labels = labels.split(" ")
     else:
-        tickers = ["F", "A", "N", "g"]
+        labels = ["F", "A", "N", "g"]
 
     images = []
 
@@ -299,7 +302,9 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
     plt.xlabel('Time (Date)')
     plt.ylabel('Price (%)')
     plt.title('Daily Performance Of Chosen Assets');
-    plt.legend(tickers, bbox_to_anchor=(1.05, 1.0), loc='upper left')
+
+
+    plt.legend(labels, bbox_to_anchor=(1.05, 1.0), loc='upper left')
     plt.tight_layout()
 
     images.append(plt_to_img(plt, "noise"))

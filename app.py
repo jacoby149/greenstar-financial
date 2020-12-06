@@ -26,7 +26,7 @@ form_params = dict()
 form_params["LargeG"] = "FSPGX"
 form_params["LargeV"] = "FLCOX"                # S&P 500 Value Index
 form_params["SmallG"] = "^RUT"
-form_params["SmallV"] = "FISVX"                # 500 value index not found
+form_params["SmallV"] = "VISVX"                # 500 value index not found
 form_params["Med"] = "MDY"                     # identical to ^SP400
 form_params["Inter"] = "VTIAX"
 form_params["Emerging"] = "VEMAX"
@@ -119,6 +119,7 @@ def load_graphs(tickers=None):
     vals["risks"]= str(risks)
 
     return vals
+
 
 @app.route("/norm", methods=["GET", "POST"])
 def norm():
