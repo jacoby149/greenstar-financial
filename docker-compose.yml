@@ -8,9 +8,8 @@ services:
       - ./:/app
     environment:
       FLASK_ENV: development
-
     ports:
-      - "5000:80"
+      - "80:80"
 
 
 #  testing:
