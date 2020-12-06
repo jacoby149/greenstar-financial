@@ -109,7 +109,7 @@ def rand_weights(n):
     return k / sum(k)
 
 
-def pie(sizes=rand_weights(4), tickers=None, num=''):
+def pie(sizes=rand_weights(4), tickers=None, title='pie_default'):
     import matplotlib.pyplot as plt
 
     # Pie chart, where the slices will be ordered and plotted counter-clockwise:
@@ -122,7 +122,8 @@ def pie(sizes=rand_weights(4), tickers=None, num=''):
     ax1.pie(sizes, explode=explode, labels=tickers, autopct='%1.1f%%',shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
-    return plt_to_img(plt, "pie" + num)
+    return plt_to_img(plt, title)
+
 
 def line(years=''):
     Data = {'Year': [2020,2021,2022,2023,2024,2025,2026],
@@ -273,10 +274,24 @@ def portfolio_performance(daily_data, weights=None):
 def customer_port_weights(captable):
     if captable is None:
         return [.2, .3, .2, .3]
-
+    print('captable: ', captable)
     allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '']
     allocations = [a / sum(allocations) for a in allocations]
     print("allocations: ", allocations)
+    return allocations
+
+
+def old_weights(captable):
+    if captable is None:
+        return [.2, .3, .2, .3]
+
+    allocations = [captable[x] for x in captable if captable[x] != '']
+    for i, item in enumerate(allocations):
+        if 'X' in item:
+            item = item[:-1]
+        allocations[i] = int(item)
+
+    allocations = [a / sum(allocations) for a in allocations]
     return allocations
 
 
@@ -284,7 +299,7 @@ def customer_port_weights(captable):
 import pickle
 import matplotlib.ticker as mtick
 
-def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50):
+def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50, old_tickers=None):
     if tickers is not None:
         daily_data, labels = asset_classes(tickers)
         labels = labels.split(" ")
@@ -293,7 +308,6 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
         labels = ["F", "A", "N", "g"]
 
     images = []
-
     plt.plot(daily_data.T, alpha=.4);
 
     def pct_format(x):
@@ -396,7 +410,9 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
     plt.title('Expected Return and Risk Of Portfolios')
     images.append(plt_to_img(plt, "frontier"))
-    images.append(pie(weights, tickers))
+    images.append(pie(weights, tickers, 'piefuture'))
+    ol_waits = old_weights(captable)
+    images.append(pie(ol_waits, old_tickers, 'pie'))
 
     portfolios = neat(portfolios)
 

@@ -80,6 +80,7 @@ def clean_form(request):
         captable[ticker] = val
 
     tickers = []
+    old_tickers = []
     for k in form_params:
         val = request.form.get(k)
         ticker = form_params[k]
@@ -87,8 +88,10 @@ def clean_form(request):
             continue
         if 'X'.casefold() not in val.casefold() and val != '':
             tickers.append(ticker)
+        if val != '0' and val != '':
+            old_tickers.append(ticker)
 
-    return captable, tickers, risk, name, birthday, term
+    return captable, tickers, risk, name, birthday, term, old_tickers
 
 
 @app.route("/load_graphs", methods=["GET", "POST"])
@@ -96,12 +99,12 @@ def load_graphs(tickers=None):
     global images
     images = []
 
-    captable, tickers, risk, name, birthday, term = clean_form(request)
+    captable, tickers, risk, name, birthday, term, old_tickers = clean_form(request)
 
     risk=int(risk)
     print("RISK_LEVEL :",risk)
-    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, captable=captable, risk_level=risk)
-    # images,portfolios,returns,risks = markowitz.markowitz_run(tickers=None, captable=None, risk_level=risk)
+    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, captable=captable, risk_level=risk, old_tickers=old_tickers)
+    # images,portfolios,returns,risks = markowitz.markowitz_run(tickers=None, captable=None, risk_level=risk, old_tickers=None)
     vals = {}
     html_images = [img_form.format(i) for i in images]
 
@@ -151,7 +154,7 @@ def back():
 import report
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    _, _, _, name, _, _ = clean_form(request)
+    _, _, _, name, _, _, _ = clean_form(request)
     report.make_report(name)
 
     return send_file("/app/pdfs/{} Report.pdf".format(name))
