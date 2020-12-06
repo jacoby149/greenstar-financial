@@ -145,9 +145,9 @@ def optimal_portfolio(daily_data):
 
     N = 500            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
     if 0 <= n <= 7:
-        power = n + 1
+        power = n + 9
     else:
-        power = 8.0
+        power = 9.0
     #the first 20 porfolios are
     mus = [10**(power * t/N - 1.0) for t in range(0,200)]
     
