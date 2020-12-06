@@ -23,8 +23,8 @@ img_form = "<img src = '{}'>"
 
 form_params = dict()
 #stock_symbols
-form_params["LargeG"] = "FSPGX"
-form_params["LargeV"] = "FLCOX"                # S&P 500 Value Index
+form_params["LargeG"] = "VIGRX"                # FSPGX
+form_params["LargeV"] = "JKD"                  # FLCOX S&P 500 Value Index
 form_params["SmallG"] = "^RUT"
 form_params["SmallV"] = "VISVX"                # 500 value index not found
 form_params["Med"] = "MDY"                     # identical to ^SP400

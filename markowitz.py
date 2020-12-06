@@ -12,6 +12,7 @@ from urllib.request import urlopen
 #markowitz requirements.
 import numpy as np
 from numpy import array
+from numpy import isnan
 
 import importlib
 
@@ -138,19 +139,17 @@ def line(years=''):
     return plt_to_img(plt, "line" + str(years))
 
 
-from numpy import isnan
 def optimal_portfolio(daily_data):
-    findnans = isnan(daily_data)
-    daily_data[findnans] = 1
-
     n = len(daily_data)
-    print("len data: ", len(daily_data))
     daily_data = np.asmatrix(daily_data)
 
-    N = 250#selecting an appropriate number
-    power = 5.0
+    N = 500            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
+    if 0 <= n <= 7:
+        power = n + 1
+    else:
+        power = 8.0
     #the first 20 porfolios are
-    mus = [10**(power * t/N - 1.0) for t in range(0,100)]
+    mus = [10**(power * t/N - 1.0) for t in range(0,200)]
     
     # Convert to cvxopt matrices
     S = opt.matrix(np.cov(daily_data))
@@ -169,7 +168,6 @@ def optimal_portfolio(daily_data):
     risks = [np.sqrt(blas.dot(p, S*p)) for p in portfolios]
     ## CALCULATE THE 2ND DEGREE POLYNOMIAL OF THE FRONTIER CURVE
     
-    
     #Calculates "optimal" portfolio, but better to let customer choose
     #m1 = np.polyfit(returns, risks, 2)
     #x1 = np.sqrt(m1[2] / m1[0])
@@ -183,13 +181,16 @@ def optimal_portfolio(daily_data):
 #number of assets - number of stocks
 #number of observations - number of days
 #g - rate of average daily growth in positions 
+def nan_helper(y):
+    return np.isnan(y), lambda z: z.nonzero()[0]
+
 
 # from morningstar.morningstar_client import MorningstarClient
 def asset_classes(tickers):
     from datetime import date,timedelta
     print("TICKERS :", tickers, flush=True)
     end_date = date.today()
-    d = timedelta(days=531)
+    d = timedelta(days=1800)
     start_date = end_date - d
 
     # client = MorningstarClient()
@@ -197,19 +198,23 @@ def asset_classes(tickers):
 
     labels = " ".join(tickers)
     yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
-
+    yahoo.to_csv('tickers.csv')
     # print("head : ", yahoo.head(), flush=True)
     # print("dates: ", start_date, " ... ", end_date, flush=True)
     # print("YAHOO :", yahoo.values, flush=True)
     # print('ytype :', type(yahoo), flush=True)
-    # print(flush=True)
+    # print(flush=True) relaod
 
     yahoo = yahoo.to_numpy()
+
     yahoo = np.reshape(yahoo, (yahoo.shape[0], -1))
     print("yahoo shape : ", yahoo.shape, flush=True)
 
-    vector = yahoo[0]
-    yahoo = yahoo / vector
+    #  Averages each ticker based on the value from first day listed
+    yahoo = yahoo / yahoo[0]
+
+    findnans = isnan(yahoo)
+    yahoo[findnans] = 1
 
     yahoo = yahoo.T
     print("T shape: ", yahoo.shape, flush=True)
@@ -255,7 +260,6 @@ def portfolio_performance(daily_data, weights=None):
     mu = w * p.T
     sigma = np.sqrt(w * C * w.T)
 
-    print("random weights: ", weights)
     # print("randweight shape: ", w.shape)
     # print("p.T shape: ", p.T.shape)
 
@@ -284,6 +288,7 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
     if tickers is not None:
         daily_data, labels = asset_classes(tickers)
         labels = labels.split(" ")
+        labels.sort()
     else:
         labels = ["F", "A", "N", "g"]
 
@@ -340,7 +345,7 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
     #plot the random portfolios
     plt.plot([r*s for r in stds], [r*s for r in means], 'o',color="wheat",markersize=ms)
-    
+
     #plot the optimal portfolios
     plt.ylabel('Return (Percentage)')
     plt.xlabel('Risk (Standard Deviation)')
