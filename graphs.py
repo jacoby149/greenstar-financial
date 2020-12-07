@@ -96,7 +96,7 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     fig, ax = plt.subplots(figsize=(9,6))
 
     # draw bells
-    ax, x, y = draw_bell(ax, mu, sigma, zorder=2, color='g', alpha=.3)
+    ax, x, y = draw_bell(ax, mu, sigma, zorder=2, color='mediumSeaGreen', alpha=.3)
     plt.xticks(np.arange(min(x), max(x)+1, sigma))
     ax, x, y = draw_bell(ax, mu2, sigma2, zorder=1, color='b', alpha=.1)
 
@@ -162,14 +162,16 @@ def pie(pie_data, title='pie_default'):
 
     fig1, ax1 = plt.subplots()
 
-    ax1.pie(sizes, labels=tickers, explode=explode, autopct='%1.1f%%',shadow=True, startangle=90)
+    colors = ['darkorange', 'cornflowerblue', 'lightsteelblue', 'gold', 'orangered']
+    ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)
 
 
 def noise(daily_data, labels):
-    plt.plot(daily_data.T, alpha=.4);
+    plt.figure(figsize=(10,6))
+    plt.plot(daily_data.T, alpha=.4)
 
     def pct_format(x):
         if x <= 0:

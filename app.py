@@ -24,21 +24,21 @@ img_form = "<img src = '{}'>"
 
 form_params = dict()
 #stock_symbols
-form_params["LargeG"] = "VIGRX"                # FSPGX
-form_params["LargeV"] = "JKD"                  # FLCOX S&P 500 Value Index
-form_params["SmallG"] = "^RUT"
-form_params["SmallV"] = "VISVX"                # 500 value index not found
-form_params["Med"] = "MDY"                     # identical to ^SP400
-form_params["Inter"] = "VTIAX"
-form_params["Emerging"] = "VEMAX"
-form_params["InterBond"] = "GVI"
-form_params["Long"] = "ILTB"
-form_params["Corp"] = "CBFSX"                  # from JP Morgan   "^SPBDACPT"
-form_params["Highyield"] = "HYG"
-form_params["Muni"] = "MUB"
-form_params["Foreignbonds"] = "BNDX"
-form_params["Debt"] = "JEDAX"
-form_params["Realestate"] = "IYR"              # from Blackrock, models DJSure very very closely   "DJUSRE"
+form_params["Large Cap Growth"] = "VIGRX"                # FSPGX
+form_params["Large Cap Val"] = "JKD"                  # FLCOX S&P 500 Value Index
+form_params["Small Cap Growth"] = "^RUT"
+form_params["Small Cap Val"] = "VISVX"                # 500 value index not found
+form_params["Mid Cap"] = "MDY"                     # identical to ^SP400
+form_params["Intl Stock"] = "VTIAX"
+form_params["Emerging Mkt Stock"] = "VEMAX"
+form_params["Intl Gov Bonds"] = "GVI"
+form_params["Long Gov Bonds"] = "ILTB"
+form_params["Corporate Bonds"] = "CBFSX"                  # from JP Morgan   "^SPBDACPT"
+form_params["High Yield Bonds"] = "HYG"
+form_params["Municipal Bonds"] = "MUB"
+form_params["Foreign Bonds"] = "BNDX"
+form_params["Emerging Mkt Debt"] = "JEDAX"
+form_params["Real Estate"] = "IYR"              # from Blackrock, models DJSure very very closely   "DJUSRE"
 form_params["V.C."] = "LDVIX"                  # quick replacement from Reuters... need to sus it out   "^AMZX"
 form_params["Commodities"] = "USCI"            # US commodity index instead of dow jones intl. very similar models "^DJCI"
 form_params["Cash"] = "BIL"
@@ -101,13 +101,14 @@ def clean_form(request):
 def load_graphs(tickers=None):
     global images
     images = []
+    asset_map = {v: k for k, v in form_params.items()}
 
     captable, tickers, risk, name, birthday, term, old_tickers = clean_form(request)
 
     risk=int(risk)
     print("RISK_LEVEL :",risk)
-    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, captable=captable, risk_level=risk, old_tickers=old_tickers)
-    # images,portfolios,returns,risks = markowitz.markowitz_run(tickers=None, captable=None, risk_level=risk, old_tickers=None)
+    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, captable=captable, risk_level=risk, old_tickers=old_tickers, asset_map=asset_map)
+    # images,portfolios,returns,risks = markowitz.markowitz_run(tickers=None, captable=None, risk_level=risk, old_tickers=None, asset_map=form_params)
     vals = {}
     html_images = [img_form.format(i) for i in images]
 

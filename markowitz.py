@@ -49,11 +49,12 @@ def yahoo_assets(tickers):
     filename = "csvs/yfinance" + str(end_date) + labels + ".csv"
 
     if os.path.exists(filename):
-        print(filename + " exits")
+        print(filename + " exists")
         yahoo = pd.read_csv(filename, index_col="Date")
         # print("cached yahoo: ", yahoo, flush=True)
 
     else:
+        print("downloading data from yahoo")
         yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
         yahoo.to_csv(filename)
 
@@ -133,6 +134,9 @@ def get_rand_portfolio(daily_data):
 def customer_port_weights(captable):
     if captable is None:
         return [.2, .3, .2, .3]
+
+    print("")
+
     allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '']
     allocations = [a / sum(allocations) for a in allocations]
     # print("allocations: ", allocations)
@@ -143,13 +147,16 @@ def old_weights(captable):
     if captable is None:
         return [.2, .3, .2, .3]
 
-    allocations = [captable[x] for x in captable if captable[x] != '']
+    allocations = [(captable[x], x) for x in captable if captable[x] != '']
+    allocations = sorted(allocations, key=lambda x: x[1])
+    allocations = [a[0] for a in allocations]
     for i, item in enumerate(allocations):
         if 'X' in item:
             item = item[:-1]
         allocations[i] = int(item)
 
     allocations = [a / sum(allocations) for a in allocations]
+
     return allocations
 
 
@@ -159,7 +166,7 @@ def old_weights(captable):
 #################################
 
 
-def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50, old_tickers=None):
+def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50, old_tickers=None, asset_map=None):
     if tickers is not None:
         daily_data, labels = yahoo_assets(tickers)
         labels = labels.split(" ")
@@ -190,8 +197,18 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
         return red, blue, wheat, ribs
 
-
     red, blue, wheat, ribs = get_frontier_data()
+
+
+    # remapping to relevant assets
+    old_tickers.sort()
+    old_assets = [asset_map[label] for label in old_tickers]
+    assets = [asset_map[label] for label in labels]
+
+    # get pie data
+    ol_pie = dict(zip(old_assets, old_weights(captable)))
+    fpd = dict(zip(assets, ribs['port'][risk_level]))
+    new_pie = {asset: fpd[asset] for asset in fpd if fpd[asset] > 0.0005}
 
 
     # make frontier graph
@@ -199,16 +216,12 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
 
     # make pie graphs
-    fpd = dict(zip(labels, ribs['port'][risk_level]))
-    new_pie = {label: fpd[label] for label in fpd if fpd[label] > 0.0005}
-    ol_pie = dict(zip(old_tickers, old_weights(captable)))
-
     images.append(graphs.pie(new_pie, 'piefuture'))
     images.append(graphs.pie(ol_pie, 'pie'))
 
 
     # Make noise graph
-    images.append(graphs.noise(daily_data, labels))
+    images.append(graphs.noise(daily_data, assets))
 
 
     # Make line graphs
