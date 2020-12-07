@@ -6,6 +6,7 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # imports
 import markowitz
+import graphs
 from flask import Flask, request, jsonify, render_template, send_file, session, redirect
 from flask_cors import CORS
 import sys
@@ -91,6 +92,8 @@ def clean_form(request):
         if val != '0' and val != '':
             old_tickers.append(ticker)
 
+    tickers.sort()
+    old_tickers.sort()
     return captable, tickers, risk, name, birthday, term, old_tickers
 
 
@@ -108,13 +111,6 @@ def load_graphs(tickers=None):
     vals = {}
     html_images = [img_form.format(i) for i in images]
 
-    line = markowitz.line()
-    line7 = markowitz.line(7)
-    html_img = img_form.format(line)
-    html_img7 = img_form.format(line7)
-    html_images.append(html_img)
-    html_images.append(html_img7)
-
 
     vals["images"]= "".join(html_images)
     vals["portfolios"]= str(portfolios)
@@ -124,19 +120,19 @@ def load_graphs(tickers=None):
     return vals
 
 
-@app.route("/norm", methods=["GET", "POST"])
-def norm():
-    global images
-    mu,std = float(request.form.get('mu')),float(request.form.get('std'))
-    vals = dict()
-    
-    norm = markowitz.normal(mu,std)    
-    html_img = img_form.format(norm)
-    #images.append(norm)
-
-    vals["normal"]= str(html_img)
-    sys.stdout.flush()
-    return vals
+# @app.route("/norm", methods=["GET", "POST"])
+# def norm():
+#     global images
+#     mu,std = float(request.form.get('mu')),float(request.form.get('std'))
+#     vals = dict()
+#
+#     norm = graphs.normal(mu,std)
+#     html_img = img_form.format(norm)
+#     #images.append(norm)
+#
+#     vals["normal"]= str(html_img)
+#     sys.stdout.flush()
+#     return vals
 
 
 @app.route("/back", methods=["GET", "POST"])

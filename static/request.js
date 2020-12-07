@@ -37,35 +37,21 @@ function setRisk() {
 //  NETWORKING JAVASCRIPT  /////
 ////////////////////////////////
 
-
-//normal function returning
-
-function norm() {
-    update_vals()
-    $.post("/norm", { "std": std * 100, "mu": mean * 100 }, load_norm)
-}
-
-function load_norm(data) {
-    document.getElementById("norm").innerHTML = data["normal"]
-}
-
-//basic image returning
-
-function load_basic(data) {
+// image return
+function load_graphs(data) {
     console.log(data)
     document.getElementById("graphs").innerHTML = data["images"]
     stds = eval(data["risks"])
     means = eval(data["returns"])
     portfolios = eval(data["portfolios"])
-    norm()
 }
 
-function basic() {
+function graphs() {
     form = {}
     $('#captable').serializeArray().map(function(x) {form[x.name] = x.value})
     form["risk"] = risk
     console.log("FORM :" + form)
-    $.post("/load_graphs", form, load_basic);
+    $.post("/load_graphs", form, load_graphs);
 }
 
 

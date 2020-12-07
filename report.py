@@ -3,6 +3,42 @@ from latex import build_pdf
 from jinja2 import FileSystemLoader
 from latex.jinja2 import make_env
 
+
+
+def latex_pickle_dump(red, blue):
+    def stringit(v):
+        if v == 0:
+            v = "$\pm$ " + str(v)
+        elif v > 0:
+            v = "+ " + str(v)
+        else:
+            v = str(v)
+        return v
+
+    ret_curr = blue['ret'].tolist()
+    risk_curr = blue['risk'].tolist()
+
+    ret_curr = ret_curr[0][0]
+    risk_curr = risk_curr[0][0]
+    ret_new = red['ret'][0]
+    risk_new = round(red['risk'][0], 2)
+
+    risk_change = round((risk_new - risk_curr), 2)
+
+    risk_change = stringit(risk_change)
+    ret_improve = ret_new - ret_curr
+
+    ret_new = stringit(round((ret_new - 100), 1))
+    ret_improve = stringit(round((ret_improve - 100), 1))
+
+    port_vars = {"ret_curr": ret_curr, "risk_curr": risk_curr,
+                 "ret_new": ret_new, "risk_new": risk_new,
+                 "risk_change": risk_change, "ret_improve": ret_improve}
+
+    with open("port_vars.pickle", 'wb') as port_pickle:
+        pickle.dump(port_vars, port_pickle)
+
+
 def make_report(name):
     with open("port_vars.pickle", 'rb') as pickle_file:
         port_vars = pickle.load(pickle_file)

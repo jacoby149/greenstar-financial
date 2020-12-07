@@ -20,7 +20,7 @@
                     <button onclick="showhide()">Show/Hide Form</button>
                 </td>
                 <td>
-                    <button onclick="basic()">Load Graphs</button>
+                    <button onclick="graphs()">Load Graphs</button>
                 </td>
                 <td>
                     <button onclick="genReport()">Generate Report</button>
@@ -151,9 +151,8 @@
 
 
     <div id="graphs"></div>
-    <div id="norm"></div>
 
-    <!-- Backtesting is an anti feature upon further consideration ...
+    <!-- Backtesting is an anti feature upon further consideration ... reload
         Why? 
         1) A customer can come in with their non diversified risky porfolio and outperform a responsible portfolio on the backtest.
         2) To make quick live reliable presentations on the stock market, its best to extrapolate data than interpolate. expected return curves extrapolate, while backtesting interpolates. Backtesting is embarrasing on the spot.
