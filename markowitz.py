@@ -128,7 +128,7 @@ def customer_port_weights(captable):
         return [.2, .3, .2, .3]
     allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '']
     allocations = [a / sum(allocations) for a in allocations]
-    print("allocations: ", allocations)
+    # print("allocations: ", allocations)
     return allocations
 
 
@@ -183,6 +183,7 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
         return red, blue, wheat, ribs
 
+
     red, blue, wheat, ribs = get_frontier_data()
 
 
@@ -204,6 +205,9 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
 
     # Make line graphs
+    ops.montecarlo(mu=1.05, std=.10, term=7, trials=1000000)
+    ops.montecarlo(mu=1.05, std=0, term=7, trials=1000000)
+
     images.append(graphs.line())
     images.append(graphs.line(7))
 
@@ -229,5 +233,3 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
     portfolios = neat(ribs['port'])
 
     return images, portfolios, ribs['ret'], ribs['risk']
-
-

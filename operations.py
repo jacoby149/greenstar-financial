@@ -28,3 +28,20 @@ def portfolio_performance(daily_data, weights):
     sigma = np.sqrt(w * C * w.T)
 
     return mu, sigma
+
+
+def montecarlo(mu, std, term, trials):
+    sums = {period: 0 for period in range(term+1)}
+
+    for trial in range(trials):
+        wealth = 1
+        for period in range(term+1):
+            sums[period] += wealth
+            wealth = wealth * np.random.normal(mu, std)
+
+    for period in range(term+1):
+        sums[period] = sums[period] / trials
+
+    print("montecarlo sums: ", sums, flush=True)
+
+    return sums

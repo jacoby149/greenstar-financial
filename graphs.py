@@ -87,15 +87,11 @@ def pie(pie_data, title='pie_default'):
     else:
         tickers, sizes = pie_data.keys(), pie_data.values()
 
-
     explode = [0 for t in tickers]
     explode[0] = .1
 
     # max_ticker = max(tickers.keys(), key=(lambda k: tickers[k]))   <-- Explode largest slice of pie
 
-    print("sizes: ", sizes)
-    print("tickers: ", tickers)
-    print("explode: ", explode)
     fig1, ax1 = plt.subplots()
 
     ax1.pie(sizes, labels=tickers, explode=explode, autopct='%1.1f%%',shadow=True, startangle=90)
