@@ -79,13 +79,14 @@ def normal(mu=110,sigma=7.10):
     return plt_to_img(plt, "bell")
 
 
-def pie(sizes=None, tickers=None, title='pie_default'):
+def pie(pie_data, title='pie_default'):
     # Pie chart, where the slices will be ordered and plotted counter-clockwise:
-    if tickers is None:
+    if pie_data is None:
         tickers = 'FB', 'MSFT', 'AMZN', 'GOOG'
-
-    if sizes is None:
         sizes = ops.rand_weights(4)
+    else:
+        tickers, sizes = pie_data.keys(), pie_data.values()
+
 
     explode = [0 for t in tickers]
     explode[0] = .1
@@ -96,7 +97,8 @@ def pie(sizes=None, tickers=None, title='pie_default'):
     print("tickers: ", tickers)
     print("explode: ", explode)
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, labels=tickers, autopct='%1.1f%%',shadow=True, startangle=90)
+
+    ax1.pie(sizes, labels=tickers, explode=explode, autopct='%1.1f%%',shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)

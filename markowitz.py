@@ -114,7 +114,7 @@ def optimal_portfolio(daily_data):
     portfolios.reverse()
     returns.reverse()
     risks.reverse()
-    
+
     return portfolios,returns,risks
 
 
@@ -185,25 +185,30 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
     red, blue, wheat, ribs = get_frontier_data()
 
+
     # make frontier graph
     images.append(graphs.frontier(red, blue, wheat, ribs))
 
-    # # make pie future graph
-    # weights = ribs['port'][risk_level]
-    # images.append(graphs.pie(weights, tickers, 'picture'))
-    #
-    # # make pie graph
-    # ol_waits = old_weights(captable)
-    # images.append(graphs.pie(ol_waits, old_tickers, 'pie'))
+
+    # make pie graphs
+    fpd = dict(zip(labels, ribs['port'][risk_level]))
+    new_pie = {label: fpd[label] for label in fpd if fpd[label] > 0.0005}
+    ol_pie = dict(zip(old_tickers, old_weights(captable)))
+
+    images.append(graphs.pie(new_pie, 'piefuture'))
+    images.append(graphs.pie(ol_pie, 'pie'))
+
 
     # Make noise graph
     images.append(graphs.noise(daily_data, labels))
+
 
     # Make line graphs
     images.append(graphs.line())
     images.append(graphs.line(7))
 
-    # Make normal bell curve
+
+    # Make bell curve
     images.append(graphs.normal())
 
 
