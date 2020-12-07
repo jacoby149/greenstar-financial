@@ -6,6 +6,7 @@ import base64
 import importlib
 import numpy as np
 import pandas as pd
+from datetime import date
 from scipy.stats import norm
 
 #matplotlib necessary imports
@@ -41,13 +42,66 @@ def calc_norm(mu,sigma,z):
     return x, y
 
 
-def normal(mu=110,sigma=7.10):
-    x_t,y_t = calc_norm(mu,sigma,1)
-    x,y = calc_norm(mu,sigma,2)
-    x_all,y_all = calc_norm(mu,sigma,10)
+def draw_bell(ax, mu=110,sigma=7.10, zorder=1, color='g', alpha=0.3):
+    x_t, y_t = calc_norm(mu,sigma,1)
+    x, y = calc_norm(mu,sigma,2)
+    x_all, y_all = calc_norm(mu,sigma,10)
+    y, y_t, y_all = y / max(y), y_t / max(y_t), y_all / max(y_all)
+
+    #revenue marks
+    ax.plot(x_all, y_all, zorder=zorder, alpha=0.7, color=color)
+    ax.fill_between(x_t, y_t, 0, alpha=alpha, color=color, zorder=zorder)
+    ax.fill_between(x, y, 0, alpha=alpha, color=color, zorder=zorder)
+    ax.fill_between(x_all, y_all, 0, alpha=alpha/3, zorder=zorder)
+
+    return ax, x, y
+
+
+def bell(mu=1.10,sigma=.071):
+    mu = mu*100
+    sigma = sigma*100
 
     # build the plot
     fig, ax = plt.subplots(figsize=(9,6))
+
+    # draw bell
+    ax, x, y = draw_bell(ax, mu, sigma, color='r')
+
+    # format for percent
+    ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+
+    # adjust the graph so the x axis is zero
+    ax.spines['bottom'].set_position('zero')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.spines['left'].set_smart_bounds(True)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
+
+    ax.set_xlim([mu-4*sigma,mu+4*sigma])
+    ax.set_xlabel('# of Standard Deviations Outside the Mean')
+    ax.set_ylabel('Probability Distribution')
+    ax.set_yticklabels([])
+
+    plt.xticks(np.arange(min(x), max(x)+1, sigma))
+    ax.set_title('Bell Curve Of Returns')
+
+    return plt_to_img(plt, "bell")
+
+
+def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
+    mu, mu2 = mu*100, mu2*100
+    sigma, sigma2 = sigma*100, sigma2*100
+
+    # build the plot
+    fig, ax = plt.subplots(figsize=(9,6))
+
+    # draw bells
+    ax, x, y = draw_bell(ax, mu, sigma, zorder=2, color='g', alpha=.3)
+    plt.xticks(np.arange(min(x), max(x)+1, sigma))
+    ax, x, y = draw_bell(ax, mu2, sigma2, zorder=1, color='b', alpha=.1)
+
+    # format for percent
+    ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     #adjust the graph so the x axis is zero
     ax.spines['bottom'].set_position('zero')
@@ -56,27 +110,41 @@ def normal(mu=110,sigma=7.10):
     ax.spines['right'].set_visible(False)
     ax.spines['top'].set_visible(False)
 
-    #plt.style.use('fivethirtyeight')
-    ax.xaxis.set_major_formatter(mtick.PercentFormatter())
-
-    #revenue marks
-    ax.plot(x_all,y_all)
-
-    ax.fill_between(x_t,y_t,0, alpha=0.3, color='g')
-    ax.fill_between(x,y,0, alpha=0.3, color='b')
-    ax.fill_between(x_all,y_all,0, alpha=0.1)
-
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
-
     ax.set_xlabel('# of Standard Deviations Outside the Mean')
     ax.set_ylabel('Probability Distribution')
-
     ax.set_yticklabels([])
-    plt.xticks(np.arange(min(x), max(x)+1, sigma))
 
     ax.set_title('Bell Curve Of Returns')
 
-    return plt_to_img(plt, "bell")
+    return plt_to_img(plt, "bellcompare")
+
+
+def draw_line(plt, line_data, color="black", zorder=1):
+    year, ret = line_data.keys(), line_data.values()
+    year = [y + int(str(date.today())[:4]) for y in year]
+    plt.plot(year, ret, color=color, marker='o', zorder=zorder)
+
+
+def line(line_data, title=0):
+    draw_line(plt, line_data)
+    plt.title('Expected Returns For ' + str(title) + ' Years', fontsize=14)
+    plt.xlabel('Year', fontsize=14)
+    plt.ylabel('Return', fontsize=14)
+    plt.grid(True)
+
+    return plt_to_img(plt, "line" + str(title))
+
+
+def line_compare(rline_data, bline_data, title=1):
+    draw_line(plt, bline_data, color="blue", zorder=1)
+    draw_line(plt, rline_data, color="red", zorder=2)
+    plt.title('Expected Returns For ' + str(title) + ' Years', fontsize=14)
+    plt.xlabel('Year', fontsize=14)
+    plt.ylabel('Return', fontsize=14)
+    plt.grid(True)
+
+    return plt_to_img(plt, "line" + str(title))
 
 
 def pie(pie_data, title='pie_default'):
@@ -98,21 +166,6 @@ def pie(pie_data, title='pie_default'):
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)
-
-
-def line(years=''):
-    Data = {'Year': [2020,2021,2022,2023,2024,2025,2026],
-            'Return': [100,105,111,118,127,137,148], }
-
-    df = pd.DataFrame(Data,columns=['Year','Return'])
-
-    plt.plot(df['Year'], df['Return'], color='black', marker='o')
-    plt.title('Expected Returns For 7 Years', fontsize=14)
-    plt.xlabel('Year', fontsize=14)
-    plt.ylabel('Return', fontsize=14)
-    plt.grid(True)
-
-    return plt_to_img(plt, "line" + str(years))
 
 
 def noise(daily_data, labels):
@@ -146,7 +199,7 @@ def frontier(red, blue, wheat, ribs):
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     # Legend
-    legend_elements = [Line2D([0], [0], color='b', lw=4, label='Line'),
+    legend_elements = [Line2D([0], [0], color='b', lw=4, label='Current Strategy'),
                        Line2D([0], [0], marker='o', color='w', label='Scatter',
                               markerfacecolor='g', markersize=15),
                        Patch(facecolor='orange', edgecolor='r',
@@ -162,7 +215,7 @@ def frontier(red, blue, wheat, ribs):
     plt.plot([r*s for r in ribs['risk']], [r*s for r in ribs['ret']], 'y-o',markersize=ms)
 
     # plot slider-selected recommended portfolio
-    plt.plot(red['risk'],red['ret'],'o',color='red',zorder=2,markersize=ms*2)
+    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=2,markersize=ms*2)
 
     # plot original portfolio
     plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*2)

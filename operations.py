@@ -27,6 +27,9 @@ def portfolio_performance(daily_data, weights):
     mu = w * p.T
     sigma = np.sqrt(w * C * w.T)
 
+    mu = np.asscalar(np.squeeze(np.asarray(mu)))
+    sigma = np.asscalar(np.squeeze(np.asarray(sigma)))
+
     return mu, sigma
 
 
@@ -41,7 +44,5 @@ def montecarlo(mu, std, term, trials):
 
     for period in range(term+1):
         sums[period] = sums[period] / trials
-
-    print("montecarlo sums: ", sums, flush=True)
 
     return sums

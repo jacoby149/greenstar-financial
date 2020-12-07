@@ -6,7 +6,6 @@ import graphs
 import operations as ops
 import report
 
-
 from urllib.request import urlopen
 
 #markowitz requirements.
@@ -16,8 +15,8 @@ from numpy import isnan
 
 from datetime import date,timedelta
 
-
 import pickle
+import pandas as pd
 
 import cvxopt as opt
 from cvxopt import blas, solvers
@@ -47,8 +46,16 @@ def yahoo_assets(tickers):
     start_date = end_date - d
 
     labels = " ".join(tickers)
-    yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
-    yahoo.to_csv('tickers.csv')
+    filename = "csvs/yfinance" + str(end_date) + labels + ".csv"
+
+    if os.path.exists(filename):
+        print(filename + " exits")
+        yahoo = pd.read_csv(filename, index_col="Date")
+        # print("cached yahoo: ", yahoo, flush=True)
+
+    else:
+        yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
+        yahoo.to_csv(filename)
 
     # print("yahoo data: ", yahoo.values, flush=True)
     # print("yahoo shape: ", yahoo.shape, flush=True)
@@ -169,7 +176,7 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
         portfolios, returns, risks = optimal_portfolio(daily_data)
 
         # get red data (frontier)
-        ret_new, risk_new = [returns[risk_level]*100], [risks[risk_level]*100]
+        ret_new, risk_new = returns[risk_level], risks[risk_level]
 
         # get blue data (frontier)
         weights = customer_port_weights(captable)
@@ -205,15 +212,15 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
 
     # Make line graphs
-    ops.montecarlo(mu=1.05, std=.10, term=7, trials=1000000)
-    ops.montecarlo(mu=1.05, std=0, term=7, trials=1000000)
-
-    images.append(graphs.line())
-    images.append(graphs.line(7))
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000)
+    images.append(graphs.line_compare(rline_data, bline_data))
+    images.append(graphs.line_compare(rline_data, bline_data, 7))
 
 
     # Make bell curve
-    images.append(graphs.normal())
+    images.append(graphs.bell_compare(mu=red['ret'], mu2=blue['ret'], sigma=red['risk'], sigma2=blue['risk']))
+    images.append(graphs.bell(mu=red['ret'], sigma=red['risk']))
 
 
     # Inject variables into LaTeX report

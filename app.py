@@ -120,21 +120,6 @@ def load_graphs(tickers=None):
     return vals
 
 
-# @app.route("/norm", methods=["GET", "POST"])
-# def norm():
-#     global images
-#     mu,std = float(request.form.get('mu')),float(request.form.get('std'))
-#     vals = dict()
-#
-#     norm = graphs.normal(mu,std)
-#     html_img = img_form.format(norm)
-#     #images.append(norm)
-#
-#     vals["normal"]= str(html_img)
-#     sys.stdout.flush()
-#     return vals
-
-
 @app.route("/back", methods=["GET", "POST"])
 def back():
     global images

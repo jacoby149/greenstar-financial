@@ -15,21 +15,18 @@ def latex_pickle_dump(red, blue):
             v = str(v)
         return v
 
-    ret_curr = blue['ret'].tolist()
-    risk_curr = blue['risk'].tolist()
-
-    ret_curr = ret_curr[0][0]
-    risk_curr = risk_curr[0][0]
-    ret_new = red['ret'][0]
-    risk_new = round(red['risk'][0], 2)
+    ret_new = red['ret']
+    ret_curr = blue['ret']
+    risk_new = round(red['risk'], 2)
+    risk_curr = round(blue['risk'], 2)
 
     risk_change = round((risk_new - risk_curr), 2)
 
     risk_change = stringit(risk_change)
     ret_improve = ret_new - ret_curr
 
-    ret_new = stringit(round((ret_new - 100), 1))
-    ret_improve = stringit(round((ret_improve - 100), 1))
+    ret_new = stringit(round(ret_new, 1))
+    ret_improve = stringit(round(ret_improve, 1))
 
     port_vars = {"ret_curr": ret_curr, "risk_curr": risk_curr,
                  "ret_new": ret_new, "risk_new": risk_new,
