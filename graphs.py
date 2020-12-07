@@ -193,18 +193,18 @@ def frontier(red, blue, wheat, ribs):
     ms = 2
 
     # Format axes
-    fig = plt.figure()
-    ax = fig.add_subplot(1,1,1)
+    fig, ax = plt.subplots(figsize=(9,6))
+
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     # Legend
-    legend_elements = [Line2D([0], [0], color='b', lw=4, label='Current Strategy'),
-                       Line2D([0], [0], marker='o', color='w', label='Scatter',
-                              markerfacecolor='g', markersize=15),
-                       Patch(facecolor='orange', edgecolor='r',
-                             label='Color Patch')]
-    ax.legend(handles=legend_elements)#, loc='center')
+    legend_elements = [Line2D([0], [0], marker='o', lw=0, color='b', label='Current Strategy', markersize=5),
+                       Line2D([0], [0], marker='o', lw=0, color='r', label='Recommended Strategy', markersize=5),
+                       Line2D([0], [0], marker='o', lw=0, color='wheat', label='Generic Portfolios', markersize=5),
+                       Line2D([0], [0], color='y', lw=2.0, label='Optimal Portfolios')]
+
+    ax.legend(handles=legend_elements)
 
     #plot random portfolios
     plt.plot([r*s for r in wheat['risk']], [r*s for r in wheat['ret']], 'o',color="wheat",markersize=ms)
@@ -215,10 +215,10 @@ def frontier(red, blue, wheat, ribs):
     plt.plot([r*s for r in ribs['risk']], [r*s for r in ribs['ret']], 'y-o',markersize=ms)
 
     # plot slider-selected recommended portfolio
-    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=2,markersize=ms*2)
+    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=2,markersize=ms*1.6)
 
     # plot original portfolio
-    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*2)
+    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*1.6)
 
     # title the graph
     plt.title('Expected Return and Risk Of Portfolios')
