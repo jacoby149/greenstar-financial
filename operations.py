@@ -8,9 +8,9 @@ def rand_weights(n):
 
 
 def get_mus(N, t, n):
-    N = 400            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
+    N = 500            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
     if 0 <= n <= 7:
-        power = n + 9
+        power = n + 2
     else:
         power = 9.0
         #the first 20 porfolios are
