@@ -21,10 +21,7 @@ def latex_pickle_dump(red, blue, new_pie):
     risk_new = red['risk']
     risk_curr = blue['risk']
 
-    print("new pie: ", new_pie, flush=True)
-
     risk_change = round((risk_new - risk_curr), 2)
-
     risk_change = stringit(risk_change)
     ret_improve = ret_new - ret_curr
 
@@ -69,6 +66,8 @@ def get_port_vars(tickers, html_inputs, form_params, asset_map, captable):
 
     print("port vars: ", port_vars, flush=True)
 
+    port_vars['p'], port_vars['C'] = get_matrices()
+
     return port_vars
 
 
@@ -94,6 +93,20 @@ def get_captable(captable, form_params, asset_map):
     return new_captable
 
 
+def get_matrices():
+    with open("matrices.pickle", 'rb') as pickle_file:
+        matrices = pickle.load(pickle_file)
+    p, C = matrices
+
+    p = pd.DataFrame(p)
+    C = pd.DataFrame(C)
+
+    print("p: ", p, flush=True)
+    print("C: ", C, flush=True)
+
+    return p, C
+
+
 def make_report(tickers, html_inputs, form_params, asset_map, captable):
     port_vars = get_port_vars(tickers, html_inputs, form_params, asset_map, captable)
 
@@ -104,5 +117,5 @@ def make_report(tickers, html_inputs, form_params, asset_map, captable):
     filename = 'pdfs/{} Report.pdf'.format(html_inputs['name'])
 
 
-    pdf = build_pdf(tpl.render(**port_vars))
+    pdf = build_pdf(tpl.render(**port_vars)) #changes
     pdf.save_to(filename)

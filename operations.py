@@ -8,7 +8,7 @@ def rand_weights(n):
 
 
 def get_mus(N, t, n):
-    N = 500            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
+    N = 400            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
     if 0 <= n <= 7:
         power = n + 9
     else:
@@ -33,11 +33,11 @@ def portfolio_performance(daily_data, weights):
     return mu, sigma
 
 
-def montecarlo(mu, std, term, trials):
+def montecarlo(mu, std, term, trials, starting_wealth=1):
     sums = {period: 0 for period in range(term+1)}
 
     for trial in range(trials):
-        wealth = 1
+        wealth = starting_wealth
         for period in range(term+1):
             sums[period] += wealth
             wealth = wealth * np.random.normal(mu, std)

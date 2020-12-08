@@ -135,7 +135,7 @@ def customer_port_weights(captable):
     if captable is None:
         return [.2, .3, .2, .3]
 
-    allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '']
+    allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '0']
     allocations = [a / sum(allocations) for a in allocations]
     # print("allocations: ", allocations)
     return allocations
@@ -145,7 +145,7 @@ def old_weights(captable):
     if captable is None:
         return [.2, .3, .2, .3]
 
-    allocations = [(captable[x], x) for x in captable if captable[x] != '']
+    allocations = [(captable[x], x) for x in captable if captable[x] != '0']
     allocations = sorted(allocations, key=lambda x: x[1])
     allocations = [a[0] for a in allocations]
     for i, item in enumerate(allocations):
@@ -223,9 +223,12 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
 
     # Make line graphs
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000)
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000)
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
     images.append(graphs.line_compare(rline_data, bline_data))
+
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
     images.append(graphs.line_compare(rline_data, bline_data, 7))
 
 
@@ -249,5 +252,12 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
 
     portfolios = neat(ribs['port'])
+
+    p = np.asmatrix(np.mean(daily_data, axis=1))
+    C = np.asmatrix(np.cov(daily_data))
+    matrices = (p, C)
+
+    with open("matrices.pickle", 'wb') as matrix_pickle:
+        pickle.dump(matrices, matrix_pickle)
 
     return images, portfolios, ribs['ret'], ribs['risk']

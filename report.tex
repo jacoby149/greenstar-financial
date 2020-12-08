@@ -214,7 +214,7 @@
 
 \vspace{1cm}
 
-\begin{adjustwidth}{0in}{0in}
+\begin{center}
 \noindent \large \textbf{\underline{Prescribed Allocation Changes}}\\
 \vspace{.3cm}
 
@@ -230,7 +230,7 @@
 
 
 \end{tabular}
-\end{adjustwidth}
+\end{center}
 
 %1. Large Cap Growth Stocks - Over invested by \$34,323.34. \\
 %\,\,\,\,\,\, Reduce your holdings (\$56,372.43$).\\
@@ -248,13 +248,12 @@ Change in Risk : ( $- 3\%$ )
 \vspace{.4cm}
 \begin{center}
 
-% OVERLAY BELL AND BELL7 AND LINE AND LINE7 -- generated from MATPLOTLIB as explicit images
 
-\hspace*{-1cm}\includegraphics[width=.95\linewidth]{/app/plts/bell.png}\par
+\hspace*{-1cm}\includegraphics[width=.95\linewidth]{/app/plts/bellcompare.png}\par
 
 \vspace{.5cm}
 
-\hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/plts/line.png}\par
+\hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/plts/line7.png}\par
 \end{center}
 
 \newpage    %PAGE5
@@ -285,7 +284,7 @@ Change in Risk : ( $- 3\%$ )
 \begin{center}
   \begin{tabular}{lcr}
   \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line.png}
+    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line1.png}
   \end{tabular}
   \end{center}
 
@@ -300,7 +299,7 @@ Change in Risk : ( $- 3\%$ )
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bellcompare.png}
     & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line7.png}
   \end{tabular}
   \end{center}
@@ -355,7 +354,7 @@ Sharpe Ratio : .37
 \begin{center}
   \begin{tabular}{lcr}
   \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line.png}
+    & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line1.png}
   \end{tabular}
   \end{center}
 
@@ -370,7 +369,7 @@ Sharpe Ratio : .37
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bellcompare.png}
     & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line7.png}
   \end{tabular}
   \end{center}
@@ -430,14 +429,19 @@ Improvement in Return (\%): {\VAR{ret_improve}} \%
 \begin{center}
 
 \begin{tabular}{cccccccc} \toprule
-    Corr. & MSFT & NTFX & HULU  & RUS & BP & TR & SOCK\\ \midrule
-    MSFT  & 16.128 & +8.872 & 16.128 & 1.402 & 1.373 & -146.6 & -137.6 \\\midrule
-    NTFX  & 3.442  & -2.509 & 3.442  & 0.299 & 0.343 & 133.2  & 152.4  \\\midrule
-    HULU  & 1.826  & -0.363 & 1.826  & 0.159 & 0.119 & 168.5  & -161.1 \\\midrule
-    RUS  & 0.993  & -0.429 & 0.993  & 0.086 & 0.08  & 25.6   & 90     \\ \midrule
-    BP  & 1.29   & +0.099 & 1.29   & 0.112 & 0.097 & -175.6 & -114.7 \\\midrule
-    TR  & 0.483  & -0.183 & 0.483  & 0.042 & 0.063 & 22.3   & 122.5  \\\midrule
-    SOCK  & 0.766  & -0.475 & 0.766  & 0.067 & 0.039 & 141.6  & -122    \\ \bottomrule
+
+    \BLOCK{ for key, value in C.iterrows() }
+        \VAR{value} \\
+    \BLOCK{ endfor }
+
+%    Corr. & MSFT & NTFX & HULU  & RUS & BP & TR & SOCK\\ \midrule
+%    MSFT  & 16.128 & +8.872 & 16.128 & 1.402 & 1.373 & -146.6 & -137.6 \\\midrule
+%    NTFX  & 3.442  & -2.509 & 3.442  & 0.299 & 0.343 & 133.2  & 152.4  \\\midrule
+%    HULU  & 1.826  & -0.363 & 1.826  & 0.159 & 0.119 & 168.5  & -161.1 \\\midrule
+%    RUS  & 0.993  & -0.429 & 0.993  & 0.086 & 0.08  & 25.6   & 90     \\ \midrule
+%    BP  & 1.29   & +0.099 & 1.29   & 0.112 & 0.097 & -175.6 & -114.7 \\\midrule
+%    TR  & 0.483  & -0.183 & 0.483  & 0.042 & 0.063 & 22.3   & 122.5  \\\midrule
+%    SOCK  & 0.766  & -0.475 & 0.766  & 0.067 & 0.039 & 141.6  & -122    \\ \bottomrule
 \end{tabular}
 
 \end{center}

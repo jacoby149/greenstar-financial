@@ -125,11 +125,17 @@ def draw_line(plt, line_data, color="black", zorder=1):
     year, ret = line_data.keys(), line_data.values()
     year = [y + int(str(date.today())[:4]) for y in year]
     plt.plot(year, ret, color=color, marker='o', zorder=zorder)
+    plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()])
 
 
 def line(line_data, title=0):
     draw_line(plt, line_data)
-    plt.title('Expected Returns For ' + str(title) + ' Years', fontsize=14)
+    if title == 1:
+        ystring = ' Year'
+    else:
+        ystring = ' Years'
+
+    plt.title('Expected Returns For ' + str(title) + ystring, fontsize=14)
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
@@ -140,7 +146,12 @@ def line(line_data, title=0):
 def line_compare(rline_data, bline_data, title=1):
     draw_line(plt, bline_data, color="blue", zorder=1)
     draw_line(plt, rline_data, color="red", zorder=2)
-    plt.title('Expected Returns For ' + str(title) + ' Years', fontsize=14)
+    if title == 1:
+        ystring = ' Year'
+    else:
+        ystring = ' Years'
+
+    plt.title('Expected Returns For ' + str(title) + ystring, fontsize=14)
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
