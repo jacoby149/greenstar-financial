@@ -43,6 +43,8 @@ form_params["V.C."] = "LDVIX"                  # quick replacement from Reuters.
 form_params["Commodities"] = "USCI"            # US commodity index instead of dow jones intl. very similar models "^DJCI"
 form_params["Cash"] = "BIL"
 
+asset_map = {v: k for k, v in form_params.items()}
+
 
 # Do machine Learning.
 @app.route("/", methods=["GET", "POST"])
@@ -78,7 +80,10 @@ def clean_form(request):
     for v in form_params:
         val = request.form.get(v)
         ticker = form_params[v]
-        captable[ticker] = val
+        if val == '':
+            captable[ticker] = '0'
+        else:
+            captable[ticker] = val
 
     tickers = []
     old_tickers = []
@@ -100,8 +105,8 @@ def clean_form(request):
 @app.route("/load_graphs", methods=["GET", "POST"])
 def load_graphs(tickers=None):
     global images
+    global asset_map
     images = []
-    asset_map = {v: k for k, v in form_params.items()}
 
     captable, tickers, risk, name, birthday, term, old_tickers = clean_form(request)
 
@@ -136,8 +141,14 @@ def back():
 import report
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    _, _, _, name, _, _, _ = clean_form(request)
-    report.make_report(name)
+    global form_params
+    global asset_map
+
+
+    captable, tickers, risk, name, birthday, term, _ = clean_form(request)
+    html_inputs = {'risk': risk, 'name': name, 'birthday': birthday, 'term': term}
+
+    report.make_report(tickers, html_inputs, form_params, asset_map, captable)
 
     return send_file("/app/pdfs/{} Report.pdf".format(name))
 

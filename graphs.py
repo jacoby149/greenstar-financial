@@ -2,6 +2,7 @@
 
 # graph requirements
 import io
+import math
 import base64
 import importlib
 import numpy as np
@@ -162,8 +163,20 @@ def pie(pie_data, title='pie_default'):
 
     fig1, ax1 = plt.subplots()
 
-    colors = ['darkorange', 'cornflowerblue', 'lightsteelblue', 'gold', 'orangered']
-    ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
+    def hexy(x):
+        y = hex(x)[2:]
+        if len(y) == 1:
+            return "0" + y
+        elif len(y) > 2:
+            return "ff"
+        else:
+            return y
+
+    gcolors = ["#" + hexy(255) + hexy(255) + hexy(255) for x in range(100,255,20)]
+
+    colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'k']
+    ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=False, startangle=180,
+                    wedgeprops={"edgecolor":"0", 'linewidth': 0.65, 'antialiased': True})
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)
@@ -171,7 +184,7 @@ def pie(pie_data, title='pie_default'):
 
 def noise(daily_data, labels):
     plt.figure(figsize=(10,6))
-    plt.plot(daily_data.T, alpha=.4)
+    plt.plot(daily_data.T, alpha=.4, )
 
     def pct_format(x):
         if x <= 0:

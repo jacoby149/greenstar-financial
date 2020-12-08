@@ -46,7 +46,7 @@ def yahoo_assets(tickers):
     start_date = end_date - d
 
     labels = " ".join(tickers)
-    filename = "csvs/yfinance" + str(end_date) + labels + ".csv"
+    filename = "csv/yfinance" + str(end_date) + labels + ".csv"
 
     if os.path.exists(filename):
         print(filename + " exists")
@@ -134,8 +134,6 @@ def get_rand_portfolio(daily_data):
 def customer_port_weights(captable):
     if captable is None:
         return [.2, .3, .2, .3]
-
-    print("")
 
     allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '']
     allocations = [a / sum(allocations) for a in allocations]
@@ -237,7 +235,7 @@ def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_
 
 
     # Inject variables into LaTeX report
-    report.latex_pickle_dump(red, blue)
+    report.latex_pickle_dump(red, blue, new_pie)
 
 
     def neat(portfolios):

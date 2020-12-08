@@ -67,9 +67,8 @@
 \usepackage{float}
 \usepackage{wrapfig}
 
-%Da qui in poi inizia il documento.
 \begin{document}
-\begin{titlepage} %Cambia i valori in \vspace{} per ottenere un risultato perfetto
+\begin{titlepage}   % TITLEPAGE
 
 \begin{center}
 	{\scshape\Large\bfseries \, \par}
@@ -124,7 +123,7 @@
 \end{titlepage}
 
 
-\tableofcontents
+\tableofcontents    % PAGE1
 
 \begin{center}
 \vfill
@@ -133,7 +132,7 @@
 \end{center}
 \justify
 
-\newpage
+\newpage    % PAGE2
 
 \section{Statistical Terminology \& Asset Class Descriptions}
 
@@ -149,42 +148,40 @@
 \noindent \textbf{The 18 Asset Classes : }
 \normalsize
 \vspace{.5cm}
-\begin{adjustwidth}{0in}{0in}% adjust the L and R margins by 1 inch
-\begin{tabular}{lll} %\toprule
+\begin{adjustwidth}{0in}{0in}  % adjust the L and R margins
+\begin{tabular}{lll}   %\toprule
     Asset Class & Index & Description\\ \midrule
 
-    Large Cap Growth  & FSPGX & Fastly growing stocks from big companies. \\\midrule
-    Large Cap Value & SVX & Undervalued stocks from big companies. \\\midrule
-    Small Cap Growth & RUT & Fastly growing stocks from small companies.\\\midrule
+    Large Cap Growth  & {\VAR{LargeCapGrowth}} & Fastly growing stocks from big companies. \\\midrule
+    Large Cap Value & {\VAR{LargeCapVal}} & Undervalued stocks from big companies. \\\midrule
+    Small Cap Growth & {\VAR{SmallCapGrowth}} & Fastly growing stocks from small companies.\\\midrule
 
-    Small Cap Value  & RUJ & Undervalued stocks from small companies. \\\midrule
-    Mid Cap  & SP400 & Stocks from mid sized companies. \\\midrule
-    International  & VTIAX & Stocks not traded in U.S.A. exchanges. \\\midrule
+    Small Cap Value  & {\VAR{SmallCapVal}} & Undervalued stocks from small companies. \\\midrule
+    Mid Cap  & {\VAR{MidCap}} & Stocks from mid sized companies. \\\midrule
+    International  & {\VAR{IntlStock}} & Stocks not traded in U.S.A. exchanges. \\\midrule
 
-    Emerging Mkt.  & VEMAX & Stocks from emerging Mkt. countries. \\\midrule
-    Real Estate  & DJUSRE & Land and buildings. \\\midrule
-    Venture Capital  & AMZX &  New and innovative companies. \\\midrule
+    Emerging Mkt.  & {\VAR{EmergingMktStock}} & Stocks from emerging Mkt. countries. \\\midrule
+    Real Estate  & {\VAR{RealEstate}} & Land and buildings. \\\midrule
+    Venture Capital  & {\VAR{VC}} &  New and innovative companies. \\\midrule
 
-Inter. Govt. Bonds  & GVI & Govt. bonds that mature in 5-10 years. \\\midrule
-    Long Govt. Bonds  & ILTB & Govt. bonds mature in more than 10 years. \\\midrule
+    Inter. Govt. Bonds  & {\VAR{IntlGovBonds}} & Govt. bonds that mature in 5-10 years. \\\midrule
+    Long Govt. Bonds  & {\VAR{LongGovBonds}} & Govt. bonds mature in more than 10 years. \\\midrule
 
-    Corporate Bonds  & SPDBDACPT & Bonds issued by a corporation. \\\midrule
-    High Yield Bond  &HYG & Lower credit rating higher return bonds. \\\midrule
-    Municipal Bond  & MUB & Bonds Issued by local government. \\\midrule
+    Corporate Bonds  & {\VAR{CorporateBonds}} & Bonds issued by a corporation. \\\midrule
+    High Yield Bond  & {\VAR{HighYieldBonds}} & Lower credit rating higher return bonds. \\\midrule
+    Municipal Bond  & {\VAR{MunicipalBonds}} & Bonds Issued by local government. \\\midrule
 
-    Foreign Bonds  & BNDX & Bonds issued in other countries. \\\midrule
-    Emerging Mkt. Debt  & JEDAX & Bonds issued by emerging countries. \\\midrule
-    Commodities  & DJCI & Basic goods used in commerce.
-\\\midrule
-
-    Cash  & BIL & Currencies, Foreign Currencies
+    Foreign Bonds  & {\VAR{ForeignBonds}} & Bonds issued in other countries. \\\midrule
+    Emerging Mkt. Debt  & {\VAR{EmergingMktDebt}} & Bonds issued by emerging countries. \\\midrule
+    Commodities  & {\VAR{Commodities}} & Basic goods used in commerce. \\\midrule
+    Cash  & {\VAR{Cash}} & Currencies, Foreign Currencies.
 
     \\ \bottomrule
 \end{tabular}
 \end{adjustwidth}
 
 
-\newpage
+\newpage  % PAGE3
 
 \section{Investment Profile | Prescribed Allocation Changes}
 
@@ -195,18 +192,17 @@ Inter. Govt. Bonds  & GVI & Govt. bonds that mature in 5-10 years. \\\midrule
 \large\textbf{\underline {Investment Profile:}}
 \vspace{.25cm}\\
 \noindent Name : {\VAR{name}} \\
-\noindent Birthday : 11/20/1960 \\
+\noindent Birthday : {\VAR{birthday}} \\
 %\noindent Purpose : Retirement \\
-\noindent Time Frame : 9 Years \\
+\noindent Time Frame : {\VAR{term}} \\
 \noindent Available Funds : \$1,232,683.45 \\
-\noindent Preferred Risk : ($\pm 8\%$ Yearly) \\
-\noindent \textbf{Preffered Asset Classes:} \\
-- Large Cap Growth Stocks\\
-- Large Cap Value Stocks\\
-- High Yield Bonds \\
-- Emerging Mkt. Stocks\\
-- Venture Capital\\
-- Cash\\
+\noindent Preferred Risk : ($\pm {\VAR{risk_new}}\%$ Yearly) \\
+\noindent \textbf{Preferred Asset Classes:} \\
+
+    \BLOCK{ for key, value in preferred.iterrows() }
+        -- \VAR{key} \\
+    \BLOCK{ endfor }
+
 \end{tabular} &
 \begin{tabular}[t]{c}
 (a) Current Portfolio\\
@@ -216,38 +212,32 @@ Inter. Govt. Bonds  & GVI & Govt. bonds that mature in 5-10 years. \\\midrule
 \end{tabular}
 \end{tabular}
 
-\vspace{.5cm}
+\vspace{1cm}
 
-\begin{center}
+\begin{adjustwidth}{0in}{0in}
 \noindent \large \textbf{\underline{Prescribed Allocation Changes}}\\
-\vspace{.5cm}
+\vspace{.3cm}
 
 \normalsize
 
 \begin{tabular}{cccc}
-    Asset Class & Current& Suggested & Change\\ \midrule
+    Asset Class & Current & Suggested & Change\\ \midrule
 
-    Large Cap Growth  & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
-    Large Cap Value & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
-    Small Cap Growth & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
-    Small Cap Value  & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
-    Mid Cap  & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
-    International Stock  & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
 
-    Emerging Mkt Stock  & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
+    \BLOCK{ for key, value in newcap.iterrows() }
+        \VAR{key} & \$\VAR{value.1} & \$\VAR{value.2} & \$\VAR{value.2} \\ \midrule
+    \BLOCK{ endfor }
 
-    Real Estate  & \$54,441.73 & \$43,210.22 & +\$34,321.34 \\\midrule
-    Venture Capital  & \$54,441.73 & \$43,210.22 & +\$34,321.34
-    \\ \bottomrule
+
 \end{tabular}
-\end{center}
+\end{adjustwidth}
 
 %1. Large Cap Growth Stocks - Over invested by \$34,323.34. \\
 %\,\,\,\,\,\, Reduce your holdings (\$56,372.43$).\\
 
 
 
-\newpage
+\newpage    % PAGE4
 
 \section{Performance Improvements Of Prescribed Portfolio}
 
@@ -267,7 +257,7 @@ Change in Risk : ( $- 3\%$ )
 \hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/plts/line.png}\par
 \end{center}
 
-\newpage
+\newpage    %PAGE5
 
 \section{Current Portfolio Overview - Statistical Analysis}
 
@@ -336,7 +326,7 @@ Change in Risk : ( $- 3\%$ )
 \noindent
 Sharpe Ratio : .37
 
-\newpage
+\newpage    % PAGE6
 
 
 \section{Prescribed Portfolio Overview - Statistical Analysis}
@@ -407,7 +397,7 @@ Sharpe Ratio : .37
 Sharpe Ratio : .37
 
 
-\newpage
+\newpage    % PAGE7
 
 
 
@@ -431,7 +421,7 @@ Adjustment of Risk (\%): {\VAR{risk_change}} \%
 Improvement in Return (\%): {\VAR{ret_improve}} \%
 
 
-\newpage
+\newpage    % PAGE8
 
 \section{Correlation Matrices}
 
