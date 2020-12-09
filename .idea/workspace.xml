@@ -2,14 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/graphs.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-07BIL BNDX IYR MUB VIGRX.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-07BIL HYG IYR JKD VIGRX.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-07BIL ILTB VISVX ^RUT.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL BNDX CBFSX GVI HYG ILTB IYR JEDAX JKD LDVIX MDY MUB USCI VEMAX VIGRX VISVX VTIAX ^RUT.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL BNDX IYR JEDAX VIGRX VISVX.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL CBFSX HYG ILTB IYR JEDAX JKD MDY VEMAX VIGRX VISVX ^RUT.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL HYG ILTB IYR JEDAX VEMAX VIGRX.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL HYG IYR JEDAX VEMAX VIGRX.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL ILTB IYR VEMAX VIGRX.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL IYR.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-08BIL.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/csv/yfinance2020-12-09BIL IYR MUB VEMAX VIGRX.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/markowitz.py" beforeDir="false" afterPath="$PROJECT_DIR$/markowitz.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/operations.py" beforeDir="false" afterPath="$PROJECT_DIR$/operations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.py" beforeDir="false" afterPath="$PROJECT_DIR$/report.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

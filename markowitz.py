@@ -41,27 +41,26 @@ solvers.options['show_progress'] = False
 #################################
 
 def yahoo_assets(tickers):
-    # print("TICKERS :", tickers, flush=True)
+    # mprint("TICKERS",tickers)
     end_date = date.today()
     d = timedelta(days=1800)
     start_date = end_date - d
 
-    labels = " ".join(tickers)
-    filename = "csv/yfinance" + str(end_date) + labels + ".csv"
+    tickers = " ".join(tickers)
+    filename = "csv/yfinance" + str(end_date) + tickers + ".csv"
 
+    print("collecting daily data:")
     if os.path.exists(filename):
-        print(filename + " exists")
+        print(filename + " exists\n")
         yahoo = pd.read_csv(filename, index_col="Date")
-        # print("cached yahoo: ", yahoo, flush=True)
-
     else:
-        print("downloading data from yahoo")
-        yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
+        print("downloading data from yahoo\n")
+        yahoo = yf.download(tickers, start=str(start_date), end=str(end_date))['Adj Close']
         yahoo.to_csv(filename)
 
     # mprint("yahoo data",yahoo.values)
     # mprint("yahoo shape",yahoo.shape)
-    # mprint("yahoo type",type(yahoo))
+    # mprint("yahoo type",type(yahoo))          yahoo downloads as a nice looking pandas dataframe
 
 
     def clean(yahoo):
@@ -69,7 +68,7 @@ def yahoo_assets(tickers):
         yahoo = np.reshape(yahoo, (yahoo.shape[0], -1))
         yahoo = yahoo / yahoo[0]
 
-        # Sets nan values to value on first day listed (after normalization)
+        # normalizes nan values
         findnans = isnan(yahoo)
         yahoo[findnans] = 1
 
@@ -78,7 +77,9 @@ def yahoo_assets(tickers):
         return yahoo
 
     yahoo = clean(yahoo)
-    return yahoo, labels
+    # mprint('yahoo',yahoo)                     yahoo exports as a numpy matrix
+
+    return yahoo
 
 
 def random_assets(n_assets=4, n_obs=1000, g=1.00026):
@@ -124,6 +125,9 @@ def optimal_portfolio(daily_data):
     returns.reverse()
     risks.reverse()
 
+    # mprint('returns',returns)
+    # mprint('risks',risks)
+
     return portfolios,returns,risks
 
 
@@ -132,21 +136,20 @@ def get_rand_portfolio(daily_data):
     return ops.portfolio_performance(daily_data, ops.rand_weights(daily_data.shape[0]))
 
 
-def customer_port_weights(captable):
-    if captable is None:
-        return [.2, .3, .2, .3]
+def customer_port_weights(leanbook):
+    captable = dict(zip(leanbook.ticker,leanbook.allocation))
 
-    allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '0']
+    allocations = [int(captable[x]) for x in captable]
     allocations = [a / sum(allocations) for a in allocations]
+
     # mprint("allocations",allocations)
     return allocations
 
 
-def old_weights(captable):
-    if captable is None:
-        return [.2, .3, .2, .3]
+def old_weights(leanbook):
+    captable = dict(zip)
 
-    allocations = [(captable[x], x) for x in captable if captable[x] != '0']
+    allocations = [(captable[x], x) for x in captable]
     allocations = sorted(allocations, key=lambda x: x[1])
     allocations = [a[0] for a in allocations]
     for i, item in enumerate(allocations):
@@ -164,17 +167,42 @@ def old_weights(captable):
 #######  MARKOWITZ RUN   ########
 #################################
 
+def dataframe_structures(book):
+    # get structures for future strategy (red)
+    redbook = book.loc[~book['allocation'].str.startswith('-')]  # & (~book['allocation'].isin([str(val) + 'X' for val in range(max(int(book['allocation'])))]))]
+    rtickers = redbook['ticker'].tolist()
+
+    mprint('future book',redbook)
+    mprint('future tickers',rtickers)
+
+    # get structures for current strategy (blue)
+    bluebook = book.loc[(book['allocation'] != '-') & (book['allocation'] != '0')]
+    btickers = bluebook['ticker'].tolist()
+
+    mprint('old book',bluebook)
+    mprint('old tickers',btickers)
+
+    # get structures for yahoo's daily_data (yahoo)
+    ybook = book.loc[book['allocation'] != '-']
+    ytickers = ybook['ticker'].tolist()
+
+    mprint('yahoo book',ybook)
+    mprint('yahoo tickers',ytickers)
+
+    return rtickers, redbook, btickers, bluebook, ytickers, ybook
+
+
 
 def markowitz_run(book, info):
-    if tickers is not None:
-        daily_data, labels = yahoo_assets(tickers)
-        labels = labels.split(" ")
-    else:
-        labels = ["F", "A", "N", "g"]
-
     images = []
+    rtickers, redbook, btickers, bluebook, ytickers, ybook = dataframe_structures(book)
+
+
+    daily_data = yahoo_assets(ytickers)
 
     def get_frontier_data():
+        risk_level = int(info['risk'])
+
         # get wheats data (frontier)
         means, stds = np.column_stack([get_rand_portfolio(daily_data) for _ in range(500) ])
 
@@ -185,8 +213,8 @@ def markowitz_run(book, info):
         ret_new, risk_new = returns[risk_level], risks[risk_level]
 
         # get blue data (frontier)
-        weights = customer_port_weights(captable)
-        ret_curr, risk_curr = ops.portfolio_performance(daily_data,weights=weights)
+        allocations = customer_port_weights(leanbook)
+        ret_curr, risk_curr = ops.portfolio_performance(daily_data,weights=allocations)
 
         # pack dictionary for quick unload
         red = {"ret": ret_new, "risk": risk_new}
@@ -200,12 +228,11 @@ def markowitz_run(book, info):
 
 
     # remapping to relevant assets
-    old_tickers.sort()
-    old_assets = [asset_map[label] for label in old_tickers]
-    assets = [asset_map[label] for label in labels]
+    old_assets = [asset_map[ticker] for ticker in btickers]
+    assets = [asset_map[ticker] for ticker in tickers]
 
     # get pie data
-    ol_pie = dict(zip(old_assets, old_weights(captable)))
+    ol_pie = dict(zip(old_assets, old_weights(leanbook)))
     fpd = dict(zip(assets, ribs['port'][risk_level]))
     new_pie = {asset: fpd[asset] for asset in fpd if fpd[asset] > 0.0005}
 

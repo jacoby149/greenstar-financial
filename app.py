@@ -99,8 +99,11 @@ def get_book(request):
     book['assetclass'] = book['ticker'].map(asset_map)
     book['recommended'] = ['-' for i in range(len(form_params))]
 
-    # order dataframe
+    # order and sort dataframe
     book = book[['assetclass', 'ticker', 'allocation', 'recommended']]
+    book.sort_values('ticker', inplace=True)
+    book.reset_index(drop=True, inplace=True)
+
     mprint('book',book)
 
     return book, personal_info
@@ -112,18 +115,15 @@ def load_graphs(tickers=None):
 
     book, personal_info = get_book(request)
 
-    mprint("RISK_LEVEL",int(personal_info['risk']))
+    # mprint("RISK_LEVEL",int(personal_info['risk']))
 
     images,portfolios,returns,risks = markowitz.markowitz_run(book=book, info=personal_info)
     # images,portfolios,returns,risks = markowitz.markowitz_run(book=book, info=personal_info)
 
-    vals = {}
-    html_images = [img_form.format(i) for i in images]
-
-    vals["images"]= "".join(html_images)
-    vals["portfolios"]= str(portfolios)
-    vals["returns"]= str(returns)
-    vals["risks"]= str(risks)
+    vals = {'images': "".join([img_form.format(i) for i in images]),
+            'portfolios': str(portfolios),
+            'returns': str(returns),
+            'risks': str(risks), }
 
     return vals
 

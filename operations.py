@@ -4,7 +4,7 @@ import numpy as np
 
 
 def mprint(name, x):
-    print("\n" + name + ":\n", x, "\n", flush=True)
+    print(name + ":\n", x, "\n", flush=True)
 
 
 def rand_weights(n):
