@@ -196,7 +196,7 @@
 %\noindent Purpose : Retirement \\
 \noindent Time Frame : {\VAR{term}} \\
 \noindent Available Funds : \$1,232,683.45 \\
-\noindent Preferred Risk : ($\pm {\VAR{risk_new}}\%$ Yearly) \\
+\noindent Preferred Risk : ($\pm {\VAR{redrisk}}\%$ Yearly) \\
 \noindent \textbf{Preferred Asset Classes:} \\
 
     \BLOCK{ for key, value in preferred.iterrows() }
@@ -411,13 +411,13 @@ In 1990, Harry Markowitz won a nobel prize for his contributions to portfolio ba
 \vspace{1cm}
 
 
-Risk (Std. Deviation) : $\pm$ {\VAR{risk_new}} \%
+Risk (Std. Deviation) : $\pm$ {\VAR{redrisk}} \%
 
-Expected Return (\%): {\VAR{ret_new}} \%
+Expected Return (\%): {\VAR{redret}} \%
 
 Adjustment of Risk (\%): {\VAR{risk_change}} \%
 
-Improvement in Return (\%): {\VAR{ret_improve}} \%
+Improvement in Return (\%): {\VAR{ret_change}} \%
 
 
 \newpage    % PAGE8

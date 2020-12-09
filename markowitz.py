@@ -82,17 +82,6 @@ def yahoo_assets(tickers):
     return yahoo
 
 
-def random_assets(n_assets=4, n_obs=1000, g=1.00026):
-    np.random.seed(123)
-
-    daily_data = np.random.randn(n_assets, n_obs)/4 + 1
-    daily_data[daily_data < 0] = 0
-    gain_vector = [g**n for n in range(n_obs)]
-    daily_data = daily_data*gain_vector
-
-    return daily_data
-
-
 
 #################################
 #######  PORTFOLIO CALC  ########
@@ -136,30 +125,25 @@ def get_rand_portfolio(daily_data):
     return ops.portfolio_performance(daily_data, ops.rand_weights(daily_data.shape[0]))
 
 
-def customer_port_weights(leanbook):
-    captable = dict(zip(leanbook.ticker,leanbook.allocation))
+def get_weights(book):
+    captable = dict(zip(book.index.values,book.allocation))
 
     allocations = [int(captable[x]) for x in captable]
     allocations = [a / sum(allocations) for a in allocations]
 
-    # mprint("allocations",allocations)
     return allocations
 
 
-def old_weights(leanbook):
-    captable = dict(zip)
+def add_recommended(book, redbook, chosen, wealth):
+    chosen_cash = [int(c*wealth) for c in chosen]
 
-    allocations = [(captable[x], x) for x in captable]
-    allocations = sorted(allocations, key=lambda x: x[1])
-    allocations = [a[0] for a in allocations]
-    for i, item in enumerate(allocations):
-        if 'X' in item:
-            item = item[:-1]
-        allocations[i] = int(item)
+    chosen_dict = dict(zip(redbook['assetclass'],chosen_cash))
+    book['recommended'] = book['assetclass'].map(chosen_dict)
+    book['recommended'] = book['recommended'].apply(lambda x: int(0) if pd.isna(x) is True else int(x))
 
-    allocations = [a / sum(allocations) for a in allocations]
+    mprint('recommended book',book)
 
-    return allocations
+    return book
 
 
 
@@ -169,56 +153,56 @@ def old_weights(leanbook):
 
 def dataframe_structures(book):
     # get structures for future strategy (red)
-    redbook = book.loc[~book['allocation'].str.startswith('-')]  # & (~book['allocation'].isin([str(val) + 'X' for val in range(max(int(book['allocation'])))]))]
-    rtickers = redbook['ticker'].tolist()
+    redbook = book.loc[book['inred'] == True]
+    rtickers = redbook.index.values.tolist()
 
-    mprint('future book',redbook)
-    mprint('future tickers',rtickers)
+    # mprint('redbook',redbook)
+    # mprint('rtickers',rtickers)
 
     # get structures for current strategy (blue)
-    bluebook = book.loc[(book['allocation'] != '-') & (book['allocation'] != '0')]
-    btickers = bluebook['ticker'].tolist()
+    bluebook = book.loc[book['inblue'] == True]
+    btickers = bluebook.index.values.tolist()
 
-    mprint('old book',bluebook)
-    mprint('old tickers',btickers)
+    # mprint('bluebook',bluebook)
+    # mprint('btickers',btickers)
 
-    # get structures for yahoo's daily_data (yahoo)
-    ybook = book.loc[book['allocation'] != '-']
-    ytickers = ybook['ticker'].tolist()
+    # get structures for yahoo's daily data (yahoo)
+    ybook = book.loc[(book['inred'] == True) | (book['inblue'] == True)] #comment
+    ytickers = ybook.index.values.tolist()
 
-    mprint('yahoo book',ybook)
-    mprint('yahoo tickers',ytickers)
+    # mprint('ybook',ybook)
+    # mprint('ytickers',ytickers)
 
-    return rtickers, redbook, btickers, bluebook, ytickers, ybook
-
+    return redbook, rtickers, bluebook, btickers, ybook, ytickers
 
 
 def markowitz_run(book, info):
     images = []
-    rtickers, redbook, btickers, bluebook, ytickers, ybook = dataframe_structures(book)
+    redbook, rtickers, bluebook, btickers, ybook, ytickers = dataframe_structures(book)
+    blue_weights = get_weights(bluebook)
+    risk_level = int(info['risk'])
+    wealth = sum([int(val) for val in bluebook.allocation.tolist()])
 
-
-    daily_data = yahoo_assets(ytickers)
+    red_data = yahoo_assets(rtickers)
+    blue_data = yahoo_assets(btickers)
+    yahoo_data = yahoo_assets(ytickers)
 
     def get_frontier_data():
-        risk_level = int(info['risk'])
-
         # get wheats data (frontier)
-        means, stds = np.column_stack([get_rand_portfolio(daily_data) for _ in range(500) ])
+        means, stds = np.column_stack([get_rand_portfolio(red_data) for _ in range(500)])
 
         # get ribs data (frontier)
-        portfolios, returns, risks = optimal_portfolio(daily_data)
+        portfolios, returns, risks = optimal_portfolio(red_data)
 
         # get red data (frontier)
         ret_new, risk_new = returns[risk_level], risks[risk_level]
 
         # get blue data (frontier)
-        allocations = customer_port_weights(leanbook)
-        ret_curr, risk_curr = ops.portfolio_performance(daily_data,weights=allocations)
+        ret_curr, risk_curr = ops.portfolio_performance(blue_data,weights=blue_weights)
 
         # pack dictionary for quick unload
         red = {"ret": ret_new, "risk": risk_new}
-        blue = {"ret": ret_curr, "risk": risk_curr, "weights": weights}
+        blue = {"ret": ret_curr, "risk": risk_curr, "weights": blue_weights}
         wheat = {"ret": means, "risk": stds}
         ribs = {"ret": returns, "risk": risks, 'port': portfolios}
 
@@ -228,13 +212,14 @@ def markowitz_run(book, info):
 
 
     # remapping to relevant assets
-    old_assets = [asset_map[ticker] for ticker in btickers]
-    assets = [asset_map[ticker] for ticker in tickers]
+    old_assets = bluebook['assetclass'].tolist()
+    assets = redbook['assetclass'].tolist()
 
     # get pie data
-    ol_pie = dict(zip(old_assets, old_weights(leanbook)))
-    fpd = dict(zip(assets, ribs['port'][risk_level]))
-    new_pie = {asset: fpd[asset] for asset in fpd if fpd[asset] > 0.0005}
+    chosen_rib = ribs['port'][risk_level]
+    future_pie_data = dict(zip(redbook.assetclass,chosen_rib))
+    new_pie = {asset: future_pie_data[asset] for asset in future_pie_data if future_pie_data[asset] > 0.0005}
+    ol_pie = dict(zip(bluebook.assetclass, blue_weights))
 
 
     # make frontier graph
@@ -247,16 +232,16 @@ def markowitz_run(book, info):
 
 
     # Make noise graph
-    images.append(graphs.noise(daily_data, assets))
+    images.append(graphs.noise(yahoo_data, assets))
 
 
     # Make line graphs
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=1000, starting_wealth=wealth)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data))
 
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=sum([int(x) for x in captable.values()]))
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=wealth)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data, 7))
 
 
@@ -265,8 +250,21 @@ def markowitz_run(book, info):
     images.append(graphs.bell(mu=red['ret'], sigma=red['risk']))
 
 
-    # Inject variables into LaTeX report
-    report.latex_pickle_dump(red, blue, new_pie)
+    # get matrices
+    p = np.asmatrix(np.mean(yahoo_data, axis=1))
+    C = np.asmatrix(np.cov(yahoo_data))
+    p = pd.DataFrame(p)
+    C = pd.DataFrame(C)
+
+    matrices = (p, C)
+
+
+    # update book
+    book = add_recommended(book, redbook, chosen_rib, wealth)
+
+
+    # Send variables to report.py for LaTeX injection
+    report.pickle_dump(red, blue, matrices, book, info)
 
 
     def neat(portfolios):
@@ -278,14 +276,7 @@ def markowitz_run(book, info):
         portfolios = [n(p) for p in portfolios]
         return portfolios
 
-
     portfolios = neat(ribs['port'])
 
-    p = np.asmatrix(np.mean(daily_data, axis=1))
-    C = np.asmatrix(np.cov(daily_data))
-    matrices = (p, C)
-
-    with open("matrices.pickle", 'wb') as matrix_pickle:
-        pickle.dump(matrices, matrix_pickle)
 
     return images, portfolios, ribs['ret'], ribs['risk']

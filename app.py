@@ -75,66 +75,84 @@ def logout():
 
 def get_book(request):
     # get personal info
-    personal_info = {'risk': request.form.get('risk'),
-                     'name': request.form.get('name'),
-                     'birthday': request.form.get('birthday'),
-                     'term': request.form.get('term'),
-                     'firm': 'Provins',
-                     }
+    info = {'risk': request.form.get('risk'),
+            'name': request.form.get('name'),
+            'birthday': request.form.get('birthday'),
+            'term': request.form.get('term'),
+            'firm': 'Provins',
+            }
 
     # get columns for dataframe
     asset_map = {v: k for k, v in form_params.items()}
-    recommended = ['-' for i in range(len(form_params))]
+    inred = {}
+    inblue = {}
+
     captable = {}
     for v in form_params:
         val = request.form.get(v)
         ticker = form_params[v]
         if val == '':
-            captable[ticker] = '-'
+            captable[ticker] = 0
+            inred[ticker] = False
+            inblue[ticker] = False
+        elif 'X'.casefold() in val.casefold():
+            captable[ticker] = int(val[:len(val)-1])
+            inred[ticker] = False
+            inblue[ticker] = True
+        elif val == '0':
+            captable[ticker] = 0
+            inred[ticker] = True
+            inblue[ticker] = False
         else:
-            captable[ticker] = val
+            captable[ticker] = int(val)
+            inred[ticker] = True
+            inblue[ticker] = True
 
     # construct dataframe
     book = pd.DataFrame(captable.items(), columns=['ticker', 'allocation'])
     book['assetclass'] = book['ticker'].map(asset_map)
-    book['recommended'] = ['-' for i in range(len(form_params))]
+    book['inred'] = book['ticker'].map(inred)
+    book['inblue'] = book['ticker'].map(inblue)
+    book['recommended'] = [0 for i in range(len(form_params))]
+
 
     # order and sort dataframe
-    book = book[['assetclass', 'ticker', 'allocation', 'recommended']]
+    book = book[['assetclass', 'ticker', 'allocation', 'recommended', 'inred', 'inblue']]
     book.sort_values('ticker', inplace=True)
-    book.reset_index(drop=True, inplace=True)
+    book.set_index('ticker', inplace=True)
 
     mprint('book',book)
 
-    return book, personal_info
+    return book, info
 
 
 @app.route("/load_graphs", methods=["GET", "POST"])
 def load_graphs(tickers=None):
     global images
 
-    book, personal_info = get_book(request)
+    book, info = get_book(request)
 
-    # mprint("RISK_LEVEL",int(personal_info['risk']))
+    # mprint("RISK_LEVEL",int(info['risk']))
 
-    images,portfolios,returns,risks = markowitz.markowitz_run(book=book, info=personal_info)
-    # images,portfolios,returns,risks = markowitz.markowitz_run(book=book, info=personal_info)
+    images, portfolios, returns, risks = markowitz.markowitz_run(book=book, info=info)
+    # images, portfolios, returns, risks = markowitz.markowitz_run(book=book, info=info)
 
     vals = {'images': "".join([img_form.format(i) for i in images]),
             'portfolios': str(portfolios),
             'returns': str(returns),
-            'risks': str(risks), }
+            'risks': str(risks),
+            }
 
     return vals
 
 
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    book, personal_info = get_book(request)
+    book, info = get_book(request)
 
-    report.make_report(book=book, info=personal_info)
+    report.make_report(book=book, info=info)
 
-    return send_file("/app/pdfs/{} Report.pdf".format(personal_info['name']))
+    return send_file("/app/pdfs/{} Report.pdf".format(info['name']))
 
 
 # @app.route("/back", methods=["GET", "POST"])
