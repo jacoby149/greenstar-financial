@@ -32,20 +32,17 @@ def pickle_dump(red, blue, matrices, book, info):
     p, C = matrices
 
     report_variables = {"blueret": blueret, "bluerisk": bluerisk,
-                 "redret": redret, "redrisk": round(redrisk*100, 2),
-                 "risk_change": risk_change, "ret_change": ret_change,
-                 "book": book, "info": info, "p": p, "C": C, }
+                        "redret": redret, "redrisk": round(redrisk*100, 2),
+                        "risk_change": risk_change, "ret_change": ret_change,
+                        "book": book, "info": info, "p": p, "C": C, }
 
     with open("report_variables.pickle", 'wb') as report_pickle:
         pickle.dump(report_variables, report_pickle)
-
-# ^^^ called in markowitz after graph creations ^^^
-
-
+# called in markowitz
 
 
 def make_report():
-    # get variables as designed above to display in LaTeX report
+    # get variables as designed above, passed from markowitz
     with open("report_variables.pickle", 'rb') as pickle_file:
         report_variables = pickle.load(pickle_file)
 
