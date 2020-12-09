@@ -150,7 +150,7 @@ def load_graphs(tickers=None):
 def make_report():
     book, info = get_book(request)
 
-    report.make_report(book=book, info=info)
+    report.make_report()
 
     return send_file("/app/pdfs/{} Report.pdf".format(info['name']))
 
