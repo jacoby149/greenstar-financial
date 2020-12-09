@@ -40,7 +40,7 @@ solvers.options['show_progress'] = False
 #################################
 
 def yahoo_assets(tickers):
-    print("TICKERS :", tickers, flush=True)
+    # print("TICKERS :", tickers, flush=True)
     end_date = date.today()
     d = timedelta(days=1800)
     start_date = end_date - d

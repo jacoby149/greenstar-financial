@@ -6,10 +6,12 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # imports
 import markowitz
+from operations import *
 import graphs
 from flask import Flask, request, jsonify, render_template, send_file, session, redirect
 from flask_cors import CORS
 import sys
+import pandas as pd
 
 
 # Initialize the Flask application
@@ -43,7 +45,6 @@ form_params["V.C."] = "LDVIX"                  # quick replacement from Reuters.
 form_params["Commodities"] = "USCI"            # US commodity index instead of dow jones intl. very similar models "^DJCI"
 form_params["Cash"] = "BIL"
 
-asset_map = {v: k for k, v in form_params.items()}
 
 
 # Do machine Learning.
@@ -71,35 +72,34 @@ def logout():
 
 
 def clean_form(request):
+    asset_map = {v: k for k, v in form_params.items()}
+
     risk = request.form.get('risk')
     name = request.form.get('name')
     birthday = request.form.get('birthday')
     term = request.form.get('term')
+
+    personal_info = {'risk': risk, 'name': name, 'birthday': birthday, 'term': term, 'firm': 'Provins'}
+    recommended = ['-' for i in range(len(form_params))]
+
 
     captable = {}
     for v in form_params:
         val = request.form.get(v)
         ticker = form_params[v]
         if val == '':
-            captable[ticker] = '0'
+            captable[ticker] = '-'
         else:
             captable[ticker] = val
 
-    tickers = []
-    old_tickers = []
-    for k in form_params:
-        val = request.form.get(k)
-        ticker = form_params[k]
-        if val is None:
-            continue
-        if 'X'.casefold() not in val.casefold() and val != '':
-            tickers.append(ticker)
-        if val != '0' and val != '':
-            old_tickers.append(ticker)
+    book = pd.DataFrame(captable.items(), columns=['ticker', 'allocation'])
+    book['assetclass'] = book['ticker'].map(asset_map)
+    book['recommended'] = recommended
 
-    tickers.sort()
-    old_tickers.sort()
-    return captable, tickers, risk, name, birthday, term, old_tickers
+    book = book[['assetclass', 'ticker', 'allocation', 'recommended']]
+    log('book',book)
+
+    return book, personal_info
 
 
 @app.route("/load_graphs", methods=["GET", "POST"])

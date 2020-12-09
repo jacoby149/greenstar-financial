@@ -5,7 +5,7 @@ from jinja2 import FileSystemLoader, Template
 from latex.jinja2 import make_env
 
 
-
+# called in markowitz after graph creations
 def latex_pickle_dump(red, blue, new_pie):
     def stringit(v):
         if v == 0:
@@ -35,40 +35,6 @@ def latex_pickle_dump(red, blue, new_pie):
 
     with open("port_vars.pickle", 'wb') as port_pickle:
         pickle.dump(port_vars, port_pickle)
-
-
-def get_port_vars(tickers, html_inputs, form_params, asset_map, captable):
-    with open("port_vars.pickle", 'rb') as pickle_file:
-        port_vars = pickle.load(pickle_file)
-
-    print("html inputs: ", html_inputs, flush=True)
-
-    for i in html_inputs:
-        port_vars[i] = html_inputs[i]
-
-    for a in form_params:
-        if "." in a:
-            port_vars[a.replace(".", "")] = form_params[a]
-        else:
-            port_vars[a.replace(" ", "")] = form_params[a]
-        if "^" in form_params[a]:
-            port_vars[a.replace(" ", "")] = "\\" + form_params[a][0] + "{}" + form_params[a][1:] #changes
-
-
-    port_vars["preferred"] = get_preferred_assets(tickers, form_params, asset_map, port_vars['new_pie'])
-
-
-    captable = get_captable(captable, form_params, asset_map)
-    captable = pd.DataFrame(captable, index=[captable[t] for t in captable])
-    port_vars['newcap'] = captable.T
-
-    print('cap dframe: ', port_vars['newcap'], flush=True)
-
-    print("port vars: ", port_vars, flush=True)
-
-    port_vars['p'], port_vars['C'] = get_matrices()
-
-    return port_vars
 
 
 def get_preferred_assets(tickers, form_params, asset_map, new_pie):
@@ -101,10 +67,42 @@ def get_matrices():
     p = pd.DataFrame(p)
     C = pd.DataFrame(C)
 
-    print("p: ", p, flush=True)
-    print("C: ", C, flush=True)
+    # print("\np: ", p, '\n', flush=True)
+    # print("\nC: ", C, '\n', flush=True)
 
     return p, C
+
+
+def get_port_vars(tickers, html_inputs, form_params, asset_map, captable):
+    with open("port_vars.pickle", 'rb') as pickle_file:
+        port_vars = pickle.load(pickle_file)
+
+    # print("html inputs: ", html_inputs, flush=True)
+
+    for i in html_inputs:
+        port_vars[i] = html_inputs[i]
+
+    for a in form_params:
+        if "." in a:
+            port_vars[a.replace(".", "")] = form_params[a]
+        else:
+            port_vars[a.replace(" ", "")] = form_params[a]
+        if "^" in form_params[a]:
+            port_vars[a.replace(" ", "")] = "\\" + form_params[a][0] + "{}" + form_params[a][1:] #changes
+
+
+    port_vars["preferred"] = get_preferred_assets(tickers, form_params, asset_map, port_vars['new_pie'])
+
+    captable = get_captable(captable, form_params, asset_map)
+    captable = pd.DataFrame(captable, index=[captable[t] for t in captable])
+    port_vars['newcap'] = captable.T
+
+    # print('cap dframe: ', port_vars['newcap'], flush=True)
+    # print("port vars: ", port_vars, flush=True)
+
+    port_vars['p'], port_vars['C'] = get_matrices()
+
+    return port_vars
 
 
 def make_report(tickers, html_inputs, form_params, asset_map, captable):
