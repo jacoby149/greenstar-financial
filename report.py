@@ -1,5 +1,6 @@
 import pickle
 import pandas as pd
+from operations import mprint
 from latex import build_pdf
 from jinja2 import FileSystemLoader, Template
 from latex.jinja2 import make_env
@@ -67,8 +68,8 @@ def get_matrices():
     p = pd.DataFrame(p)
     C = pd.DataFrame(C)
 
-    # print("\np: ", p, '\n', flush=True)
-    # print("\nC: ", C, '\n', flush=True)
+    # mprint("p",p)
+    # mprint("C",C)
 
     return p, C
 
@@ -77,7 +78,7 @@ def get_port_vars(tickers, html_inputs, form_params, asset_map, captable):
     with open("port_vars.pickle", 'rb') as pickle_file:
         port_vars = pickle.load(pickle_file)
 
-    # print("html inputs: ", html_inputs, flush=True)
+    # mprint("html inputs",html_inputs)
 
     for i in html_inputs:
         port_vars[i] = html_inputs[i]
@@ -97,8 +98,8 @@ def get_port_vars(tickers, html_inputs, form_params, asset_map, captable):
     captable = pd.DataFrame(captable, index=[captable[t] for t in captable])
     port_vars['newcap'] = captable.T
 
-    # print('cap dframe: ', port_vars['newcap'], flush=True)
-    # print("port vars: ", port_vars, flush=True)
+    # mprint('cap dframe',port_vars['newcap'])
+    # mprint("port vars",port_vars)
 
     port_vars['p'], port_vars['C'] = get_matrices()
 

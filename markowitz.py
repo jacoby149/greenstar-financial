@@ -4,6 +4,7 @@
 # in-house
 import graphs
 import operations as ops
+from operations import mprint
 import report
 
 from urllib.request import urlopen
@@ -58,10 +59,10 @@ def yahoo_assets(tickers):
         yahoo = yf.download(labels, start=str(start_date), end=str(end_date))['Adj Close']
         yahoo.to_csv(filename)
 
-    # print("yahoo data: ", yahoo.values, flush=True)
-    # print("yahoo shape: ", yahoo.shape, flush=True)
-    # print("yahoo type: ", type(yahoo), flush=True)
-    # print(flush=True)
+    # mprint("yahoo data",yahoo.values)
+    # mprint("yahoo shape",yahoo.shape)
+    # mprint("yahoo type",type(yahoo))
+
 
     def clean(yahoo):
         yahoo = yahoo.to_numpy()
@@ -73,7 +74,7 @@ def yahoo_assets(tickers):
         yahoo[findnans] = 1
 
         yahoo = yahoo.T
-        # print("T shape: ", yahoo.shape, flush=True)
+        # mprint("T shape",yahoo.shape)
         return yahoo
 
     yahoo = clean(yahoo)
@@ -137,7 +138,7 @@ def customer_port_weights(captable):
 
     allocations = [int(captable[x]) for x in captable if "X".casefold() not in captable[x].casefold() and captable[x] != '0']
     allocations = [a / sum(allocations) for a in allocations]
-    # print("allocations: ", allocations)
+    # mprint("allocations",allocations)
     return allocations
 
 
@@ -164,7 +165,7 @@ def old_weights(captable):
 #################################
 
 
-def markowitz_run(daily_data=random_assets(), tickers=None, captable=None, risk_level=50, old_tickers=None, asset_map=None):
+def markowitz_run(book, info):
     if tickers is not None:
         daily_data, labels = yahoo_assets(tickers)
         labels = labels.split(" ")

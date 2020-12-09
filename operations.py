@@ -1,11 +1,10 @@
 #  MATH OPERATIONS FOR USE IN GRAPHS AND MARKOWITZ
 import numpy as np
-import varname
 
 
 
-def log(name, x):
-    print("\n" + name + ": ", x, "\n", flush=True)
+def mprint(name, x):
+    print("\n" + name + ":\n", x, "\n", flush=True)
 
 
 def rand_weights(n):

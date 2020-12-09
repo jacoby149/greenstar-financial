@@ -4,14 +4,17 @@ upload contours to s3 with id problem grade IN problems folder
 upload full packet images to s3 with id packet grade IN packets folder
 """
 
-# imports
-import markowitz
-from operations import *
-import graphs
+# main imports
 from flask import Flask, request, jsonify, render_template, send_file, session, redirect
 from flask_cors import CORS
 import sys
 import pandas as pd
+
+# in-house
+import graphs
+import report
+import markowitz
+from operations import mprint
 
 
 # Initialize the Flask application
@@ -47,7 +50,7 @@ form_params["Cash"] = "BIL"
 
 
 
-# Do machine Learning.
+# do machine learning
 @app.route("/", methods=["GET", "POST"])
 def load_home():
     if 'logged_in'in session:
@@ -64,25 +67,24 @@ def login():
     return redirect("/")
 
 
-
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
     session.clear()
     return redirect("/")
 
 
-def clean_form(request):
+def get_book(request):
+    # get personal info
+    personal_info = {'risk': request.form.get('risk'),
+                     'name': request.form.get('name'),
+                     'birthday': request.form.get('birthday'),
+                     'term': request.form.get('term'),
+                     'firm': 'Provins',
+                     }
+
+    # get columns for dataframe
     asset_map = {v: k for k, v in form_params.items()}
-
-    risk = request.form.get('risk')
-    name = request.form.get('name')
-    birthday = request.form.get('birthday')
-    term = request.form.get('term')
-
-    personal_info = {'risk': risk, 'name': name, 'birthday': birthday, 'term': term, 'firm': 'Provins'}
     recommended = ['-' for i in range(len(form_params))]
-
-
     captable = {}
     for v in form_params:
         val = request.form.get(v)
@@ -92,12 +94,14 @@ def clean_form(request):
         else:
             captable[ticker] = val
 
+    # construct dataframe
     book = pd.DataFrame(captable.items(), columns=['ticker', 'allocation'])
     book['assetclass'] = book['ticker'].map(asset_map)
-    book['recommended'] = recommended
+    book['recommended'] = ['-' for i in range(len(form_params))]
 
+    # order dataframe
     book = book[['assetclass', 'ticker', 'allocation', 'recommended']]
-    log('book',book)
+    mprint('book',book)
 
     return book, personal_info
 
@@ -105,18 +109,16 @@ def clean_form(request):
 @app.route("/load_graphs", methods=["GET", "POST"])
 def load_graphs(tickers=None):
     global images
-    global asset_map
-    images = []
 
-    captable, tickers, risk, name, birthday, term, old_tickers = clean_form(request)
+    book, personal_info = get_book(request)
 
-    risk=int(risk)
-    print("RISK_LEVEL :",risk)
-    images,portfolios,returns,risks = markowitz.markowitz_run(tickers=tickers, captable=captable, risk_level=risk, old_tickers=old_tickers, asset_map=asset_map)
-    # images,portfolios,returns,risks = markowitz.markowitz_run(tickers=None, captable=None, risk_level=risk, old_tickers=None, asset_map=form_params)
+    mprint("RISK_LEVEL",int(personal_info['risk']))
+
+    images,portfolios,returns,risks = markowitz.markowitz_run(book=book, info=personal_info)
+    # images,portfolios,returns,risks = markowitz.markowitz_run(book=book, info=personal_info)
+
     vals = {}
     html_images = [img_form.format(i) for i in images]
-
 
     vals["images"]= "".join(html_images)
     vals["portfolios"]= str(portfolios)
@@ -126,34 +128,30 @@ def load_graphs(tickers=None):
     return vals
 
 
-@app.route("/back", methods=["GET", "POST"])
-def back():
-    global images
-    images = []
-    risk_level = int(request.form.get('risk'))
-    vals=dict() 
-    vals["weights"],images = markowitz.backtest(risk_level=risk_level)
-    html_images = [img_form.format(i) for i in images]
-    vals["backtest"]= "".join(html_images)
-    return vals
-
-
-import report
 @app.route("/report", methods=["GET", "POST"])
 def make_report():
-    global form_params
-    global asset_map
+    book, personal_info = get_book(request)
+
+    report.make_report(book=book, info=personal_info)
+
+    return send_file("/app/pdfs/{} Report.pdf".format(personal_info['name']))
 
 
-    captable, tickers, risk, name, birthday, term, _ = clean_form(request)
-    html_inputs = {'risk': risk, 'name': name, 'birthday': birthday, 'term': term}
-
-    report.make_report(tickers, html_inputs, form_params, asset_map, captable)
-
-    return send_file("/app/pdfs/{} Report.pdf".format(name))
+# @app.route("/back", methods=["GET", "POST"])
+# def back():
+#     global images
+#     images = []
+#     risk_level = int(request.form.get('risk'))
+#     vals=dict()
+#     vals["weights"],images = markowitz.backtest(risk_level=risk_level)
+#     html_images = [img_form.format(i) for i in images]
+#     vals["backtest"]= "".join(html_images)
+#     return vals
 
 
 # start flask
 if __name__ == "__main__":
     # Threaded option to enable multiple instances for multiple user access support
     app.run(host="0.0.0.0", threaded=True)
+
+
