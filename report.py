@@ -59,13 +59,6 @@ def pickle_dump(red, blue, matrices, book, info):
         else:
             return "(" + str(v)[1:] + "\%)"
 
-    # convert book, info to LaTex friendly formatting
-    book, info = latexify(book, info)
-
-    mprint('latex book',book)
-    redbook = book[book['infinal']==True]
-    bluebook = book[book['inblue']==True]
-    ybook = book[(book['inred']==True) | (book['inblue']==True)]
 
     redret = round(((red['ret'] - 1) * 100),2)
     blueret = round(((blue['ret'] - 1) * 100),2)
@@ -76,8 +69,15 @@ def pickle_dump(red, blue, matrices, book, info):
     risk_change = round(redrisk - bluerisk,2)
     ret_change = round(redret - blueret,2)
 
-
     p, C = matrices
+
+    # convert book, info to LaTex friendly formatting
+    book, info = latexify(book, info)
+
+    mprint('latex book',book)
+    redbook = book[book['infinal']==True]
+    bluebook = book[book['inblue']==True]
+    ybook = book[(book['inred']==True) | (book['inblue']==True)]
 
 
     report_variables = {"blueret": percent(blueret), "bluerisk": percent(bluerisk),
