@@ -7,19 +7,35 @@ from latex.jinja2 import make_env
 
 
 
+def dollar(v):
+    if 0 <= v:
+        return "\$" + '{:,}'.format(int(v))
+    else:
+        return "(\$" + '{:,}'.format(int(v))[1:] + ")"
+
+
+def percent(v):
+    if 0 <= v:
+        return str(v) + "\%"
+    else:
+        return "(" + str(v)[1:] + "\%)"
+
+
+
 def latexify(book, info):
-    def dollar(v):
-        if 0 <= v:
-            return "\$" + '{:,}'.format(int(v))
-        else:
-            return "(\$" + '{:,}'.format(int(v))[1:] + ")"
-
-
     book['change'] = book['change'].apply(dollar)
     book['allocation'] = book['allocation'].apply(dollar)
     book['recommended'] = book['recommended'].apply(dollar)
 
     info['wealth'] = dollar(info['wealth'])
+    info['redoneret'] = dollar(info['redoneret'])
+    info['redsevenret'] = dollar(info['redsevenret'])
+    info['blueoneret'] = dollar(info['blueoneret'])
+    info['bluesevenret'] = dollar(info['bluesevenret'])
+    info['redoneretchange'] = percent(round(info['redoneretchange']*100,2))
+    info['redsevenretchange'] = percent(round(info['redsevenretchange']*100,2))
+    info['blueoneretchange'] = percent(round(info['blueoneretchange']*100,2))
+    info['bluesevenretchange'] = percent(round(info['bluesevenretchange']*100,2))
 
 
     descriptions = {"Large Cap Growth": " Fastly growing stocks from big companies.",
@@ -51,17 +67,37 @@ def latexify(book, info):
     return book, info
 
 
+def write_montecarlo(info):
+    red_one_year = info['rlinedata'][1]
+    info['redoneret'] = red_one_year[0]
+    info['redonerisk'] = percent(round(red_one_year[1]/100,2))
+
+    red_seven_year = info['rlinedata'][7]
+    info['redsevenret'] = red_seven_year[0]
+    info['redsevenrisk'] = percent(round(red_seven_year[1]/100,2))
+
+    blue_one_year = info['blinedata'][1]
+    info['blueoneret'] = blue_one_year[0]
+    info['blueonerisk'] = percent(round(blue_one_year[1]/100,2))
+
+    blue_seven_year = info['blinedata'][7]
+    info['bluesevenret'] = blue_seven_year[0]
+    info['bluesevenrisk'] = percent(round(blue_seven_year[1]/100,2))
+
+    info['redoneretchange'] = (info['redoneret'] - info['wealth']) / info['wealth']
+    info['redsevenretchange'] = (info['redsevenret'] - info['wealth']) / info['wealth']
+    info['blueoneretchange'] = (info['blueoneret'] - info['wealth']) / info['wealth']
+    info['bluesevenretchange'] = (info['bluesevenret'] - info['wealth']) / info['wealth']
+
+    return info
+
+
 # called in markowitz after graph creations
 def pickle_dump(red, blue, matrices, book, info):
-    def percent(v):
-        if 0 <= v:
-            return str(v) + "\%"
-        else:
-            return "(" + str(v)[1:] + "\%)"
+    p, C = matrices
 
-
-    redret = round(((red['ret'] - 1) * 100),2)
-    blueret = round(((blue['ret'] - 1) * 100),2)
+    redret = round(((red['ret']-1)*100),2)
+    blueret = round(((blue['ret']-1)*100),2)
 
     redrisk = round(red['risk']*100,2)
     bluerisk = round(blue['risk']*100,2)
@@ -69,7 +105,8 @@ def pickle_dump(red, blue, matrices, book, info):
     risk_change = round(redrisk - bluerisk,2)
     ret_change = round(redret - blueret,2)
 
-    p, C = matrices
+    info = write_montecarlo(info)
+
 
     # convert book, info to LaTex friendly formatting
     book, info = latexify(book, info)

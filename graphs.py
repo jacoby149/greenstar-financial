@@ -123,8 +123,10 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
 
 
 def draw_line(plt, line_data, color="black", zorder=1):
-    year, ret = line_data.keys(), line_data.values()
-    year = [y + int(str(date.today())[:4]) for y in year]
+    year = line_data.keys()
+    ret = [line_data[x][0] for x in line_data]
+
+    year = [int(date.today().year) + y for y in year]
     plt.plot(year, ret, color=color, marker='o', zorder=zorder)
     plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()])
 

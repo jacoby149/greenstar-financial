@@ -253,9 +253,15 @@ def markowitz_run(book, info):
     bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data))
 
+
     rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=wealth)
     bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data, 7))
+
+    # write montecarlo data to info
+    info['rlinedata'] = rline_data
+    info['blinedata'] = bline_data
+
 
 
     # Make bell curve

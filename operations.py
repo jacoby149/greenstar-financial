@@ -1,6 +1,6 @@
 #  MATH OPERATIONS FOR USE IN GRAPHS AND MARKOWITZ
 import numpy as np
-
+import statistics as s
 
 
 def mprint(name, x):
@@ -40,15 +40,17 @@ def portfolio_performance(daily_data, weights):
 
 
 def montecarlo(mu, std, term, trials, starting_wealth=1):
-    sums = {period: 0 for period in range(term+1)}
+    data = {period: [] for period in range(term+1)}
 
     for trial in range(trials):
         wealth = starting_wealth
         for period in range(term+1):
-            sums[period] += wealth
+            data[period].append(wealth)
             wealth = wealth * np.random.normal(mu, std)
 
     for period in range(term+1):
-        sums[period] = sums[period] / trials
+        ret = sum(data[period]) / trials
+        risk = s.stdev(data[period])
+        data[period] = (ret, risk)
 
-    return sums
+    return data
