@@ -54,8 +54,8 @@
     citecolor=cyan,
     linkcolor=black,
     urlcolor=black,
-    pdftitle=Report - {\VAR{name}},
-    pdfauthor=Un povero studente di medicina,
+    pdftitle=Report - \VAR{info.name},
+    pdfauthor=ghoozie,
     }
 
 \usepackage{booktabs} %per le tabelle
@@ -82,7 +82,7 @@
 	\vspace{0,5cm}
 	{\scshape\Large\bfseries Recommended Asset Allocation
 
-	{\VAR{name}} | 11/20/2020 \par}
+	{\VAR{info.name}} | {\VAR{info.date}} \par}
 	\vspace{0,5cm}
 	{\scshape\normalsize Frontier Curve Optimal Portfolio Analysis
 
@@ -152,31 +152,11 @@
 \begin{tabular}{lll}   %\toprule
     Asset Class & Index & Description\\ \midrule
 
-    Large Cap Growth  & {\VAR{LargeCapGrowth}} & Fastly growing stocks from big companies. \\\midrule
-    Large Cap Value & {\VAR{LargeCapVal}} & Undervalued stocks from big companies. \\\midrule
-    Small Cap Growth & {\VAR{SmallCapGrowth}} & Fastly growing stocks from small companies.\\\midrule
+    \BLOCK{ for key, value in book.iterrows() }
+        \VAR{value.assetclass} & \VAR{value.latex} & \VAR{value.description} \\\midrule
+    \BLOCK{ endfor }
 
-    Small Cap Value  & {\VAR{SmallCapVal}} & Undervalued stocks from small companies. \\\midrule
-    Mid Cap  & {\VAR{MidCap}} & Stocks from mid sized companies. \\\midrule
-    International  & {\VAR{IntlStock}} & Stocks not traded in U.S.A. exchanges. \\\midrule
 
-    Emerging Mkt.  & {\VAR{EmergingMktStock}} & Stocks from emerging Mkt. countries. \\\midrule
-    Real Estate  & {\VAR{RealEstate}} & Land and buildings. \\\midrule
-    Venture Capital  & {\VAR{VC}} &  New and innovative companies. \\\midrule
-
-    Inter. Govt. Bonds  & {\VAR{IntlGovBonds}} & Govt. bonds that mature in 5-10 years. \\\midrule
-    Long Govt. Bonds  & {\VAR{LongGovBonds}} & Govt. bonds mature in more than 10 years. \\\midrule
-
-    Corporate Bonds  & {\VAR{CorporateBonds}} & Bonds issued by a corporation. \\\midrule
-    High Yield Bond  & {\VAR{HighYieldBonds}} & Lower credit rating higher return bonds. \\\midrule
-    Municipal Bond  & {\VAR{MunicipalBonds}} & Bonds Issued by local government. \\\midrule
-
-    Foreign Bonds  & {\VAR{ForeignBonds}} & Bonds issued in other countries. \\\midrule
-    Emerging Mkt. Debt  & {\VAR{EmergingMktDebt}} & Bonds issued by emerging countries. \\\midrule
-    Commodities  & {\VAR{Commodities}} & Basic goods used in commerce. \\\midrule
-    Cash  & {\VAR{Cash}} & Currencies, Foreign Currencies.
-
-    \\ \bottomrule
 \end{tabular}
 \end{adjustwidth}
 
@@ -191,16 +171,16 @@
 \vspace{.1cm}\\
 \large\textbf{\underline {Investment Profile:}}
 \vspace{.25cm}\\
-\noindent Name : {\VAR{name}} \\
-\noindent Birthday : {\VAR{birthday}} \\
+\noindent Name : {\VAR{info.name}} \\
+\noindent Birthday : {\VAR{info.birthday}} \\
 %\noindent Purpose : Retirement \\
-\noindent Time Frame : {\VAR{term}} \\
+\noindent Time Frame : {\VAR{info.term}} \\
 \noindent Available Funds : \$1,232,683.45 \\
 \noindent Preferred Risk : ($\pm {\VAR{redrisk}}\%$ Yearly) \\
 \noindent \textbf{Preferred Asset Classes:} \\
 
-    \BLOCK{ for key, value in preferred.iterrows() }
-        -- \VAR{key} \\
+    \BLOCK{ for key, value in redbook.iterrows() }
+        -- \VAR{value.assetclass} \\
     \BLOCK{ endfor }
 
 \end{tabular} &
@@ -224,8 +204,8 @@
     Asset Class & Current & Suggested & Change\\ \midrule
 
 
-    \BLOCK{ for key, value in newcap.iterrows() }
-        \VAR{key} & \$\VAR{value.1} & \$\VAR{value.2} & \$\VAR{value.2} \\ \midrule
+    \BLOCK{ for key, value in ybook.iterrows() }
+        \VAR{value.assetclass} & \$\VAR{value.allocation} & \$\VAR{value.recommended} & \$\VAR{value.change} \\ \midrule
     \BLOCK{ endfor }
 
 
@@ -411,13 +391,13 @@ In 1990, Harry Markowitz won a nobel prize for his contributions to portfolio ba
 \vspace{1cm}
 
 
-Risk (Std. Deviation) : $\pm$ {\VAR{redrisk}} \%
+Risk (Std. Deviation) : $\pm$ {\VAR{redrisk}}
 
-Expected Return (\%): {\VAR{redret}} \%
+Expected Return (\%): {\VAR{redret}}
 
-Adjustment of Risk (\%): {\VAR{risk_change}} \%
+Adjustment of Risk (\%): {\VAR{risk_change}}
 
-Improvement in Return (\%): {\VAR{ret_change}} \%
+Change in Return (\%): {\VAR{ret_change}}
 
 
 \newpage    % PAGE8

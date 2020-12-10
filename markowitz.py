@@ -126,7 +126,7 @@ def get_rand_portfolio(daily_data):
 
 
 def get_weights(book):
-    captable = dict(zip(book.index.values,book.allocation))
+    captable = dict(zip(book.ticker,book.allocation))
 
     allocations = [int(captable[x]) for x in captable]
     allocations = [a / sum(allocations) for a in allocations]
@@ -141,7 +141,21 @@ def add_recommended(book, redbook, chosen, wealth):
     book['recommended'] = book['assetclass'].map(chosen_dict)
     book['recommended'] = book['recommended'].apply(lambda x: int(0) if pd.isna(x) is True else int(x))
 
-    mprint('recommended book',book)
+    # mprint('recommended book',book)
+
+    return book
+
+
+def add_change(book):
+    current = book['allocation'].tolist()
+    recommended = book['recommended'].tolist()
+    change = [recommended[i] - current[i] for i, n in enumerate(current)]
+    book['change'] = change
+
+    # add column for display on final report
+    book['infinal'] = [False if b == 0 else True for b in book['recommended']]
+
+    mprint("finalbook",book)
 
     return book
 
@@ -154,21 +168,21 @@ def add_recommended(book, redbook, chosen, wealth):
 def dataframe_structures(book):
     # get structures for future strategy (red)
     redbook = book.loc[book['inred'] == True]
-    rtickers = redbook.index.values.tolist()
+    rtickers = redbook['ticker'].tolist()
 
     # mprint('redbook',redbook)
     # mprint('rtickers',rtickers)
 
     # get structures for current strategy (blue)
     bluebook = book.loc[book['inblue'] == True]
-    btickers = bluebook.index.values.tolist()
+    btickers = bluebook['ticker'].tolist()
 
     # mprint('bluebook',bluebook)
     # mprint('btickers',btickers)
 
     # get structures for yahoo's daily data (yahoo)
     ybook = book.loc[(book['inred'] == True) | (book['inblue'] == True)] #comment
-    ytickers = ybook.index.values.tolist()
+    ytickers = ybook['ticker'].tolist()
 
     # mprint('ybook',ybook)
     # mprint('ytickers',ytickers)
@@ -261,6 +275,7 @@ def markowitz_run(book, info):
 
     # update book
     book = add_recommended(book, redbook, chosen_rib, wealth)
+    book = add_change(book)
 
 
     # Send variables to report.py for LaTeX injection

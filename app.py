@@ -9,6 +9,11 @@ from flask import Flask, request, jsonify, render_template, send_file, session, 
 from flask_cors import CORS
 import sys
 import pandas as pd
+from datetime import date
+
+# display whole book
+pd.set_option('display.width', 260)
+pd.set_option('display.max_columns', 20)
 
 # in-house
 import graphs
@@ -27,16 +32,16 @@ app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 images = []
 img_form = "<img src = '{}'>"
 
-form_params = dict()
+form_params = {}
 #stock_symbols
 form_params["Large Cap Growth"] = "VIGRX"                # FSPGX
-form_params["Large Cap Val"] = "JKD"                  # FLCOX S&P 500 Value Index
+form_params["Large Cap Value"] = "JKD"                  # FLCOX S&P 500 Value Index
 form_params["Small Cap Growth"] = "^RUT"
-form_params["Small Cap Val"] = "VISVX"                # 500 value index not found
+form_params["Small Cap Value"] = "VISVX"                # 500 value index not found
 form_params["Mid Cap"] = "MDY"                     # identical to ^SP400
-form_params["Intl Stock"] = "VTIAX"
+form_params["International Stock"] = "VTIAX"
 form_params["Emerging Mkt Stock"] = "VEMAX"
-form_params["Intl Gov Bonds"] = "GVI"
+form_params["International Gov Bonds"] = "GVI"
 form_params["Long Gov Bonds"] = "ILTB"
 form_params["Corporate Bonds"] = "CBFSX"                  # from JP Morgan   "^SPBDACPT"
 form_params["High Yield Bonds"] = "HYG"
@@ -77,10 +82,14 @@ def get_book(request):
     # get personal info
     info = {'risk': request.form.get('risk'),
             'name': request.form.get('name'),
+            'date': str(date.today()),
             'birthday': request.form.get('birthday'),
             'term': request.form.get('term'),
             'firm': 'Provins',
             }
+
+    def latex(v):
+        return v.replace("^","\\^{}")
 
     # get columns for dataframe
     asset_map = {v: k for k, v in form_params.items()}
@@ -111,15 +120,16 @@ def get_book(request):
     # construct dataframe
     book = pd.DataFrame(captable.items(), columns=['ticker', 'allocation'])
     book['assetclass'] = book['ticker'].map(asset_map)
+    book['latex'] = [latex(v) for v in book['ticker']]
     book['inred'] = book['ticker'].map(inred)
     book['inblue'] = book['ticker'].map(inblue)
     book['recommended'] = [0 for i in range(len(form_params))]
 
 
     # order and sort dataframe
-    book = book[['assetclass', 'ticker', 'allocation', 'recommended', 'inred', 'inblue']]
+    book = book[['assetclass', 'ticker', 'latex', 'allocation', 'recommended', 'inred', 'inblue']]
     book.sort_values('ticker', inplace=True)
-    book.set_index('ticker', inplace=True)
+    book.reset_index(drop=True, inplace=True)
 
     mprint('book',book)
 
