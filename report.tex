@@ -175,8 +175,8 @@
 \noindent Birthday : {\VAR{info.birthday}} \\
 %\noindent Purpose : Retirement \\
 \noindent Time Frame : {\VAR{info.term}} \\
-\noindent Available Funds : \$1,232,683.45 \\
-\noindent Preferred Risk : ($\pm {\VAR{redrisk}}\%$ Yearly) \\
+\noindent Available Funds : {\VAR{info.wealth}} \\
+\noindent Preferred Risk : $\pm$ {\VAR{redrisk}} Yearly \\
 \noindent \textbf{Preferred Asset Classes:} \\
 
     \BLOCK{ for key, value in redbook.iterrows() }
@@ -205,7 +205,7 @@
 
 
     \BLOCK{ for key, value in ybook.iterrows() }
-        \VAR{value.assetclass} & \$\VAR{value.allocation} & \$\VAR{value.recommended} & \$\VAR{value.change} \\ \midrule
+        \VAR{value.assetclass} & \VAR{value.allocation} & \VAR{value.recommended} & \VAR{value.change.rjust(100)} \\ \midrule
     \BLOCK{ endfor }
 
 

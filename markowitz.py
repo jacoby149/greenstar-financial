@@ -155,8 +155,6 @@ def add_change(book):
     # add column for display on final report
     book['infinal'] = [False if b == 0 else True for b in book['recommended']]
 
-    mprint("finalbook",book)
-
     return book
 
 
@@ -196,6 +194,7 @@ def markowitz_run(book, info):
     blue_weights = get_weights(bluebook)
     risk_level = int(info['risk'])
     wealth = sum([int(val) for val in bluebook.allocation.tolist()])
+    info['wealth'] = wealth
 
     red_data = yahoo_assets(rtickers)
     blue_data = yahoo_assets(btickers)

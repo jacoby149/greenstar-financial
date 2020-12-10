@@ -7,7 +7,21 @@ from latex.jinja2 import make_env
 
 
 
-def add_descriptions(book):
+def latexify(book, info):
+    def dollar(v):
+        if 0 <= v:
+            return "\$" + '{:,}'.format(int(v))
+        else:
+            return "(\$" + '{:,}'.format(int(v))[1:] + ")"
+
+
+    book['change'] = book['change'].apply(dollar)
+    book['allocation'] = book['allocation'].apply(dollar)
+    book['recommended'] = book['recommended'].apply(dollar)
+
+    info['wealth'] = dollar(info['wealth'])
+
+
     descriptions = {"Large Cap Growth": " Fastly growing stocks from big companies.",
                     "Large Cap Value": " Undervalued stocks from big companies.",
                     "Small Cap Growth": " Fastly growing stocks from small companies.",
@@ -33,25 +47,22 @@ def add_descriptions(book):
                     "Cash": " Currencies, Foreign Currencies."}
 
     book['description'] = book['assetclass'].map(descriptions)
-    return book
+
+    return book, info
 
 
 # called in markowitz after graph creations
 def pickle_dump(red, blue, matrices, book, info):
-    def dollar(v):
-        if 0 <= v:
-            return "\$" + str(v)
-        else:
-            return "(\$" + str(v)[1:] + ")"
-
     def percent(v):
         if 0 <= v:
             return str(v) + "\%"
         else:
             return "(" + str(v)[1:] + "\%)"
 
-    book = add_descriptions(book)
-    mprint('final final book',book)
+    # convert book, info to LaTex friendly formatting
+    book, info = latexify(book, info)
+
+    mprint('latex book',book)
     redbook = book[book['infinal']==True]
     bluebook = book[book['inblue']==True]
     ybook = book[(book['inred']==True) | (book['inblue']==True)]
@@ -65,7 +76,9 @@ def pickle_dump(red, blue, matrices, book, info):
     risk_change = round(redrisk - bluerisk,2)
     ret_change = round(redret - blueret,2)
 
+
     p, C = matrices
+
 
     report_variables = {"blueret": percent(blueret), "bluerisk": percent(bluerisk),
                         "redret": percent(redret), "redrisk": percent(redrisk),
