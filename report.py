@@ -92,9 +92,75 @@ def write_montecarlo(info):
     return info
 
 
+
+
+# Corr. & MSFT & NTFX & HULU  & RUS & BP & TR & SOCK \\\midrule
+# MSFT  & 16.128 & +8.872 & 16.128 & 1.402 & 1.373 & -146.6 & -137.6 \\\midrule
+# NTFX  & 3.442  & -2.509 & 3.442  & 0.299 & 0.343 & 133.2  & 152.4  \\\midrule
+# HULU  & 1.826  & -0.363 & 1.826  & 0.159 & 0.119 & 168.5  & -161.1 \\\midrule
+# RUS  & 0.993  & -0.429 & 0.993  & 0.086 & 0.08  & 25.6   & 90     \\ \midrule
+# BP  & 1.29   & +0.099 & 1.29   & 0.112 & 0.097 & -175.6 & -114.7 \\\midrule
+# TR  & 0.483  & -0.183 & 0.483  & 0.042 & 0.063 & 22.3   & 122.5  \\\midrule
+# SOCK  & 0.766  & -0.475 & 0.766  & 0.067 & 0.039 & 141.6  & -122    \\\bottomrule
+
+def latex_matrix(C):
+    def semantic(j):
+        if j < (-0.1):
+            return "\\color[rgb]{.8,0,0} (HIGH) \\color{black}"
+        elif j < (-0.05):
+            return "\\color[rgb]{.8,0,0} (MID) \\color{black}"
+        elif j > 0.1:
+            return "\\color[rgb]{0,.5,0} HIGH \\color{black}"
+        elif j > 0.05:
+            return "\\color[rgb]{0,.5,0} MID \\color{black}"
+        else:
+            return "-"
+
+
+    tickers = C.columns.tolist()
+    tags = ''.join(['c' for c in range(C.shape[0] + 1)])
+    header = ' \\begin{tabular}{' + tags + '}\n \\toprule \n'
+    footer = ' \\\\ \n \\bottomrule \n \\end{tabular} \n'
+
+    row1 = 'Corr. '
+    for i in range(C.shape[0]):
+        row1 = row1 +' & ' + tickers[i]
+
+    body = ''
+    for i in C:
+        body = body + ' \\\\ \n \\midrule \n' + i
+        for j in C[i]:
+            body = body + ' & ' + semantic(j)
+
+
+    table = header + row1 + body + footer
+    return table
+
+
+
 # called in markowitz after graph creations
-def pickle_dump(red, blue, matrices, book, info):
-    p, C = matrices
+def pickle_dump(red, blue, C, book, info):
+    def profit_cent(v):
+        v = int((100*v)-100)
+        if 0 <= v:
+            return str(v) + "%"
+        else:
+            return "(" + str(v)[1:] + "%)"
+
+    def risk_cent(v):
+        v = int((100*v))
+        if 0 <= v:
+            return str(v) + "%"
+        else:
+            return "(" + str(v)[1:] + "%)"
+
+    p = info['p']
+    p = p.apply(lambda x: x.apply(profit_cent))
+    p = p.to_latex(index=False)
+
+    r = info['r']
+    r = r.apply(lambda x: x.apply(risk_cent))
+    r = r.to_latex(index=False)
 
     redret = round(((red['ret']-1)*100),2)
     blueret = round(((blue['ret']-1)*100),2)
@@ -107,11 +173,12 @@ def pickle_dump(red, blue, matrices, book, info):
 
     info = write_montecarlo(info)
 
+    C = latex_matrix(C)
 
     # convert book, info to LaTex friendly formatting
     book, info = latexify(book, info)
 
-    mprint('latex book',book)
+    # mprint('latex book',book)
     redbook = book[book['infinal']==True]
     bluebook = book[book['inblue']==True]
     ybook = book[(book['inred']==True) | (book['inblue']==True)]
@@ -120,7 +187,7 @@ def pickle_dump(red, blue, matrices, book, info):
     report_variables = {"blueret": percent(blueret), "bluerisk": percent(bluerisk),
                         "redret": percent(redret), "redrisk": percent(redrisk),
                         "risk_change": percent(risk_change), "ret_change": percent(ret_change),
-                        "book": book, "info": info, "p": p, "C": C,
+                        "book": book, "info": info, "p": p, "C": C, "r": r,
                         "redbook": redbook, "bluebook": bluebook, "ybook": ybook, }
 
     with open("report_variables.pickle", 'wb') as report_pickle:

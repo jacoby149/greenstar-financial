@@ -158,8 +158,33 @@ def add_change(book):
     return book
 
 
+def frame_matrix(C, ybook):
+    def hundredth(x):
+        return round(x,2)
 
-#################################
+    C = pd.DataFrame(C).apply(hundredth)
+    C.columns = ybook['latex'].tolist()
+    C['ticker'] = ybook['latex'].tolist()
+    C.set_index('ticker', inplace=True)
+    del C.index.name
+
+    return C
+
+
+def frame_vector(v, ybook):
+    def hundredth(x):
+        return round(x,2)
+
+    v = pd.DataFrame(v).apply(hundredth)
+    v.columns = ybook['latex']
+    v.sort_values(by=0, axis=1, inplace=True)
+
+    mprint("p",v)
+
+    return v
+
+
+############################### come on ##
 #######  MARKOWITZ RUN   ########
 #################################
 
@@ -271,11 +296,15 @@ def markowitz_run(book, info):
 
     # get matrices
     p = np.asmatrix(np.mean(yahoo_data, axis=1))
-    C = np.asmatrix(np.cov(yahoo_data))
-    p = pd.DataFrame(p)
-    C = pd.DataFrame(C)
+    p = frame_vector(p, ybook)
+    info['p'] = p
 
-    matrices = (p, C)
+    C = np.asmatrix(np.cov(yahoo_data))
+    C = frame_matrix(C, ybook)
+
+    r = np.asmatrix(np.diag(C))
+    r = frame_vector(r, ybook)
+    info['r'] = r
 
 
     # update book
@@ -284,7 +313,7 @@ def markowitz_run(book, info):
 
 
     # Send variables to report.py for LaTeX injection
-    report.pickle_dump(red, blue, matrices, book, info)
+    report.pickle_dump(red, blue, C, book, info)
 
 
     def neat(portfolios):

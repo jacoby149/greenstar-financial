@@ -6,6 +6,7 @@
 \linespread{1.5} %interlinea
 \pagestyle{plain}
 \usepackage{chngpage}
+\usepackage{booktabs}
 
 \usepackage{geometry} %margini
 \geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
@@ -404,25 +405,15 @@ Change in Return (\%): {\VAR{ret_change}}
 
 \begin{center}
 
-\begin{tabular}{cccccccc} \toprule
 
-    \BLOCK{ for key, value in C.iterrows() }
-        \VAR{value} \\
-    \BLOCK{ endfor }
 
-%    Corr. & MSFT & NTFX & HULU  & RUS & BP & TR & SOCK\\ \midrule
-%    MSFT  & 16.128 & +8.872 & 16.128 & 1.402 & 1.373 & -146.6 & -137.6 \\\midrule
-%    NTFX  & 3.442  & -2.509 & 3.442  & 0.299 & 0.343 & 133.2  & 152.4  \\\midrule
-%    HULU  & 1.826  & -0.363 & 1.826  & 0.159 & 0.119 & 168.5  & -161.1 \\\midrule
-%    RUS  & 0.993  & -0.429 & 0.993  & 0.086 & 0.08  & 25.6   & 90     \\ \midrule
-%    BP  & 1.29   & +0.099 & 1.29   & 0.112 & 0.097 & -175.6 & -114.7 \\\midrule
-%    TR  & 0.483  & -0.183 & 0.483  & 0.042 & 0.063 & 22.3   & 122.5  \\\midrule
-%    SOCK  & 0.766  & -0.475 & 0.766  & 0.067 & 0.039 & 141.6  & -122    \\ \bottomrule
-\end{tabular}
+        \VAR{C}
+\vspace{0.3cm}
+
+    Above is the Semantic Correlation Matrix of the selected Asset Classes. It shows how each asset class is correlated to one another
 
 \end{center}
 
-Above is the Semantic Correlation Matrix of the selected Asset Classes. It shows how each asset class is correlated to one another
 
 \vspace{1cm}
 
@@ -430,34 +421,35 @@ Above is the Semantic Correlation Matrix of the selected Asset Classes. It shows
 
 \begin{center}
 
-\begin{tabular}{cccccccc} \toprule
-    Return & MSFT & NTFX & HULU  & RUS & BP & TR & SOCK\\ \midrule
-    1  & 16.128 & +8.872 & 16.128 & 1.402 & 1.373 & -146.6 & -137.6 \\
-    2  & 3.442  & -2.509 & 3.442  & 0.299 & 0.343 & 133.2  & 152.4  \\
+    \VAR{r}
+\vspace{0.3cm}
 
-\end{tabular}
+    Above is the ranking of the selected asset classes by risk
 
 \end{center}
 
 
-Above is the ranking of the selected asset classes by risk
+
+
+
+
 
 \vspace{1cm}
 
 
 \begin{center}
 
-\begin{tabular}{cccccccc} \toprule
-    Risk & MSFT & NTFX & HULU  & RUS & BP & TR & SOCK\\ \midrule
-    1  & 16.128 & +8.872 & 16.128 & 1.402 & 1.373 & -146.6 & -137.6 \\
-    2  & 3.442  & -2.509 & 3.442  & 0.299 & 0.343 & 133.2  & 152.4  \\
+    \VAR{p}
+    \vspace{0.3cm}
 
-\end{tabular}
+    Above is the ranking of the selected asset classes by return
 
 \end{center}
 
 
-Above is the ranking of the selected asset classes by return
+
+
+
 
 
 \medskip
