@@ -14,6 +14,8 @@ import numpy as np
 from numpy import array
 from numpy import isnan
 
+from sympy.utilities.iterables import multiset_permutations
+
 from datetime import date,timedelta
 
 import pickle
@@ -87,6 +89,22 @@ def yahoo_assets(tickers):
 #######  PORTFOLIO CALC  ########
 #################################
 
+def bundles(c,l,n,G,h):
+    #all bundles of size l > c
+    #-wa -wb -wc <= -.3
+    #IS wa+wb+wc >= .3
+    #all perms i.e.
+    #[1,1,1,0,0,0],[1,0,1,1,0,0]...
+    perms = list(multiset_permutations([1 if i<l else 0 for i in range(n)]))
+    G_ext = -np.matrix(perms)
+    #matrix of boundary c
+    h_ext = - np.full((len(perms),1),c)
+
+    #append the bundle boundaries.
+    G = opt.matrix(np.vstack((G,G_ext)))
+    h = opt.matrix(np.vstack((h,h_ext)))
+    return G,h
+
 def optimal_portfolio(daily_data):
     n = len(daily_data)
     daily_data = np.asmatrix(daily_data)
@@ -96,12 +114,20 @@ def optimal_portfolio(daily_data):
     S = opt.matrix(np.cov(daily_data))
     pbar = opt.matrix(np.mean(daily_data, axis=1))
 
-    # Create constraint matrices
+    # all stocks are greater than zero.
+    #w0 > 0, w1> 0 ... wn > 0
     G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
     h = opt.matrix(0.0, (n ,1))
-    A = opt.matrix(1.0, (1, n))
+
+    #add bundle boundaries bundles size l sum greater weight than c
+    G,h = bundles(c=1/n,l=n - n//4,n=n,G=G,h=h)
+    
+    #all stocks add up to 1.
+    #w1 + w2 + ... = 1
+    A = opt.matrix(1.0, (1, n)) #all stocks add to 1.
     b = opt.matrix(1.0)
     
+
     # Calculate rib frontier weights using quadratic programming
     portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] for mu in mus]
 
@@ -176,7 +202,7 @@ def frame_vector(v, ybook):
         return round(x,2)
 
     v = pd.DataFrame(v).apply(hundredth)
-    v.columns = ybook['latex']
+    v.columns = ybook['ticker']
     v.sort_values(by=0, axis=1, inplace=True)
 
     mprint("p",v)
@@ -299,11 +325,13 @@ def markowitz_run(book, info):
     p = frame_vector(p, ybook)
     info['p'] = p
 
-    C = np.asmatrix(np.cov(yahoo_data))
-    C = frame_matrix(C, ybook)
-
-    r = np.asmatrix(np.diag(C))
-    r = frame_vector(r, ybook)
+    #correlation matrix rather than covariance matrix :)
+    
+    Cov = np.asmatrix(np.cov(red_data))
+    C = np.asmatrix(np.corrcoef(red_data))
+    C = frame_matrix(C, redbook)
+    r = np.asmatrix(np.sqrt(np.diag(Cov))) 
+    r = frame_vector(r, redbook)
     info['r'] = r
 
 
