@@ -326,11 +326,11 @@ def markowitz_run(book, info):
     info['p'] = p
 
     #correlation matrix rather than covariance matrix :)
-    Cov = np.asmatrix(np.cov(yahoo_data))
-    C = np.asmatrix(np.corrcoef(yahoo_data))
-    C = frame_matrix(C, ybook)
+    Cov = np.asmatrix(np.cov(red_data))
+    C = np.asmatrix(np.corrcoef(red_data))
+    C = frame_matrix(C, redbook)
     r = np.asmatrix(np.sqrt(np.diag(Cov))) 
-    r = frame_vector(r, ybook)
+    r = frame_vector(r, redbook)
     info['r'] = r
 
 
