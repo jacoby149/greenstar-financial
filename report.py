@@ -168,8 +168,8 @@ def pickle_dump(red, blue, C, book, info):
     redrisk = round(red['risk']*100,2)
     bluerisk = round(blue['risk']*100,2)
 
-    risk_change = round(redrisk - bluerisk,2)
-    ret_change = round(redret - blueret,2)
+    riskchange = round(redrisk - bluerisk,2)
+    retchange = round(redret - blueret,2)
 
     info = write_montecarlo(info)
 
@@ -186,7 +186,7 @@ def pickle_dump(red, blue, C, book, info):
 
     report_variables = {"blueret": percent(blueret), "bluerisk": percent(bluerisk),
                         "redret": percent(redret), "redrisk": percent(redrisk),
-                        "risk_change": percent(risk_change), "ret_change": percent(ret_change),
+                        "riskchange": percent(riskchange), "recharge": percent(retchange),
                         "book": book, "info": info, "p": p, "C": C, "r": r,
                         "redbook": redbook, "bluebook": bluebook, "ybook": ybook, }
 
