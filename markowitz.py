@@ -202,7 +202,7 @@ def frame_vector(v, ybook):
         return round(x,2)
 
     v = pd.DataFrame(v).apply(hundredth)
-    v.columns = ybook['latex']
+    v.columns = ybook['ticker']
     v.sort_values(by=0, axis=1, inplace=True)
 
     mprint("p",v)
