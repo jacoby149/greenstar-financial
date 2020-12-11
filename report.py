@@ -179,7 +179,7 @@ def pickle_dump(red, blue, C, book, info):
     book, info = latexify(book, info)
 
     # mprint('latex book',book)
-    redbook = book[book['infinal']==True]
+    redbook = book[book['infinal']==True ]
     bluebook = book[book['inblue']==True]
     ybook = book[(book['inred']==True) | (book['inblue']==True)]
 
