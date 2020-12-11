@@ -120,7 +120,7 @@ def optimal_portfolio(daily_data):
     h = opt.matrix(0.0, (n ,1))
 
     #add bundle boundaries bundles size l sum greater weight than c
-    G,h = bundles(c=.4,l=n-3,n=n,G=G,h=h)
+    G,h = bundles(c=1/n,l=n - n//4,n=n,G=G,h=h)
     
     #all stocks add up to 1.
     #w1 + w2 + ... = 1
