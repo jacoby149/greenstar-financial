@@ -105,13 +105,13 @@ def write_montecarlo(info):
 
 def latex_matrix(C):
     def semantic(j):
-        if j < (-0.1):
+        if j < (-0.6):
             return "\\color[rgb]{.8,0,0} (HIGH) \\color{black}"
-        elif j < (-0.05):
+        elif j < (-0.3):
             return "\\color[rgb]{.8,0,0} (MID) \\color{black}"
-        elif j > 0.1:
+        elif j > 0.6:
             return "\\color[rgb]{0,.5,0} HIGH \\color{black}"
-        elif j > 0.05:
+        elif j > 0.3:
             return "\\color[rgb]{0,.5,0} MID \\color{black}"
         else:
             return "-"
@@ -130,7 +130,7 @@ def latex_matrix(C):
     for i in C:
         body = body + ' \\\\ \n \\midrule \n' + i
         for j in C[i]:
-            body = body + ' & ' + semantic(j)
+            body = body + ' & ' + str(j)
 
 
     table = header + row1 + body + footer
