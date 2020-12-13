@@ -55,6 +55,7 @@ form_params["Cash"] = "BIL"
 
 
 
+
 # do machine learning
 @app.route("/", methods=["GET", "POST"])
 def load_home():
@@ -91,31 +92,47 @@ def get_book(request):
     def latex(v):
         return v.replace("^","\\^{}")
 
+    def limit_handle(lim):
+        if lim == '':
+            return 1.0
+        elif "%" in lim:
+            return round(float(lim[:-1])/100,6)
+        else:
+            return round(float(lim)/100,6)
+
     # get columns for dataframe
     asset_map = {v: k for k, v in form_params.items()}
     inred = {}
     inblue = {}
 
     captable = {}
+    limit = {}
     for v in form_params:
         val = request.form.get(v)
+        lim = request.form.get(v+"X")
         ticker = form_params[v]
         if val == '':
             captable[ticker] = 0
+            limit[ticker] = 0
             inred[ticker] = False
             inblue[ticker] = False
         elif 'X'.casefold() in val.casefold():
-            captable[ticker] = int(val[:len(val)-1])
+            captable[ticker] = int(float(val[:-1]))
+            limit[ticker] = 0
             inred[ticker] = False
             inblue[ticker] = True
         elif val == '0':
             captable[ticker] = 0
+            limit[ticker] = limit_handle(lim)
             inred[ticker] = True
             inblue[ticker] = False
         else:
-            captable[ticker] = int(val)
+            captable[ticker] = int(float(val))
+            limit[ticker] = limit_handle(lim)
             inred[ticker] = True
             inblue[ticker] = True
+
+    #turn 0's to 1's for limit where there is a value in red
 
     # construct dataframe
     book = pd.DataFrame(captable.items(), columns=['ticker', 'allocation'])
@@ -124,10 +141,11 @@ def get_book(request):
     book['inred'] = book['ticker'].map(inred)
     book['inblue'] = book['ticker'].map(inblue)
     book['recommended'] = [0 for i in range(len(form_params))]
+    book['limit'] = book['ticker'].map(limit)
 
 
     # order and sort dataframe
-    book = book[['assetclass', 'ticker', 'latex', 'allocation', 'recommended', 'inred', 'inblue']]
+    book = book[['assetclass', 'ticker', 'latex', 'allocation', 'recommended', 'limit', 'inred', 'inblue']]
     book.sort_values('ticker', inplace=True)
     book.reset_index(drop=True, inplace=True)
 
