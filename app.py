@@ -92,7 +92,7 @@ def get_book(request):
     def latex(v):
         return v.replace("^","\\^{}")
 
-    def limit_handle(lim):
+    def upper_limit_handle(lim):
         if lim == '':
             return 1.0
         elif "%" in lim:
@@ -106,29 +106,33 @@ def get_book(request):
     inblue = {}
 
     captable = {}
-    limit = {}
+    upperlimit = {}
     for v in form_params:
         val = request.form.get(v)
-        lim = request.form.get(v+"X")
+        u_lim = request.form.get(v+"X")
         ticker = form_params[v]
+        # not in blue, not in red
         if val == '':
             captable[ticker] = 0
             limit[ticker] = 0
             inred[ticker] = False
             inblue[ticker] = False
+        # in blue, not in red
         elif 'X'.casefold() in val.casefold():
             captable[ticker] = int(float(val[:-1]))
             limit[ticker] = 0
             inred[ticker] = False
             inblue[ticker] = True
+        # not in blue, in red
         elif val == '0':
             captable[ticker] = 0
-            limit[ticker] = limit_handle(lim)
+            upperlimit[ticker] = upper_limit_handle(u_lim)
             inred[ticker] = True
             inblue[ticker] = False
+        # in blue, in red
         else:
             captable[ticker] = int(float(val))
-            limit[ticker] = limit_handle(lim)
+            upperlimit[ticker] = upper_limit_handle(u_lim)
             inred[ticker] = True
             inblue[ticker] = True
 
@@ -141,11 +145,11 @@ def get_book(request):
     book['inred'] = book['ticker'].map(inred)
     book['inblue'] = book['ticker'].map(inblue)
     book['recommended'] = [0 for i in range(len(form_params))]
-    book['limit'] = book['ticker'].map(limit)
+    book['limit'] = book['ticker'].map(upperlimit)
 
 
     # order and sort dataframe
-    book = book[['assetclass', 'ticker', 'latex', 'allocation', 'recommended', 'limit', 'inred', 'inblue']]
+    book = book[['assetclass', 'ticker', 'latex', 'allocation', 'recommended', 'upperlimit', 'inred', 'inblue']]
     book.sort_values('ticker', inplace=True)
     book.reset_index(drop=True, inplace=True)
 
