@@ -94,7 +94,7 @@ def get_book(request):
 
     def upper_limit_handle(lim):
         if lim == '':
-            return 1.0
+            return 1
         elif "%" in lim:
             return round(float(lim[:-1])/100,6)
         else:
