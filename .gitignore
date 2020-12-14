@@ -6,3 +6,4 @@
 *.csv
 *.pickle
 *.pyc
+.idea/workspace.xml
