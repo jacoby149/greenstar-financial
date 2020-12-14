@@ -236,7 +236,7 @@ def frontier(red, blue, wheat, ribs):
     ax.legend(handles=legend_elements)
 
     #plot random portfolios
-    plt.plot([r*s for r in wheat['risk']], [r*s for r in wheat['ret']], 'o',color="wheat",markersize=ms)
+    # plt.plot([r*s for r in wheat['risk']], [r*s for r in wheat['ret']], 'o',color="wheat",markersize=ms)
 
     # plot optimal portfolios
     plt.ylabel('Return (Percentage)')

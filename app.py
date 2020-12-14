@@ -33,20 +33,20 @@ images = []
 img_form = "<img src = '{}'>"
 
 form_params = {}
-#stock_symbols
+#stock_symbols                                          # FAQ    https://www.portfoliovisualizer.com/faq#dataSources
 form_params["Large Cap Growth"] = "VIGRX"                # FSPGX
 form_params["Large Cap Value"] = "JKD"                  # FLCOX S&P 500 Value Index
 form_params["Small Cap Growth"] = "^RUT"
 form_params["Small Cap Value"] = "VISVX"                # 500 value index not found
 form_params["Mid Cap"] = "MDY"                     # identical to ^SP400
-form_params["International Stock"] = "VTIAX"
+form_params["International Stock"] = "VGTSX"            #VTIAX
 form_params["Emerging Mkt Stock"] = "VEMAX"
 form_params["International Gov Bonds"] = "GVI"
 form_params["Long Gov Bonds"] = "ILTB"
-form_params["Corporate Bonds"] = "CBFSX"                  # from JP Morgan   "^SPBDACPT"
+form_params["Corporate Bonds"] = "LQD"                          #"CBFSX"         # from JP Morgan   "^SPBDACPT"
 form_params["High Yield Bonds"] = "HYG"
 form_params["Municipal Bonds"] = "MUB"
-form_params["Foreign Bonds"] = "BNDX"
+form_params["Foreign Bonds"] = "PIGLX"                  #BNDX
 form_params["Emerging Mkt Debt"] = "JEDAX"
 form_params["Real Estate"] = "IYR"              # from Blackrock, models DJSure very very closely   "DJUSRE"
 form_params["V.C."] = "LDVIX"                  # quick replacement from Reuters... need to sus it out   "^AMZX"
@@ -114,13 +114,13 @@ def get_book(request):
         # not in blue, not in red
         if val == '':
             captable[ticker] = 0
-            limit[ticker] = 0
+            upperlimit[ticker] = 0
             inred[ticker] = False
             inblue[ticker] = False
         # in blue, not in red
         elif 'X'.casefold() in val.casefold():
             captable[ticker] = int(float(val[:-1]))
-            limit[ticker] = 0
+            upperlimit[ticker] = 0
             inred[ticker] = False
             inblue[ticker] = True
         # not in blue, in red
@@ -145,7 +145,7 @@ def get_book(request):
     book['inred'] = book['ticker'].map(inred)
     book['inblue'] = book['ticker'].map(inblue)
     book['recommended'] = [0 for i in range(len(form_params))]
-    book['limit'] = book['ticker'].map(upperlimit)
+    book['upperlimit'] = book['ticker'].map(upperlimit)
 
 
     # order and sort dataframe

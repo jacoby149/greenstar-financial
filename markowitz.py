@@ -45,7 +45,7 @@ solvers.options['show_progress'] = False
 def yahoo_assets(tickers):
     # mprint("TICKERS",tickers)
     end_date = date.today()
-    d = timedelta(days=1800)
+    d = timedelta(days=7300)
     start_date = end_date - d
 
     tickers = " ".join(tickers)
@@ -98,14 +98,36 @@ def bundles(c,l,n,G,h):
     perms = list(multiset_permutations([1 if i<l else 0 for i in range(n)]))
     G_ext = -np.matrix(perms)
     #matrix of boundary c
-    h_ext = - np.full((len(perms),1),c)
+    h_ext = -np.full((len(perms),1),c)
 
     #append the bundle boundaries.
     G = opt.matrix(np.vstack((G,G_ext)))
     h = opt.matrix(np.vstack((h,h_ext)))
+
     return G,h
 
-def optimal_portfolio(daily_data):
+
+def limits(G,h,book):
+    n=book.shape[0]
+    # [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+    G_ext=np.eye(n)
+
+    h_ext=book['upperlimit'].tolist()
+    h_ext=np.matrix([h_ext])
+    h_ext=h_ext.T
+
+    mprint("g_ext",G_ext)
+    mprint("g shape",G_ext.shape)
+    mprint("h_ext",h_ext)
+    mprint("h shape",h_ext.shape)
+
+    # append limit constraints
+    G = opt.matrix(np.vstack((G,G_ext)))
+    h = opt.matrix(np.vstack((h,h_ext)))
+    return G, h
+
+
+def optimal_portfolio(daily_data,book):
     n = len(daily_data)
     daily_data = np.asmatrix(daily_data)
     mus = ops.get_mus(N=500, t=200, n=n)
@@ -121,6 +143,9 @@ def optimal_portfolio(daily_data):
 
     #add bundle boundaries bundles size l sum greater weight than c
     G,h = bundles(c=1/n,l=n - n//4,n=n,G=G,h=h)
+
+    #add limit constraints (i.e. no more than 10% in V.C. etc)
+    G,h = limits(G,h,book)
     
     #all stocks add up to 1.
     #w1 + w2 + ... = 1
@@ -205,7 +230,7 @@ def frame_vector(v, ybook):
     v.columns = ybook['ticker']
     v.sort_values(by=0, axis=1, inplace=True)
 
-    mprint("p",v)
+    # mprint("p",v)
 
     return v
 
@@ -247,6 +272,7 @@ def markowitz_run(book, info):
     wealth = sum([int(val) for val in bluebook.allocation.tolist()])
     info['wealth'] = wealth
 
+    daily_data = yahoo_assets(book['ticker'].tolist())
     red_data = yahoo_assets(rtickers)
     blue_data = yahoo_assets(btickers)
     yahoo_data = yahoo_assets(ytickers)
@@ -256,7 +282,7 @@ def markowitz_run(book, info):
         means, stds = np.column_stack([get_rand_portfolio(red_data) for _ in range(500)])
 
         # get ribs data (frontier)
-        portfolios, returns, risks = optimal_portfolio(red_data)
+        portfolios, returns, risks = optimal_portfolio(red_data,redbook)
 
         # get red data (frontier)
         ret_new, risk_new = returns[risk_level], risks[risk_level]
