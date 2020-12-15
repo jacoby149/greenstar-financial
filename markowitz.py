@@ -45,8 +45,7 @@ solvers.options['show_progress'] = False
 def yahoo_assets(tickers):
     # mprint("TICKERS",tickers)
     end_date = date.today()
-    d = timedelta(days=7300)
-    start_date = end_date - d
+    start_date = date(2007, 12, 19)
 
     tickers = " ".join(tickers)
     filename = "csv/yfinance" + str(end_date) + tickers + ".csv"
@@ -77,6 +76,9 @@ def yahoo_assets(tickers):
         yahoo = yahoo.T
         # mprint("T shape",yahoo.shape)
         return yahoo
+
+    def average(yahoo):
+        return
 
     yahoo = clean(yahoo)
     # mprint('yahoo',yahoo)                     yahoo exports as a numpy matrix
@@ -133,8 +135,13 @@ def optimal_portfolio(daily_data,book):
     mus = ops.get_mus(N=500, t=200, n=n)
     
     # Convert to cvxopt matrices
-    S = opt.matrix(np.cov(daily_data))
-    pbar = opt.matrix(np.mean(daily_data, axis=1))
+    S = opt.matrix(ops.AC(daily_data))
+
+    #calculate annual average return (AAR)
+    pbar = opt.matrix(ops.AAR(daily_data))
+
+
+    # mprint("pbar",pbar)
 
     # all stocks are greater than zero.
     #w0 > 0, w1> 0 ... wn > 0

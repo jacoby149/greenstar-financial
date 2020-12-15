@@ -247,7 +247,7 @@ def frontier(red, blue, wheat, ribs):
     plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=2,markersize=ms*1.6)
 
     # plot original portfolio
-    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*1.6)
+    # plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*1.6)
 
     # title the graph
     plt.title('Expected Return and Risk Of Portfolios')

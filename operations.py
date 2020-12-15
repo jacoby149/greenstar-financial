@@ -13,21 +13,49 @@ def rand_weights(n):
     return k / sum(k)
 
 
-def get_mus(N, t, n):
-    N = 500            # Bigger N, bigger upper range, less lower range and less control. Smaller N, smaller range more control, more lower values
+def AVG_annualize(daily_data,func):
+    ATD=252
+    means=[]
+
+    for i in range(0,daily_data.shape[1],ATD):
+        new_mean = func(daily_data[:,i:i+ATD]/daily_data[:,i])
+        means.append(new_mean)
+
+    means = np.mean(means,axis=0)
+
+    return means
+
+
+def AAR(daily_data):
+    def ez_mean(d):
+        return np.mean(d,axis=1)
+    return AVG_annualize(daily_data,ez_mean)
+
+
+def AC(daily_data):
+    def ez_cov(d):
+        return np.cov(d)
+    return AVG_annualize(daily_data,ez_cov)
+
+
+def get_mus(N=500, t=200, n=None):
+    if n is None:
+        n = 18
     if 0 <= n <= 7:
         power = n + 2
     else:
         power = 9.0
-        #the first 20 porfolios are
-    mus = [10**(power * t/N - 1.0) for t in range(0,200)]
+    #the first 20 portfolios are
+    mus = [10**(power * b/N - 1.0) for b in range(0,t)]
     return mus
 
 
 def portfolio_performance(daily_data, weights):
-    p = np.asmatrix(np.mean(daily_data, axis=1))
+    # p = AAR(daily_data)
+    p = np.asmatrix(np.mean(daily_data,axis=1))
     w = np.asmatrix(weights)
     C = np.asmatrix(np.cov(daily_data))
+    # C = AC(daily_data)
 
     #calculates mean earnings (mu) and risk (sigma)
     mu = w * p.T
