@@ -21,7 +21,7 @@ def AVG_annualize(daily_data,func):
         new_mean = func(daily_data[:,i:i+ATD]/daily_data[:,i])
         means.append(new_mean)
 
-    #FOR GEOMETRIC/COMPOUND AVG OF RETURNS ACROSS YEARS    is this not a simple function?
+    #FOR GEOMETRIC/COMPOUND AVG OF RETURNS ACROSS YEARS    is this not a simple function?   also can use numpy.prod(means) instead of for loop
     #mean=1
     #for i in means:
         #mean *= i
