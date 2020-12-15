@@ -1,5 +1,6 @@
 #  MATH OPERATIONS FOR USE IN GRAPHS AND MARKOWITZ
 import numpy as np
+import scipy as sp
 import statistics as s
 
 
@@ -13,35 +14,33 @@ def rand_weights(n):
     return k / sum(k)
 
 
-def AVG_annualize(daily_data,func):
+def AAR(daily_data):
     ATD=252
     means=[]
+    # mprint("ddshape",daily_data.shape)
+    # mprint("dd",daily_data)
 
     for i in range(0,daily_data.shape[1],ATD):
-        new_mean = func(daily_data[:,i:i+ATD]/daily_data[:,i])
+        new_mean = np.mean(daily_data[:,i:i+ATD]/daily_data[:,i].reshape(-1,1),axis=1)
         means.append(new_mean)
 
-    #FOR GEOMETRIC/COMPOUND AVG OF RETURNS ACROSS YEARS    is this not a simple function?   also can use numpy.prod(means) instead of for loop
-    #mean=1
-    #for i in means:
-        #mean *= i
-    #mean=mean**(1/len(means))
-
-    means = np.mean(means,axis=0)
+    #Geometric mean
+    means = sp.stats.mstats.gmean(means)
 
     return means
 
 
-def AAR(daily_data):
-    def ez_mean(d):
-        return np.mean(d,axis=1)
-    return AVG_annualize(daily_data,ez_mean)
-
-
 def AC(daily_data):
-    def ez_cov(d):
-        return np.cov(d)
-    return AVG_annualize(daily_data,ez_cov)
+    ATD=252
+    cov=[]
+
+    for i in range(0,daily_data.shape[1],ATD):
+        new_cov = np.cov(daily_data[:,i:i+ATD])
+        cov.append(new_cov)
+
+    cov = np.mean(cov,axis=0)
+
+    return cov
 
 
 def get_mus(N=500, t=200, n=None):
@@ -57,14 +56,14 @@ def get_mus(N=500, t=200, n=None):
 
 
 def portfolio_performance(daily_data, weights):
-    # p = AAR(daily_data)
-    p = np.asmatrix(np.mean(daily_data,axis=1))
+    p = AAR(daily_data)
+    # p = np.asmatrix(np.mean(daily_data,axis=1))
     w = np.asmatrix(weights)
-    C = np.asmatrix(np.cov(daily_data))
-    # C = AC(daily_data)
+    # C = np.asmatrix(np.cov(daily_data))
+    C = AC(daily_data)
 
     #calculates mean earnings (mu) and risk (sigma)
-    mu = w * p.T
+    mu = w * p.reshape(-1,1)
     sigma = np.sqrt(w * C * w.T)
 
     mu = np.asscalar(np.squeeze(np.asarray(mu)))

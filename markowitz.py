@@ -77,8 +77,6 @@ def yahoo_assets(tickers):
         # mprint("T shape",yahoo.shape)
         return yahoo
 
-    def average(yahoo):
-        return
 
     yahoo = clean(yahoo)
     # mprint('yahoo',yahoo)                     yahoo exports as a numpy matrix
@@ -148,8 +146,8 @@ def optimal_portfolio(daily_data,book):
     G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
     h = opt.matrix(0.0, (n ,1))
 
-    #add bundle boundaries bundles size l sum greater weight than c
-    G,h = bundles(c=1/n,l=n - n//4,n=n,G=G,h=h)
+    #add bundle boundaries bundles size l sum greater weight than c BUNDLE BUNDLE BUNDLE
+    G,h = bundles(c=.25,l=n - n//4,n=n,G=G,h=h)
 
     #add limit constraints (i.e. no more than 10% in V.C. etc)
     G,h = limits(G,h,book)
@@ -360,10 +358,10 @@ def markowitz_run(book, info):
 
     #correlation matrix rather than covariance matrix :)
     
-    Cov = np.asmatrix(np.cov(red_data))
+    cov = np.asmatrix(ops.AC(red_data))
     C = np.asmatrix(np.corrcoef(red_data))
     C = frame_matrix(C, redbook)
-    r = np.asmatrix(np.sqrt(np.diag(Cov))) 
+    r = np.asmatrix(np.sqrt(np.diag(cov)))
     r = frame_vector(r, redbook)
     info['r'] = r
 
