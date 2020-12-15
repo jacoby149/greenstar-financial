@@ -116,10 +116,10 @@ def limits(G,h,book):
     h_ext=np.matrix([h_ext])
     h_ext=h_ext.T
 
-    mprint("g_ext",G_ext)
-    mprint("g shape",G_ext.shape)
-    mprint("h_ext",h_ext)
-    mprint("h shape",h_ext.shape)
+    # mprint("g_ext",G_ext)
+    # mprint("g shape",G_ext.shape)
+    # mprint("h_ext",h_ext)
+    # mprint("h shape",h_ext.shape)
 
     # append limit constraints
     G = opt.matrix(np.vstack((G,G_ext)))
@@ -235,7 +235,7 @@ def frame_vector(v, ybook):
     return v
 
 
-############################### come on ##
+#################################
 #######  MARKOWITZ RUN   ########
 #################################
 
