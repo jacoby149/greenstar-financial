@@ -344,14 +344,16 @@ def markowitz_run(book, info):
 
 
     # Make line graphs
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=1000, starting_wealth=wealth)
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=wealth)
+    mprint("MONTECARLO START",datetime.now())
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=10000, starting_wealth=wealth)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=10000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data))
 
 
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=wealth)
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=wealth)
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=10000, starting_wealth=wealth)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=10000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data, 7))
+    mprint("MONTECARLO FINISH",datetime.now())
 
     # write montecarlo data to info
     info['rlinedata'] = rline_data
@@ -361,7 +363,8 @@ def markowitz_run(book, info):
 
     # Make bell curve
     images.append(graphs.bell_compare(mu=red['ret'], mu2=blue['ret'], sigma=red['risk'], sigma2=blue['risk']))
-    images.append(graphs.bell(mu=red['ret'], sigma=red['risk']))
+    images.append(graphs.bell(mu=red['ret'], sigma=red['risk'], title='future',color='g'))
+    images.append(graphs.bell(mu=blue['ret'], sigma=blue['risk']))
 
 
     # get matrices

@@ -59,7 +59,7 @@ def draw_bell(ax, mu=110,sigma=7.10, zorder=1, color='g', alpha=0.3):
     return ax, x, y
 
 
-def bell(mu=1.10,sigma=.071):
+def bell(mu=1.10,sigma=.071,title='',color='b'):
     mu = mu*100
     sigma = sigma*100
 
@@ -67,7 +67,7 @@ def bell(mu=1.10,sigma=.071):
     fig, ax = plt.subplots(figsize=(9,6))
 
     # draw bell
-    ax, x, y = draw_bell(ax, mu, sigma, color='r')
+    ax, x, y = draw_bell(ax, mu, sigma, color=color)
 
     # format for percent
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
@@ -87,7 +87,7 @@ def bell(mu=1.10,sigma=.071):
     plt.xticks(np.arange(min(x), max(x)+1, sigma))
     ax.set_title('Bell Curve Of Returns')
 
-    return plt_to_img(plt, "bell")
+    return plt_to_img(plt, "bell"+title)
 
 
 def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):

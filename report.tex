@@ -168,8 +168,7 @@
 
 \vspace{.5cm}
 
-\Large
-\begin{tabular}{lr}
+\large
 \begin{tabular}[t]{l}
 \vspace{.1cm}\\
 
@@ -181,19 +180,23 @@
 \noindent Time Frame : {\VAR{info.term}} \\
 \noindent Available Funds : {\VAR{info.wealth}} \\
 \noindent Preferred Risk : $\pm$ {\VAR{redrisk}} Yearly \\
-
-\vspace{1cm} \\
-
-\noindent \textbf{Preferred Asset Classes:} \\
-
-    \BLOCK{ for key, value in redbook.iterrows() }
-         \VAR{value.assetclass} \\
-    \BLOCK{ endfor }
-
-\end{tabular} &
-
 \end{tabular}
 \normalsize
+
+\hspace*{-0.5cm}
+\begin{tabular}{lll}
+
+\vspace{1cm}\\
+\large \textbf{Preferred Asset Classes:} & & \normalsize \vspace{0.3cm}\\
+
+     \textbf{Asset Class} & \textbf{Index} & \textbf{Description}\\ \midrule
+
+    \BLOCK{ for key, value in redbook.iterrows() }
+         \VAR{value.assetclass} & \VAR{value.ticker} & \VAR{value.description} \\\midrule
+    \BLOCK{ endfor }
+
+\end{tabular}
+
 
 \vspace{1cm}
 
@@ -210,14 +213,14 @@
   \end{tabular}
 
 
-\vspace{0.85cm}
+\vspace{0.3cm}
 
 
 
 
 \normalsize
-\hspace*{-1.5cm}
 
+\hspace*{-1.5cm}
 \begin{tabular}{lccc}
     \textbf{Asset Class} & \textbf{Current} & \textbf{Suggested} & \textbf{Change}\\ \midrule
 
@@ -314,7 +317,7 @@ Change in Risk : {\VAR{riskchange}}
 
 \noindent
 1 Year Expected Return (\$): {\VAR{info.blueoneret}} \quad \emph{{\VAR{info.blueoneretchange}}} \\
-1 Year Risk (Std Deviation \%) : $\pm$ {\VAR{info.blueonerisk}}
+1 Year Risk (Std Deviation \%) : $\pm$ {\VAR{bluerisk}}
 \\ \\
 \noindent
 7 Year Expected Return (\$): {\VAR{info.bluesevenret}} \quad \emph{{\VAR{info.bluesevenretchange}}} \\
@@ -349,7 +352,7 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.35\linewidth]{/app/plts/bell.png}
+  \includegraphics[width=.35\linewidth]{/app/plts/bellfuture.png}
     & \hspace{1cm }&\includegraphics[width=.35\linewidth]{/app/plts/line1.png}
   \end{tabular}
   \end{center}
@@ -382,7 +385,7 @@ Change in Risk : {\VAR{riskchange}}
 
 \noindent
 1 Year Expected Return (\$): {\VAR{info.redoneret}} \quad \emph{{\VAR{info.redoneretchange}}}\\
-1 Year Risk (Std Deviation \%): $\pm$ {\VAR{info.redonerisk}}
+1 Year Risk (Std Deviation \%): $\pm$ {\VAR{redrisk}}
 \\ \\
 \noindent
 7 Year Expected Return (\$): {\VAR{info.redsevenret}} \quad \emph{{\VAR{info.redsevenretchange}}}\\
@@ -404,8 +407,7 @@ In 1990, Harry Markowitz won a nobel prize for his contributions to portfolio ba
 
 \vspace{1cm}
 
-
-Risk (Std. Deviation) : $\pm$ {\VAR{redrisk}}
+Risk (Std. Deviation): $\pm$ {\VAR{redrisk}}
 
 Expected Return (\%): {\VAR{redret}}
 

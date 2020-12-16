@@ -73,7 +73,6 @@ def portfolio_performance(daily_data, weights):
 
 def montecarlo(mu, std, term, trials, starting_wealth=1):
     data = {period: [] for period in range(term+1)}
-
     mu += 1
     for trial in range(trials):
         wealth = starting_wealth
