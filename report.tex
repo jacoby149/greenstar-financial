@@ -151,7 +151,7 @@
 \vspace{.5cm}
 \begin{adjustwidth}{0in}{0in}  % adjust the L and R margins
 \begin{tabular}{lll}   %\toprule
-    Asset Class & Index & Description\\ \midrule
+    \textbf{Asset Class} & \textbf{Index} & \textbf{Description}\\ \midrule
 
     \BLOCK{ for key, value in book.iterrows() }
         \VAR{value.assetclass} & \VAR{value.latex} & \VAR{value.description} \\\midrule
@@ -164,45 +164,62 @@
 
 \newpage  % PAGE3
 
-\section{Investment Profile | Prescribed Allocation Changes}
+\section{Investment Profile}
 
 \vspace{.5cm}
+
+\Large
 \begin{tabular}{lr}
 \begin{tabular}[t]{l}
 \vspace{.1cm}\\
-\large\textbf{\underline {Investment Profile:}}
-\vspace{.25cm}\\
+
+
+\noindent\textbf{General Information}\\
 \noindent Name : {\VAR{info.name}} \\
 \noindent Birthday : {\VAR{info.birthday}} \\
 %\noindent Purpose : Retirement \\
 \noindent Time Frame : {\VAR{info.term}} \\
 \noindent Available Funds : {\VAR{info.wealth}} \\
 \noindent Preferred Risk : $\pm$ {\VAR{redrisk}} Yearly \\
+
+\vspace{1cm} \\
+
 \noindent \textbf{Preferred Asset Classes:} \\
 
     \BLOCK{ for key, value in redbook.iterrows() }
-        -- \VAR{value.assetclass} \\
+         \VAR{value.assetclass} \\
     \BLOCK{ endfor }
 
 \end{tabular} &
-\begin{tabular}[t]{c}
-(a) Current Portfolio\\
-\includegraphics[width=.45\linewidth]{/app/plts/pie.png}\\
-(b) New Portfolio\\
-\includegraphics[width=.45\linewidth]{/app/plts/piefuture.png}
+
 \end{tabular}
-\end{tabular}
+\normalsize
 
 \vspace{1cm}
 
+
+\newpage
+
+\section{Prescribed Allocation Changes}
 \begin{center}
-\noindent \large \textbf{\underline{Prescribed Allocation Changes}}\\
-\vspace{.3cm}
+
+  \begin{tabular}{ccc}
+  \hspace*{-2.25cm}\includegraphics[width=.6\linewidth]{/app/plts/pie.png}
+    & \hspace{0.5cm}&\includegraphics[width=.6\linewidth]{/app/plts/piefuture.png} \\
+    (a) Current Portfolio && (b) New Portfolio
+  \end{tabular}
+
+
+\vspace{0.85cm}
+
+
+
 
 \normalsize
+\hspace*{-1.5cm}
 
-\begin{tabular}{cccc}
-    Asset Class & Current & Suggested & Change\\ \midrule
+\begin{tabular}{lccc}
+    \textbf{Asset Class} & \textbf{Current} & \textbf{Suggested} & \textbf{Change}\\ \midrule
 
 
     \BLOCK{ for key, value in ybook.iterrows() }
@@ -399,14 +416,16 @@ Change in Return (\%): {\VAR{retchange}}
 
 \newpage    % PAGE8
 
-\section{Correlation Matrices}
+\begin{landscape}
+
+\section{Correlation Matrix}
 
 \vspace{1cm}
 
 \begin{center}
 
 
-
+\scriptsize
         \VAR{C}
 \vspace{0.3cm}
 
@@ -417,7 +436,11 @@ Change in Return (\%): {\VAR{retchange}}
 
 \vspace{1cm}
 
+\newpage  %PAGE9
 
+\section{Risk \& Return Rankings}
+
+\vspace{2cm}
 
 \begin{center}
 
@@ -446,17 +469,16 @@ Change in Return (\%): {\VAR{retchange}}
 
 \end{center}
 
+\end{landscape}
+\newpage
+\begin{center}
+{\scshape\Large\bfseries \, \par}
+	\vspace{11cm}
+\emph{Intentionally Left Blank}
 
-
-
-
-
-
-\medskip
-
-
-%\printbibheading[heading=bibintoc,title={Bibliografia}]
-%\bibbysection[heading=bibbysubsect]
-
-
+\end{center}
 \end{document}
+
+
+
+

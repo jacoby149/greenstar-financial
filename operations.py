@@ -35,6 +35,7 @@ def AC(daily_data):
     cov=[]
 
     for i in range(0,daily_data.shape[1],ATD):
+        # new_cov = np.cov(daily_data[:,i:i+ATD]/daily_data[:,i].reshape(-1,1))   # This shit ain't work
         new_cov = np.cov(daily_data[:,i:i+ATD])
         cov.append(new_cov)
 
@@ -57,16 +58,14 @@ def get_mus(N=500, t=200, n=None):
 
 def portfolio_performance(daily_data, weights):
     p = AAR(daily_data)
-    # p = np.asmatrix(np.mean(daily_data,axis=1))
     w = np.asmatrix(weights)
-    # C = np.asmatrix(np.cov(daily_data))
     C = AC(daily_data)
 
     #calculates mean earnings (mu) and risk (sigma)
     mu = w * p.reshape(-1,1)
     sigma = np.sqrt(w * C * w.T)
 
-    mu = np.asscalar(np.squeeze(np.asarray(mu)))
+    mu = np.asscalar(np.squeeze(np.asarray(mu))) - 1
     sigma = np.asscalar(np.squeeze(np.asarray(sigma)))
 
     return mu, sigma
@@ -75,6 +74,7 @@ def portfolio_performance(daily_data, weights):
 def montecarlo(mu, std, term, trials, starting_wealth=1):
     data = {period: [] for period in range(term+1)}
 
+    mu += 1
     for trial in range(trials):
         wealth = starting_wealth
         for period in range(term+1):

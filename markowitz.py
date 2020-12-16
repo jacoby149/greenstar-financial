@@ -16,7 +16,7 @@ from numpy import isnan
 
 from sympy.utilities.iterables import multiset_permutations
 
-from datetime import date,timedelta
+from datetime import date,timedelta,datetime
 
 import pickle
 import pandas as pd
@@ -162,7 +162,7 @@ def optimal_portfolio(daily_data,book):
     portfolios = [solvers.qp(mu*S, -pbar, G, h, A, b)['x'] for mu in mus]
 
     # Calculate risk and return for frontier using linear algebra solving
-    returns = [blas.dot(pbar, p) for p in portfolios]
+    returns = [blas.dot(pbar, p) - 1 for p in portfolios]
     risks = [np.sqrt(blas.dot(p, S*p)) for p in portfolios]
 
     # risk slider is inverted without these
@@ -283,11 +283,19 @@ def markowitz_run(book, info):
     yahoo_data = yahoo_assets(ytickers)
 
     def get_frontier_data():
+        limits = [str(x) for x in book['upperlimit'].tolist()]
+        filename = "models/" + str(date.today()) + " ".join(limits) + ".pickle"
+
+        if os.path.exists(filename):
+            print(filename + " exists\n")
+            with open(filename, 'rb') as model_pickle:
+                portfolios, returns, risks = pickle.load(model_pickle)
+        else:
+            # get ribs data (frontier)
+            portfolios, returns, risks = optimal_portfolio(red_data,redbook)
+
         # get wheats data (frontier)
         means, stds = np.column_stack([get_rand_portfolio(red_data) for _ in range(500)])
-
-        # get ribs data (frontier)
-        portfolios, returns, risks = optimal_portfolio(red_data,redbook)
 
         # get red data (frontier)
         ret_new, risk_new = returns[risk_level], risks[risk_level]
@@ -301,9 +309,14 @@ def markowitz_run(book, info):
         wheat = {"ret": means, "risk": stds}
         ribs = {"ret": returns, "risk": risks, 'port': portfolios}
 
-        return red, blue, wheat, ribs
+        with open(filename, 'wb') as model_pickle:
+            model_variables = (portfolios, returns, risks)
+            pickle.dump(model_variables, model_pickle)
 
+        return red, blue, wheat, ribs
+    mprint("FRONTIER BEGIN",datetime.now())
     red, blue, wheat, ribs = get_frontier_data()
+    mprint("FRONTIER FINISHED",datetime.now())
 
 
     # remapping to relevant assets

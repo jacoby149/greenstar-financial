@@ -69,25 +69,25 @@ def latexify(book, info):
 
 def write_montecarlo(info):
     red_one_year = info['rlinedata'][1]
-    info['redoneret'] = red_one_year[0]
+    info['redoneret'] = red_one_year[0] - info['wealth']
     info['redonerisk'] = percent(round(red_one_year[1]/100,2))
 
     red_seven_year = info['rlinedata'][7]
-    info['redsevenret'] = red_seven_year[0]
+    info['redsevenret'] = red_seven_year[0] - info['wealth']
     info['redsevenrisk'] = percent(round(red_seven_year[1]/100,2))
 
     blue_one_year = info['blinedata'][1]
-    info['blueoneret'] = blue_one_year[0]
+    info['blueoneret'] = blue_one_year[0] - info['wealth']
     info['blueonerisk'] = percent(round(blue_one_year[1]/100,2))
 
     blue_seven_year = info['blinedata'][7]
-    info['bluesevenret'] = blue_seven_year[0]
+    info['bluesevenret'] = blue_seven_year[0] - info['wealth']
     info['bluesevenrisk'] = percent(round(blue_seven_year[1]/100,2))
 
-    info['redoneretchange'] = (info['redoneret'] - info['wealth']) / info['wealth']
-    info['redsevenretchange'] = (info['redsevenret'] - info['wealth']) / info['wealth']
-    info['blueoneretchange'] = (info['blueoneret'] - info['wealth']) / info['wealth']
-    info['bluesevenretchange'] = (info['bluesevenret'] - info['wealth']) / info['wealth']
+    info['redoneretchange'] = info['redoneret'] / info['wealth']
+    info['redsevenretchange'] = info['redsevenret'] / info['wealth']
+    info['blueoneretchange'] = info['blueoneret'] / info['wealth']
+    info['bluesevenretchange'] = info['bluesevenret'] / info['wealth']
 
     return info
 
@@ -105,16 +105,14 @@ def write_montecarlo(info):
 
 def latex_matrix(C):
     def semantic(j):
-        if j < (-0.6):
-            return "\\color[rgb]{.8,0,0} (HIGH) \\color{black}"
-        elif j < (-0.3):
-            return "\\color[rgb]{.8,0,0} (MID) \\color{black}"
-        elif j > 0.6:
-            return "\\color[rgb]{0,.5,0} HIGH \\color{black}"
-        elif j > 0.3:
-            return "\\color[rgb]{0,.5,0} MID \\color{black}"
-        else:
-            return "-"
+        if 0 < j:
+            if j == 1:
+                color = "{0,0,0}"
+            else:
+                color = "{0,"+str(abs(j/2))+","+str(abs(j/4))+"}"
+        elif j < 0:
+            color = "{"+str(abs(j))+",0,0}"
+        return "\\color[rgb]"+color+" "+str(j)+" \\color{black}"
 
 
     tickers = C.columns.tolist()
@@ -130,7 +128,7 @@ def latex_matrix(C):
     for i in C:
         body = body + ' \\\\ \n \\midrule \n' + i
         for j in C[i]:
-            body = body + ' & ' + str(j)
+            body = body + ' & ' + semantic(j)
 
 
     table = header + row1 + body + footer
@@ -162,8 +160,8 @@ def pickle_dump(red, blue, C, book, info):
     r = r.apply(lambda x: x.apply(risk_cent))
     r = r.to_latex(index=False)
 
-    redret = round(((red['ret']-1)*100),2)
-    blueret = round(((blue['ret']-1)*100),2)
+    redret = round((red['ret']*100),2)
+    blueret = round((blue['ret']*100),2)
 
     redrisk = round(red['risk']*100,2)
     bluerisk = round(blue['risk']*100,2)
@@ -186,7 +184,7 @@ def pickle_dump(red, blue, C, book, info):
 
     report_variables = {"blueret": percent(blueret), "bluerisk": percent(bluerisk),
                         "redret": percent(redret), "redrisk": percent(redrisk),
-                        "riskchange": percent(riskchange), "recharge": percent(retchange),
+                        "riskchange": percent(riskchange), "retchange": percent(retchange),
                         "book": book, "info": info, "p": p, "C": C, "r": r,
                         "redbook": redbook, "bluebook": bluebook, "ybook": ybook, }
 
