@@ -42,9 +42,9 @@ solvers.options['show_progress'] = False
 #######  DATA FUNCTIONS  ########
 #################################
 
-def yahoo_assets(tickers):
+def yahoo_assets(tickers, info):
     # mprint("TICKERS",tickers)
-    end_date = date.today()
+    end_date = info['end_date']
     start_date = date(2007, 12, 19)
 
     tickers = " ".join(tickers)
@@ -280,14 +280,14 @@ def markowitz_run(book, info):
     wealth = sum([int(val) for val in bluebook.allocation.tolist()])
     info['wealth'] = wealth
 
-    daily_data = yahoo_assets(book['ticker'].tolist())
-    red_data = yahoo_assets(rtickers)
-    blue_data = yahoo_assets(btickers)
-    yahoo_data = yahoo_assets(ytickers)
+    daily_data = yahoo_assets(book['ticker'].tolist(), info)
+    red_data = yahoo_assets(rtickers, info)
+    blue_data = yahoo_assets(btickers, info)
+    yahoo_data = yahoo_assets(ytickers, info)
 
     def get_frontier_data():
         limits = [str(x) for x in book['upperlimit'].tolist()]
-        filename = "models/" + str(date.today()) + " ".join(limits) + ".pickle"
+        filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"
 
         if os.path.exists(filename):
             print(filename + " exists\n")
@@ -317,9 +317,9 @@ def markowitz_run(book, info):
             pickle.dump(model_variables, model_pickle)
 
         return red, blue, wheat, ribs
-    mprint("FRONTIER BEGIN",datetime.now())
+    mprint("FRONTIER START",datetime.now())
     red, blue, wheat, ribs = get_frontier_data()
-    mprint("FRONTIER FINISHED",datetime.now())
+    mprint("FRONTIER FINISH",datetime.now())
 
 
     # remapping to relevant assets
@@ -366,8 +366,8 @@ def markowitz_run(book, info):
 
     # Make bell curve
     images.append(graphs.bell_compare(mu=red['ret'], mu2=blue['ret'], sigma=red['risk'], sigma2=blue['risk']))
-    images.append(graphs.bell(mu=red['ret'], sigma=red['risk'], title='future',color='g'))
-    images.append(graphs.bell(mu=blue['ret'], sigma=blue['risk']))
+    images.append(graphs.bell(mu=red['ret'], sigma=red['risk'], title='future',color='g',legend='Recommended'))
+    images.append(graphs.bell(mu=blue['ret'], sigma=blue['risk'], legend='Current'))
 
 
     # get matrices

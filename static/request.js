@@ -14,8 +14,8 @@ function update_vals() {
     mean = means[risk]
     portfolio = portfolios[risk]
     console.log(portfolios)
-    document.getElementById("std").innerHTML = "Std. : " + Math.round(std * 10000) / 100 + "%"
-    document.getElementById("mean").innerHTML = "Return :" + Math.round(mean * 10000) / 100 + "%"
+    document.getElementById("std").innerHTML = "Risk: " + Math.round(std * 10000) / 100 + "%"
+    document.getElementById("mean").innerHTML = "Return: " + Math.round(mean * 10000) / 100 + "%"
     //document.getElementById("weight").innerHTML = "Portfolio : " + portfolio + "%"
 }
 

@@ -87,7 +87,13 @@ def get_book(request):
             'birthday': request.form.get('birthday'),
             'term': request.form.get('term'),
             'firm': 'Provins',
+            'end_date': request.form.get('date-input'),
             }
+
+    if info['end_date'] is None:
+        info['end_date'] = date.today()
+
+    mprint("end date",info['end_date'])
 
     def latex(v):
         return v.replace("^","\\^{}")
@@ -100,7 +106,7 @@ def get_book(request):
         else:
             return round(float(lim)/100,6)
 
-    # get columns for dataframe
+    # get columns for dataframe update
     asset_map = {v: k for k, v in form_params.items()}
     inred = {}
     inblue = {}
@@ -115,14 +121,16 @@ def get_book(request):
         if val == '' or int(float(val)) == 0:
             captable[ticker] = 0
             upperlimit[ticker] = upper_limit_handle(u_lim)
-            inred[ticker] = True
             inblue[ticker] = False
         # in blue, in red
         else:
             captable[ticker] = int(float(val))
             upperlimit[ticker] = upper_limit_handle(u_lim)
-            inred[ticker] = True
             inblue[ticker] = True
+        if upper_limit_handle(u_lim) == 0:
+            inred[ticker] = False
+        else:
+            inred[ticker] = True
 
     #turn 0's to 1's for limit where there is a value in red
 

@@ -59,7 +59,7 @@ def draw_bell(ax, mu=110,sigma=7.10, zorder=1, color='g', alpha=0.3):
     return ax, x, y
 
 
-def bell(mu=1.10,sigma=.071,title='',color='b'):
+def bell(mu=1.10,sigma=.071,title='',color='b',legend=''):
     mu = mu*100
     sigma = sigma*100
 
@@ -86,6 +86,7 @@ def bell(mu=1.10,sigma=.071,title='',color='b'):
 
     plt.xticks(np.arange(min(x), max(x)+1, sigma),fontsize=16)
     ax.set_title('Bell Curve Of Returns',fontsize=16)
+    ax.legend([legend], loc='upper left')
 
     return plt_to_img(plt, "bell"+title)
 
@@ -98,8 +99,8 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     fig, ax = plt.subplots(figsize=(9,6))
 
     # draw bells
-    ax, x, y = draw_bell(ax, mu2, sigma2, zorder=1, color='b', alpha=.1)
     ax, x, y = draw_bell(ax, mu, sigma, zorder=2, color='mediumSeaGreen', alpha=.3)
+    ax, x, y = draw_bell(ax, mu2, sigma2, zorder=1, color='b', alpha=.1)
 
 
     # format for percent
@@ -113,12 +114,15 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
-    ax.set_xlabel('# of Standard Deviations Outside the Mean',fontsize=16)
+    ax.set_xlabel('% Return',fontsize=16)
     ax.set_ylabel('Probability Distribution',fontsize=16)
     ax.set_yticklabels([])
 
     plt.xticks(np.arange(min(x), max(x)+1, sigma),fontsize=16)
     ax.set_title('Bell Curve Of Returns',fontsize=16)
+
+    #legend
+    ax.legend(['Recommended','Current'], loc='upper left')
 
     return plt_to_img(plt, "bellcompare")
 
@@ -148,8 +152,8 @@ def line(line_data, title=0):
 
 
 def line_compare(rline_data, bline_data, title=1):
-    draw_line(plt, bline_data, color="blue", zorder=1)
     draw_line(plt, rline_data, color="red", zorder=2)
+    draw_line(plt, bline_data, color="blue", zorder=1)
     if title == 1:
         ystring = ' Year'
     else:
@@ -159,6 +163,8 @@ def line_compare(rline_data, bline_data, title=1):
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
+    plt.legend(['Recommended','Current'], loc='upper left')
+
 
     return plt_to_img(plt, "line" + str(title))
 

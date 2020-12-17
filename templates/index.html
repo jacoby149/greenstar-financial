@@ -43,9 +43,9 @@
                         <input type="range" min="0" max="199" value="25" class="slider" id="risk" name="risk">
                     </div>
                 </td>
-                <td id="std"></td>
+                <td id="std"> Risk % </td>
                 <td> | </td>
-                <td id="mean"></td>
+                <td id="mean"> Return % </td>
                 <td></td>
             </tr>
         </table>
@@ -71,11 +71,13 @@
                     <th>Name</th>
                     <th>Birthday</th>
                     <th>Term (yrs.)</th>
+                    <th>End Date (YYYY-MM-DD)</th>
                 </tr>
                 <tr>
                     <td><input type="text" name="name" placeholder="John Smith" size="13"></td>
                     <td><input type="text" name="birthday" placeholder="12/28/1960" size="8"></td>
                     <td><input type="text" name="term" placeholder="7" size="4"></td>
+                    <td style="text-align:center;"><input type="text" id="date-input" size="10"></td>
                 </tr>
             </table>
 
@@ -190,6 +192,13 @@
 <script type="text/javascript" src="static/serialize.js"></script>
 <script src="/static/request.js"></script>
 
+<script>
+    n =  new Date();
+    y = n.getFullYear();
+    m = n.getMonth() + 1;
+    d = n.getDate();
+    document.getElementById("date-input").value = String(y) + "-" + String(m) + "-" + String(d);
+</script>
 <style>
     body {
         background-color: whitesmoke;
