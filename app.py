@@ -9,7 +9,7 @@ from flask import Flask, request, jsonify, render_template, send_file, session, 
 from flask_cors import CORS
 import sys
 import pandas as pd
-from datetime import date
+from datetime import date,datetime
 
 # display whole book
 pd.set_option('display.width', 260)
@@ -87,13 +87,11 @@ def get_book(request):
             'birthday': request.form.get('birthday'),
             'term': request.form.get('term'),
             'firm': 'Provins',
-            'end_date': request.form.get('date-input'),
+            'end_date': datetime.strptime(request.form.get('date-input'), '%Y-%m-%d').date(),
             }
 
     if info['end_date'] is None:
         info['end_date'] = date.today()
-
-    mprint("end date",info['end_date'])
 
     def latex(v):
         return v.replace("^","\\^{}")

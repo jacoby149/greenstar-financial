@@ -57,7 +57,7 @@ def yahoo_assets(tickers, info):
     else:
         print("downloading data from yahoo\n")
         yahoo = yf.download(tickers, start=str(start_date), end=str(end_date))['Adj Close']
-        yahoo.to_csv(filename)
+        yahoo.to_csv(filename, header=True)
 
     # mprint("yahoo data",yahoo.values)
     # mprint("yahoo shape",yahoo.shape)
