@@ -182,9 +182,8 @@ def get_rand_portfolio(daily_data):
 
 
 def get_weights(book):
-    captable = dict(zip(book.ticker,book.allocation))
 
-    allocations = [int(captable[x]) for x in captable]
+    allocations = book['allocation'].tolist()
     allocations = [a / sum(allocations) for a in allocations]
 
     return allocations
@@ -273,6 +272,10 @@ def markowitz_run(book, info):
     images = []
     redbook, rtickers, bluebook, btickers, ybook, ytickers = dataframe_structures(book)
     blue_weights = get_weights(bluebook)
+
+    mprint('blue weights',blue_weights)
+    mprint('blue assets',bluebook.assetclass)
+
     risk_level = int(info['risk'])
     wealth = sum([int(val) for val in bluebook.allocation.tolist()])
     info['wealth'] = wealth
@@ -345,13 +348,13 @@ def markowitz_run(book, info):
 
     # Make line graphs
     mprint("MONTECARLO START",datetime.now())
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=10000, starting_wealth=wealth)
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=10000, starting_wealth=wealth)
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=1000, starting_wealth=wealth)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data))
 
 
-    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=10000, starting_wealth=wealth)
-    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=10000, starting_wealth=wealth)
+    rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=wealth)
+    bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data, 7))
     mprint("MONTECARLO FINISH",datetime.now())
 

@@ -104,27 +104,15 @@ def get_book(request):
     asset_map = {v: k for k, v in form_params.items()}
     inred = {}
     inblue = {}
-
     captable = {}
     upperlimit = {}
+
     for v in form_params:
         val = request.form.get(v)
         u_lim = request.form.get(v+"X")
         ticker = form_params[v]
         # not in blue, not in red
-        if val == '':
-            captable[ticker] = 0
-            upperlimit[ticker] = 0
-            inred[ticker] = False
-            inblue[ticker] = False
-        # in blue, not in red
-        elif 'X'.casefold() in val.casefold():
-            captable[ticker] = int(float(val[:-1]))
-            upperlimit[ticker] = 0
-            inred[ticker] = False
-            inblue[ticker] = True
-        # not in blue, in red
-        elif val == '0':
+        if val == '' or int(float(val)) == 0:
             captable[ticker] = 0
             upperlimit[ticker] = upper_limit_handle(u_lim)
             inred[ticker] = True
