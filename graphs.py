@@ -80,12 +80,12 @@ def bell(mu=1.10,sigma=.071,title='',color='b'):
     ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
-    ax.set_xlabel('# of Standard Deviations Outside the Mean')
-    ax.set_ylabel('Probability Distribution')
+    ax.set_xlabel('# of Standard Deviations Outside the Mean',fontsize=16)
+    ax.set_ylabel('Probability Distribution',fontsize=16)
     ax.set_yticklabels([])
 
-    plt.xticks(np.arange(min(x), max(x)+1, sigma))
-    ax.set_title('Bell Curve Of Returns')
+    plt.xticks(np.arange(min(x), max(x)+1, sigma),fontsize=16)
+    ax.set_title('Bell Curve Of Returns',fontsize=16)
 
     return plt_to_img(plt, "bell"+title)
 
@@ -98,9 +98,9 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     fig, ax = plt.subplots(figsize=(9,6))
 
     # draw bells
-    ax, x, y = draw_bell(ax, mu, sigma, zorder=2, color='mediumSeaGreen', alpha=.3)
-    plt.xticks(np.arange(min(x), max(x)+1, sigma))
     ax, x, y = draw_bell(ax, mu2, sigma2, zorder=1, color='b', alpha=.1)
+    ax, x, y = draw_bell(ax, mu, sigma, zorder=2, color='mediumSeaGreen', alpha=.3)
+
 
     # format for percent
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
@@ -113,11 +113,12 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
-    ax.set_xlabel('# of Standard Deviations Outside the Mean')
-    ax.set_ylabel('Probability Distribution')
+    ax.set_xlabel('# of Standard Deviations Outside the Mean',fontsize=16)
+    ax.set_ylabel('Probability Distribution',fontsize=16)
     ax.set_yticklabels([])
 
-    ax.set_title('Bell Curve Of Returns')
+    plt.xticks(np.arange(min(x), max(x)+1, sigma),fontsize=16)
+    ax.set_title('Bell Curve Of Returns',fontsize=16)
 
     return plt_to_img(plt, "bellcompare")
 
@@ -175,7 +176,7 @@ def pie(pie_data, title='pie_default'):
 
     # max_ticker = max(tickers.keys(), key=(lambda k: tickers[k]))   <-- Explode largest slice of pie
 
-    fig1, ax1 = plt.subplots()
+    fig1, ax1 = plt.subplots(figsize=(9,6))
 
     def hexy(x):
         y = hex(x)[2:]
@@ -190,7 +191,8 @@ def pie(pie_data, title='pie_default'):
 
     colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'k']
     ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=False, startangle=180,
-                    wedgeprops={"edgecolor":"0", 'linewidth': 0.65, 'antialiased': True})
+                    wedgeprops={"edgecolor":"0", 'linewidth': 0.65, 'antialiased': True},
+                    textprops={'fontsize': 14})
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)
