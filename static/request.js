@@ -2,6 +2,7 @@
 // NO NETWORKING JAVASCRIPT  ///
 ////////////////////////////////
 
+
 function showhide() {
     cap = document.getElementById("captable")
     if (cap.style.display == "none") cap.style.display = "block";
@@ -15,7 +16,7 @@ function update_vals() {
     console.log(portfolios)
     document.getElementById("std").innerHTML = "Std. : " + Math.round(std * 10000) / 100 + "%"
     document.getElementById("mean").innerHTML = "Return :" + Math.round(mean * 10000) / 100 + "%"
-    document.getElementById("weight").innerHTML = "Portfolio : " + portfolio + "%"
+    //document.getElementById("weight").innerHTML = "Portfolio : " + portfolio + "%"
 }
 
 function setRisk() {
@@ -44,14 +45,21 @@ function load_graphs(data) {
     stds = eval(data["risks"])
     means = eval(data["returns"])
     portfolios = eval(data["portfolios"])
+    update_vals()
+    cap = document.getElementById("captable");
+    cap.style.display = "none";
+    document.getElementById("message").innerHTML = "";
+
 }
 
 function graphs() {
     form = {}
-    $('#captable').serializeArray().map(function(x) {form[x.name] = x.value})
+    $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
     form["risk"] = risk
     console.log("FORM :" + form)
+    document.getElementById("message").innerHTML = "Loading Graphs ...";
     $.post("/load_graphs", form, load_graphs);
+
 }
 
 
@@ -77,8 +85,13 @@ $("#risk").on("change", setRisk);
 
 // Generate Report
 function genReport() {
-    form = document.getElementById('captable')
-    form.appendChild(document.getElementById('risk'))
-    response = form.submit()
-    console.log("response submitted")
+    if (document.getElementById("mean").innerHTML != "") {
+        form = document.getElementById('captable')
+        form.appendChild(document.getElementById('risk'))
+        response = form.submit()
+        console.log("response submitted")
+    }
+    else {
+        console.log("Hit Load Graphs to Gen a Report")
+    }
 }
