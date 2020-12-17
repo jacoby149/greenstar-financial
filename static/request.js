@@ -2,6 +2,27 @@
 // NO NETWORKING JAVASCRIPT  ///
 ////////////////////////////////
 
+//Load inputs from URL into the form.
+function linkload() {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    keys = urlParams.keys()
+    for (const key of keys) {
+        document.getElementsByName("key").innerHTML = urlParams.get(key);
+    }
+
+}
+
+//Make a link with all of the form inputs
+function linkmake() {
+    inputs = document.forms["form_name"].getElementsByTagName("input");
+    const urlParams = new URLSearchParams();
+    for (input of inputs) {
+        urlParams.set(input.name, input.value)
+    }
+    return window.location + urlParams.toString
+}
+
 
 function showhide() {
     cap = document.getElementById("captable")
