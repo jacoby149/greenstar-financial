@@ -79,7 +79,10 @@ function graphs() {
     form["risk"] = risk
     console.log("FORM :" + form)
     document.getElementById("message").innerHTML = "Loading Graphs ...";
-    $.post("/load_graphs", form, load_graphs);
+    $.post("/load_graphs", form, load_graphs)
+        .fail(function (error) {
+            document.getElementById("message").innerHTML = "Please Fill Out The Form.";
+        });
 
 }
 
