@@ -61,7 +61,7 @@
 
     <div>
         <div id="message"></div>
-        <div id="link"></div>
+        <a id="link">Report Link</a>
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
             <p>
@@ -200,6 +200,7 @@
     m = n.getMonth() + 1;
     d = n.getDate();
     document.getElementById("date-input").value = String(y) + "-" + String(m) + "-" + String(d);
+    linkload();
 </script>
 <style>
     body {

@@ -8,19 +8,22 @@ function linkload() {
     const urlParams = new URLSearchParams(queryString);
     keys = urlParams.keys()
     for (const key of keys) {
-        document.getElementsByName("key").innerHTML = urlParams.get(key);
+        console.log(key)
+        console.log(document.getElementsByName(key))
+        input = document.getElementsByName(key)[0];
+        input.value = decodeURIComponent(urlParams.get(key));
     }
 
 }
 
 //Make a link with all of the form inputs
 function linkmake() {
-    inputs = document.forms["form_name"].getElementsByTagName("input");
+    inputs = document.getElementById("captable").getElementsByTagName("input");
     const urlParams = new URLSearchParams();
     for (input of inputs) {
-        urlParams.set(input.name, input.value)
+        urlParams.set(input.name, encodeURIComponent(input.value))
     }
-    return window.location + urlParams.toString
+    return window.location + "?" + urlParams.toString()
 }
 
 
@@ -70,11 +73,11 @@ function load_graphs(data) {
     cap = document.getElementById("captable");
     cap.style.display = "none";
     document.getElementById("message").innerHTML = "";
-    document.getElementById("link").innerHTML = linkmake();
 
 }
 
 function graphs() {
+    document.getElementById("link").href = linkmake();
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
     form["risk"] = risk
