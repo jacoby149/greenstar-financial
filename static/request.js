@@ -67,7 +67,8 @@ function setRisk() {
 // image return
 function load_graphs(data) {
     console.log(data)
-    document.getElementById("graphs").innerHTML = data["images"]
+    $("#graphs").append(data["images"]);
+    //document.getElementById("graphs").innerHTML = data["images"]
     stds = eval(data["risks"])
     means = eval(data["returns"])
     portfolios = eval(data["portfolios"])

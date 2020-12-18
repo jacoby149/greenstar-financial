@@ -31,8 +31,8 @@ cors = CORS(app)
 app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 
 images = []
-img_form = "<img src = '{}'>"
-
+#img_form = "<img src = '{}'>"
+img_form = "{}"
 form_params = {}
 #stock_symbols                                          # FAQ    https://www.portfoliovisualizer.com/faq#dataSources
 form_params["Large Cap Growth"] = "VIGRX"                # FSPGX
