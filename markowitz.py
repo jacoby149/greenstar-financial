@@ -147,7 +147,7 @@ def optimal_portfolio(daily_data,book):
     h = opt.matrix(0.0, (n ,1))
 
     #add bundle boundaries bundles size l sum greater weight than c BUNDLE BUNDLE BUNDLE
-    G,h = bundles(c=.25,l=n - n//4,n=n,G=G,h=h)
+    G,h = bundles(c=.1,l=n - n//4,n=n,G=G,h=h)
 
     #add limit constraints (i.e. no more than 10% in V.C. etc)
     G,h = limits(G,h,book)
@@ -285,16 +285,19 @@ def markowitz_run(book, info):
     blue_data = yahoo_assets(btickers, info)
     yahoo_data = yahoo_assets(ytickers, info)
 
-    def get_frontier_data():
+    def get_frontier_data(save=False):
         limits = [str(x) for x in book['upperlimit'].tolist()]
-        filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"
-
-        if os.path.exists(filename):
-            print(filename + " exists\n")
-            with open(filename, 'rb') as model_pickle:
-                portfolios, returns, risks = pickle.load(model_pickle)
+        
+        filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"        
+        if save:
+            if os.path.exists(filename):
+                print(filename + " exists\n")
+                with open(filename, 'rb') as model_pickle:
+                    portfolios, returns, risks = pickle.load(model_pickle)
+            else:
+                # get ribs data (frontier)
+                portfolios, returns, risks = optimal_portfolio(red_data,redbook)
         else:
-            # get ribs data (frontier)
             portfolios, returns, risks = optimal_portfolio(red_data,redbook)
 
         # get wheats data (frontier)
@@ -311,7 +314,7 @@ def markowitz_run(book, info):
         blue = {"ret": ret_curr, "risk": risk_curr, "weights": blue_weights}
         wheat = {"ret": means, "risk": stds}
         ribs = {"ret": returns, "risk": risks, 'port': portfolios}
-
+        
         with open(filename, 'wb') as model_pickle:
             model_variables = (portfolios, returns, risks)
             pickle.dump(model_variables, model_pickle)
@@ -340,10 +343,12 @@ def markowitz_run(book, info):
     # make pie graphs
     images.append(graphs.pie(new_pie, 'piefuture'))
     images.append(graphs.pie(ol_pie, 'pie'))
+    mprint("PIE FINISH",datetime.now())
 
 
     # Make noise graph
     images.append(graphs.noise(yahoo_data, assets))
+    mprint("NOISE FINISH",datetime.now())
 
 
     # Make line graphs
@@ -368,6 +373,7 @@ def markowitz_run(book, info):
     images.append(graphs.bell_compare(mu=red['ret'], mu2=blue['ret'], sigma=red['risk'], sigma2=blue['risk']))
     images.append(graphs.bell(mu=red['ret'], sigma=red['risk'], title='future',color='g',legend='Recommended'))
     images.append(graphs.bell(mu=blue['ret'], sigma=blue['risk'], legend='Current'))
+    mprint("BELL FINISH",datetime.now())
 
 
     # get matrices

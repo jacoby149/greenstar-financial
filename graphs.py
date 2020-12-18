@@ -24,12 +24,12 @@ from operations import mprint
 
 
 
-def plt_to_img(plt, name="ghoozie"):
+def plt_to_img(plt, name="ghoozie",dpi=100):
     importlib.reload(matplotlib)
     s = io.BytesIO()
 
-    plt.savefig(s, format='png', dpi=300, facecolor="white", bbox_inches='tight')
-    plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=300, facecolor="white", bbox_inches='tight')
+    plt.savefig(s, format='png', dpi=100, facecolor="white", bbox_inches='tight')
+    plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=100, facecolor="white", bbox_inches='tight')
     plt.clf()
     plt.cla()
     plt.close()
@@ -124,7 +124,7 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     #legend
     ax.legend(['Current', 'Recommended'], loc='upper left')
 
-    return plt_to_img(plt, "bellcompare")
+    return plt_to_img(plt, "bellcompare",300)
 
 
 def draw_line(plt, line_data, color="black", zorder=1):
@@ -166,7 +166,7 @@ def line_compare(rline_data, bline_data, title=1):
     plt.legend(['Recommended','Current'], loc='upper left')
 
 
-    return plt_to_img(plt, "line" + str(title))
+    return plt_to_img(plt, "line" + str(title),300)
 
 
 def pie(pie_data, title='pie_default'):
@@ -221,7 +221,7 @@ def noise(daily_data, labels):
     plt.legend(labels, bbox_to_anchor=(1.05, 1.0), loc='upper left')
     plt.tight_layout()
 
-    return plt_to_img(plt, "noise")
+    return plt_to_img(plt, "noise",300)
 
 
 def frontier(red, blue, wheat, ribs):
@@ -260,4 +260,4 @@ def frontier(red, blue, wheat, ribs):
     # title the graph
     plt.title('Expected Return and Risk Of Portfolios')
 
-    return plt_to_img(plt, "frontier")
+    return plt_to_img(plt, "frontier",300)

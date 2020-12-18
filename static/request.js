@@ -23,6 +23,7 @@ function linkmake() {
     for (input of inputs) {
         urlParams.set(input.name, encodeURIComponent(input.value))
     }
+    urlParams.set(input)
     return window.location + "?" + urlParams.toString()
 }
 
@@ -78,6 +79,7 @@ function load_graphs(data) {
 
 function graphs() {
     document.getElementById("link").href = linkmake();
+    document.getElementById("link").style.display = "block";
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
     form["risk"] = risk
