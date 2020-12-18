@@ -5,7 +5,8 @@ upload full packet images to s3 with id packet grade IN packets folder
 """
 
 # main imports
-from flask import Flask, request, jsonify, render_template, send_file, session, redirect
+import os
+from flask import Flask, request, jsonify, render_template, send_file, session, redirect,send_from_directory 
 from flask_cors import CORS
 import sys
 import pandas as pd
@@ -55,6 +56,9 @@ form_params["Cash"] = "BIL"
 
 
 
+@app.route('/favicon.ico') 
+def favicon(): 
+    return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 # do machine learning
 @app.route("/", methods=["GET", "POST"])

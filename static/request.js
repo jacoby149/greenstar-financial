@@ -70,6 +70,7 @@ function load_graphs(data) {
     cap = document.getElementById("captable");
     cap.style.display = "none";
     document.getElementById("message").innerHTML = "";
+    document.getElementById("link").innerHTML = linkmake();
 
 }
 
