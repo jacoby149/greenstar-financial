@@ -23,7 +23,8 @@ function linkmake() {
     for (input of inputs) {
         urlParams.set(input.name, encodeURIComponent(input.value))
     }
-    urlParams.set(input)
+    //for risk slider
+    urlParams.set("risk", document.getElementById("risk").value);
     return window.location + "?" + urlParams.toString()
 }
 
