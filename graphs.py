@@ -28,8 +28,8 @@ def plt_to_img(plt, name="ghoozie",dpi=100):
     importlib.reload(matplotlib)
     s = io.BytesIO()
 
-    plt.savefig(s, format='png', dpi=100, facecolor="white", bbox_inches='tight')
-    plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=100, facecolor="white", bbox_inches='tight')
+    plt.savefig(s, format='png', dpi=dpi, facecolor="white", bbox_inches='tight')
+    plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=dpi, facecolor="white", bbox_inches='tight')
     plt.clf()
     plt.cla()
     plt.close()
