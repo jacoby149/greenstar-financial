@@ -22,8 +22,11 @@ from matplotlib.lines import Line2D
 import operations as ops
 from operations import mprint
 
-
-
+def pct_format(x):
+    if x <= 0:
+        return '{:.0f}%'.format(x)
+    else:
+        return '+{:.0f}%'.format(x)
 
 def plt_to_img(plt, name="ghoozie",dpi=100):
     importlib.reload(matplotlib)
@@ -76,6 +79,7 @@ def bell(mu=1.10,sigma=.071,title='',color='b',legend=''):
     # format for percent
     #ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
+
     # adjust the graph so the x axis is zero
     ax.spines['bottom'].set_position('zero')
     ax.xaxis.set_ticks_position('bottom')
@@ -89,6 +93,8 @@ def bell(mu=1.10,sigma=.071,title='',color='b',legend=''):
     ax.set_yticklabels([])
 
     plt.xticks(np.arange(min(x), max(x)+1, sigma),fontsize=16)
+    plt.gca().set_xticklabels([pct_format(x) for x in plt.gca().get_xticks()])
+
     ax.set_title('Bell Curve Of Returns',fontsize=16)
     ax.legend([legend], loc='upper left')
 
@@ -123,6 +129,8 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     ax.set_yticklabels([])
 
     plt.xticks(np.arange(min(x), max(x)+1, sigma),fontsize=16)
+    plt.gca().set_xticklabels([pct_format(x) for x in plt.gca().get_xticks()])
+
     ax.set_title('Bell Curve Of Returns',fontsize=16)
 
     #legend
@@ -211,12 +219,6 @@ def pie(pie_data, title='pie_default'):
 def noise(daily_data, labels):
     plt.figure(figsize=(10,6))
     plt.plot(daily_data.T, alpha=.4, )
-
-    def pct_format(x):
-        if x <= 0:
-            return '{:.0f}%'.format(x)
-        else:
-            return '+{:.0f}%'.format(x)
 
     plt.gca().set_yticklabels([pct_format(x * 100 - 100) for x in plt.gca().get_yticks()])
     plt.xlabel('Time (Date)')
