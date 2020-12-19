@@ -22,6 +22,8 @@ from matplotlib.lines import Line2D
 # in-house
 import operations as ops
 from operations import mprint
+import customplugs as plugs
+
 
 def pct_format(x):
     if x <= 0:
@@ -219,14 +221,14 @@ def noise(daily_data, labels):
 
 
 def d3dymo(plt, points, labels):
-    tooltip = mpld3.plugins.PointHTMLTooltip(points[0], labels=labels)
+    tooltip = plugs.customHover(points[0], labels=labels)
     plugins.connect(plt.gcf(), tooltip)
 
 
 def frontier(red, blue, wheat, ribs):
     # Percentage plot rather than decimal plot
     s = 100
-    ms = 8
+    ms = 2
 
     # Format axes
     fig, ax = plt.subplots(figsize=(9,6))
