@@ -22,7 +22,7 @@ from matplotlib.lines import Line2D
 # in-house
 import operations as ops
 from operations import mprint
-import customplugs as plugs
+import plugs
 
 
 def pct_format(x):
@@ -219,6 +219,7 @@ def noise(daily_data, labels):
 
 def d3dymo(plt, points, labels):
     tooltip = plugs.customHover(points[0], labels=labels)
+    # tooltip = plugs.dHover()
     plugins.connect(plt.gcf(), tooltip)
 
 
