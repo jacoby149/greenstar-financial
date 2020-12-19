@@ -41,7 +41,7 @@ def plt_to_img(plt, name="ghoozie",dpi=100):
 
 
 def calc_norm(mu,sigma,z):
-    d = .001
+    d = .02
     x = np.arange(mu-z*sigma,mu+z*sigma,d*sigma)
     y = norm.pdf(x,mu,sigma)
     return x, y
@@ -55,6 +55,7 @@ def draw_bell(ax, mu=110,sigma=7.10, zorder=1, color='g', alpha=0.3):
 
     #revenue marks
     ax.plot(x_all, y_all, zorder=zorder, alpha=0.7, color=color)
+    
     ax.fill_between(x_t, y_t, 0, alpha=alpha, color=color, zorder=zorder)
     ax.fill_between(x, y, 0, alpha=alpha, color=color, zorder=zorder)
     ax.fill_between(x_all, y_all, 0, alpha=alpha/3, zorder=zorder)
@@ -73,14 +74,14 @@ def bell(mu=1.10,sigma=.071,title='',color='b',legend=''):
     ax, x, y = draw_bell(ax, mu, sigma, color=color)
 
     # format for percent
-    ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+    #ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     # adjust the graph so the x axis is zero
-    ax.spines['bottom'].set_position('zero')
-    ax.xaxis.set_ticks_position('bottom')
-    ax.spines['left'].set_smart_bounds(True)
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
+    #ax.spines['bottom'].set_position('zero')
+    #ax.xaxis.set_ticks_position('bottom')
+    #ax.spines['left'].set_smart_bounds(True)
+    #ax.spines['right'].set_visible(False)
+    #ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
     ax.set_xlabel('% Return',fontsize=16)
@@ -107,14 +108,14 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
 
 
     # format for percent
-    ax.xaxis.set_major_formatter(mtick.PercentFormatter())
+    #ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     #adjust the graph so the x axis is zero
-    ax.spines['bottom'].set_position('zero')
-    ax.xaxis.set_ticks_position('bottom')
-    ax.spines['left'].set_smart_bounds(True)
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
+    #ax.spines['bottom'].set_position('zero')
+    #ax.xaxis.set_ticks_position('bottom')
+    #ax.spines['left'].set_smart_bounds(True)
+    #ax.spines['right'].set_visible(False)
+    #ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
     ax.set_xlabel('% Return',fontsize=16)
