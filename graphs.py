@@ -141,6 +141,7 @@ def line(line_data, title=0):
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
+    plt.rc('grid', color='lightgray')
 
     return plt_to_img(plt, "line" + str(title))
 
@@ -157,6 +158,7 @@ def line_compare(rline_data, bline_data, title=1):
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
+    plt.rc('grid', color='lightgray')
     plt.legend(['Recommended','Current'], loc='upper left')
 
 
