@@ -77,11 +77,11 @@ def bell(mu=1.10,sigma=.071,title='',color='b',legend=''):
     #ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     # adjust the graph so the x axis is zero
-    #ax.spines['bottom'].set_position('zero')
-    #ax.xaxis.set_ticks_position('bottom')
-    #ax.spines['left'].set_smart_bounds(True)
-    #ax.spines['right'].set_visible(False)
-    #ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_position('zero')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.spines['left'].set_smart_bounds(True)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
     ax.set_xlabel('% Return',fontsize=16)
@@ -111,11 +111,11 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
     #ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
     #adjust the graph so the x axis is zero
-    #ax.spines['bottom'].set_position('zero')
-    #ax.xaxis.set_ticks_position('bottom')
-    #ax.spines['left'].set_smart_bounds(True)
-    #ax.spines['right'].set_visible(False)
-    #ax.spines['top'].set_visible(False)
+    ax.spines['bottom'].set_position('zero')
+    ax.xaxis.set_ticks_position('bottom')
+    ax.spines['left'].set_smart_bounds(True)
+    ax.spines['right'].set_visible(False)
+    ax.spines['top'].set_visible(False)
 
     ax.set_xlim([mu-4*sigma,mu+4*sigma])
     ax.set_xlabel('% Return',fontsize=16)
