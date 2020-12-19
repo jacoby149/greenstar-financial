@@ -11,6 +11,7 @@
 \usepackage{geometry} %margini
 \geometry{a4paper, top=3cm, bottom=3cm, left=3cm, right=3cm, bindingoffset=5mm}
 \usepackage{graphicx}
+%\usepackage{svg}
 \usepackage{siunitx}
 \usepackage{subcaption}
 \graphicspath{img/}
@@ -23,22 +24,10 @@
 \usepackage{minitoc} %mini sommario a inizio capitolo
 \nomtcrule
 
-
-
-
-
 \usepackage{comment}
-
-
-
-
-
-
-
 
 \usepackage{xpatch}
 \usepackage{blindtext}
-
 
 \makeatletter
 
@@ -46,8 +35,6 @@
 
 \usepackage{fancyhdr}
 \usepackage[export]{adjustbox}
-
-
 
 \usepackage{hyperref} %hyperlink
 \hypersetup{
@@ -61,8 +48,7 @@
 
 \usepackage{booktabs} %per le tabelle
 \usepackage{multirow}
-\usepackage[table,xcdraw]{xcolor}
-\usepackage{graphicx}
+\usepackage[table,xcdraw,svgnames]{xcolor}
 
 \usepackage{lscape}
 \usepackage{float}
@@ -207,8 +193,8 @@
 \begin{center}
 
   \begin{tabular}{ccc}
-  \hspace*{-1.5cm}\includegraphics[width=.55\linewidth]{/app/plts/pie.png}
-    & \hspace{0.5cm}&\includegraphics[width=.55\linewidth]{/app/plts/piefuture.png} \\
+  \hspace*{-1.5cm}\includegraphics[width=.55\linewidth]{/app/plts/pie.pdf}
+    & \hspace{0.5cm}&\includegraphics[width=.55\linewidth]{/app/plts/piefuture.pdf} \\
     (a) Current Portfolio && (b) New Portfolio
   \end{tabular}
 
@@ -250,11 +236,11 @@ Change in Risk : {\VAR{riskchange}}
 \begin{center}
 
 
-\includegraphics[width=.8\linewidth]{/app/plts/bellcompare.png}\par
+\includegraphics[width=.8\linewidth]{/app/plts/bellcompare.pdf}\par
 
 \vspace{.5cm}
 
-\hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/plts/line7.png}\par
+\hspace*{-1cm}\includegraphics[width=.8\linewidth]{/app/plts/line7.pdf}\par
 \end{center}
 
 \newpage    %PAGE5
@@ -270,7 +256,14 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{c}
-    \includegraphics[width=.5\linewidth]{/app/plts/pie.png}
+    \includegraphics[width=.5\linewidth]{/app/plts/pie.pdf}
+%
+%\begin{figure}[htbp]
+%  \centering
+%  \includesvg{pie}
+%  \caption{pie}
+%\end{figure}
+
   \end{tabular}
   \end{center}
 
@@ -284,8 +277,8 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.45\linewidth]{/app/plts/bell.png}
-    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line1.png}
+  \includegraphics[width=.45\linewidth]{/app/plts/bell.pdf}
+    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line1.pdf}
   \end{tabular}
   \end{center}
 
@@ -300,8 +293,8 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.45\linewidth]{/app/plts/bellcompare.png}
-    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line7.png}
+  \includegraphics[width=.45\linewidth]{/app/plts/bellcompare.pdf}
+    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line7.pdf}
   \end{tabular}
   \end{center}
 
@@ -338,7 +331,7 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{c}
-    \includegraphics[width=.5\linewidth]{/app/plts/piefuture.png}
+    \includegraphics[width=.5\linewidth]{/app/plts/piefuture.pdf}
   \end{tabular}
   \end{center}
 
@@ -352,8 +345,8 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.45\linewidth]{/app/plts/bellfuture.png}
-    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line1.png}
+  \includegraphics[width=.45\linewidth]{/app/plts/bellfuture.pdf}
+    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line1.pdf}
   \end{tabular}
   \end{center}
 
@@ -368,8 +361,8 @@ Change in Risk : {\VAR{riskchange}}
 
 \begin{center}
   \begin{tabular}{lcr}
-  \includegraphics[width=.45\linewidth]{/app/plts/bellcompare.png}
-    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line7.png}
+  \includegraphics[width=.45\linewidth]{/app/plts/bellcompare.pdf}
+    & \hspace{1cm }&\includegraphics[width=.45\linewidth]{/app/plts/line7.pdf}
   \end{tabular}
   \end{center}
 
@@ -403,7 +396,7 @@ In 1990, Harry Markowitz won a nobel prize for his contributions to portfolio ba
 
 \vspace{2cm}
 
-\hspace*{-2.5cm}\includegraphics[width=1.2\linewidth]{/app/plts/frontier.png}\par
+\hspace*{-2.5cm}\includegraphics[width=1.2\linewidth]{/app/plts/frontier.pdf}\par
 
 \vspace{1cm}
 
