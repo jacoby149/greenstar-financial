@@ -72,7 +72,8 @@ def bell(mu=1.10,sigma=.071,title='',color='b',legend=''):
     # build the plot
 
     fig, ax = plt.subplots(figsize=(9,6))
-    plt.ylim(bottom=0.0)
+    bigger_top = plt.ylim()[1]*1.2
+    plt.ylim(bottom=0.0,top=bigger_top)
 
     # draw bell
     ax, x, y = draw_bell(ax, mu, sigma, color=color)
@@ -97,7 +98,8 @@ def bell_compare(mu=110, mu2=100, sigma=7.10, sigma2=8):
 
     # build the plot
     fig, ax = plt.subplots(figsize=(9,6))
-    plt.ylim(bottom=0.0)
+    bigger_top = plt.ylim()[1]*1.2
+    plt.ylim(bottom=0.0,top=bigger_top)
 
     # draw bells
     ax, x, y = draw_bell(ax, mu2, sigma2, zorder=1, color='b', alpha=.1)
