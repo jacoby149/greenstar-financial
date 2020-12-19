@@ -273,9 +273,6 @@ def markowitz_run(book, info):
     redbook, rtickers, bluebook, btickers, ybook, ytickers = dataframe_structures(book)
     blue_weights = get_weights(bluebook)
 
-    mprint('blue weights',blue_weights)
-    mprint('blue assets',bluebook.assetclass)
-
     risk_level = int(info['risk'])
     wealth = sum([int(val) for val in bluebook.allocation.tolist()])
     info['wealth'] = wealth
@@ -285,7 +282,7 @@ def markowitz_run(book, info):
     blue_data = yahoo_assets(btickers, info)
     yahoo_data = yahoo_assets(ytickers, info)
 
-    def get_frontier_data(save=False):
+    def get_frontier_data(save=True):
         limits = [str(x) for x in book['upperlimit'].tolist()]
         
         filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"        
@@ -320,9 +317,9 @@ def markowitz_run(book, info):
             pickle.dump(model_variables, model_pickle)
 
         return red, blue, wheat, ribs
-    mprint("FRONTIER START",datetime.now())
+    # mprint("FRONTIER START",datetime.now())
     red, blue, wheat, ribs = get_frontier_data()
-    mprint("FRONTIER FINISH",datetime.now())
+    # mprint("FRONTIER FINISH",datetime.now())
 
 
     # remapping to relevant assets
@@ -343,16 +340,16 @@ def markowitz_run(book, info):
     # make pie graphs
     images.append(graphs.pie(new_pie, 'piefuture'))
     images.append(graphs.pie(ol_pie, 'pie'))
-    mprint("PIE FINISH",datetime.now())
+    # mprint("PIE FINISH",datetime.now())
 
 
     # Make noise graph
     images.append(graphs.noise(yahoo_data, assets))
-    mprint("NOISE FINISH",datetime.now())
+    # mprint("NOISE FINISH",datetime.now())
 
 
     # Make line graphs
-    mprint("MONTECARLO START",datetime.now())
+    # mprint("MONTECARLO START",datetime.now())
     rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=1, trials=1000, starting_wealth=wealth)
     bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=1, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data))
@@ -361,7 +358,7 @@ def markowitz_run(book, info):
     rline_data = ops.montecarlo(mu=red['ret'], std=red['risk'], term=7, trials=1000, starting_wealth=wealth)
     bline_data = ops.montecarlo(mu=blue['ret'], std=blue['risk'], term=7, trials=1000, starting_wealth=wealth)
     images.append(graphs.line_compare(rline_data, bline_data, 7))
-    mprint("MONTECARLO FINISH",datetime.now())
+    # mprint("MONTECARLO FINISH",datetime.now())
 
     # write montecarlo data to info
     info['rlinedata'] = rline_data
@@ -373,7 +370,7 @@ def markowitz_run(book, info):
     images.append(graphs.bell_compare(mu=red['ret'], mu2=blue['ret'], sigma=red['risk'], sigma2=blue['risk']))
     images.append(graphs.bell(mu=red['ret'], sigma=red['risk'], title='future',color='g',legend='Recommended'))
     images.append(graphs.bell(mu=blue['ret'], sigma=blue['risk'], legend='Current'))
-    mprint("BELL FINISH",datetime.now())
+    # mprint("BELL FINISH",datetime.now())
 
 
     # get matrices

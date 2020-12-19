@@ -2,6 +2,7 @@
 
 # graph requirements
 import mpld3
+from mpld3 import plugins
 import io
 import math
 import base64
@@ -32,9 +33,12 @@ def plt_to_img(plt, name="ghoozie",dpi=100):
     importlib.reload(matplotlib)
     s = io.BytesIO()
 
+
     #plt.savefig(s, format='png', dpi=dpi, facecolor="white", bbox_inches='tight')
+
+
     html = mpld3.fig_to_html(plt.gcf())
-    plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=dpi, facecolor="white", bbox_inches='tight')
+    # plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=dpi, facecolor="white", bbox_inches='tight')
     plt.clf()
     plt.cla()
     plt.close()
@@ -214,10 +218,15 @@ def noise(daily_data, labels):
     return plt_to_img(plt, "noise",300)
 
 
+def d3dymo(plt, points, labels):
+    tooltip = mpld3.plugins.PointHTMLTooltip(points[0], labels=labels)
+    plugins.connect(plt.gcf(), tooltip)
+
+
 def frontier(red, blue, wheat, ribs):
     # Percentage plot rather than decimal plot
     s = 100
-    ms = 2
+    ms = 8
 
     # Format axes
     fig, ax = plt.subplots(figsize=(9,6))
@@ -236,18 +245,24 @@ def frontier(red, blue, wheat, ribs):
     #plot random portfolios
     plt.plot([r*s for r in wheat['risk']], [r*s for r in wheat['ret']], 'o',color="wheat",markersize=ms)
 
-    # plot optimal portfolios
+    # plot ribs
     plt.ylabel('Return (Percentage)')
     plt.xlabel('Risk (Standard Deviation)')
-    plt.plot([r*s for r in ribs['risk']], [r*s for r in ribs['ret']], 'y-o',markersize=ms)
+    riskys = [r*s for r in ribs['risk']]
+    retys = [r*s for r in ribs['ret']]
+    points = plt.plot(riskys, retys, 'y-o',markersize=ms)
+    labels = ['Risk: ' + str(riskys[i])[:4] + ', Return: ' + str(retys[i])[:4] for i, r in enumerate(ribs['ret'])]
+    d3dymo(plt, points, labels)
 
     # plot slider-selected recommended portfolio
     plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=2,markersize=ms*1.6)
+    # labels = ["Risk: " + str(red['risk'])[:4] + ", Return:"]
 
     # plot original portfolio
     plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*1.6)
 
     # title the graph
     plt.title('Expected Return and Risk Of Portfolios')
+
 
     return plt_to_img(plt, "frontier",300)
