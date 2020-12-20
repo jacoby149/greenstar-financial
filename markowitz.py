@@ -138,9 +138,6 @@ def optimal_portfolio(daily_data,book):
     #calculate annual average return (AAR)
     pbar = opt.matrix(ops.AAR(daily_data))
 
-
-    # mprint("pbar",pbar)
-
     # all stocks are greater than zero.
     #w0 > 0, w1> 0 ... wn > 0
     G = -opt.matrix(np.eye(n))   # negative n x n identity matrix
