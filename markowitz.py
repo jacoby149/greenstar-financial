@@ -109,10 +109,11 @@ def bundles(c,l,n,G,h):
 
 def limits(G,h,book):
     n=book.shape[0]
+    # np.eye
     # [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-    G_ext=np.eye(n)
 
     #upper limit
+    G_ext=np.eye(n)
     h_ext=book['upperlimit'].tolist()
     h_ext=np.matrix([h_ext])
     h_ext=h_ext.T
