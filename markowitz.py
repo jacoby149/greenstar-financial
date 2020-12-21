@@ -122,8 +122,9 @@ def limits(G,h,book):
     h = opt.matrix(np.vstack((h,h_ext)))
 
     # #lower limit
+    # G_ext = -np.eye(n)
     # h_ext=book['lowerlimit'].tolist()
-    # h_ext=np.matrix([h_ext])
+    # h_ext=-np.matrix([h_ext])
     # h_ext=h_ext.T
     #
     # #append lower limit constraints
