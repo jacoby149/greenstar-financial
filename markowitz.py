@@ -121,15 +121,15 @@ def limits(G,h,book):
     G = opt.matrix(np.vstack((G,G_ext)))
     h = opt.matrix(np.vstack((h,h_ext)))
 
-    # #lower limit
-    # G_ext = -np.eye(n)
-    # h_ext=book['lowerlimit'].tolist()
-    # h_ext=-np.matrix([h_ext])
-    # h_ext=h_ext.T
-    #
-    # #append lower limit constraints
-    # G = opt.matrix(np.vstack((G,G_ext)))
-    # h = opt.matrix(np.vstack((h,h_ext)))
+    #lower limit
+    G_ext = -np.eye(n)
+    h_ext=book['lowerlimit'].tolist()
+    h_ext=-np.matrix([h_ext])
+    h_ext=h_ext.T
+
+    #append lower limit constraints
+    G = opt.matrix(np.vstack((G,G_ext)))
+    h = opt.matrix(np.vstack((h,h_ext)))
 
     return G, h
 
@@ -287,7 +287,7 @@ def markowitz_run(book, info):
     blue_data = yahoo_assets(btickers, info)
     yahoo_data = yahoo_assets(ytickers, info)
 
-    def get_frontier_data(save=True):
+    def get_frontier_data(save=False):
         limits = [str(x) for x in book['upperlimit'].tolist()]
         
         filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"        
