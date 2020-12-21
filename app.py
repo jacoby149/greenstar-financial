@@ -108,26 +108,38 @@ def get_book(request):
         else:
             return round(float(lim)/100,6)
 
+    def lower_limit_handle(lim):
+        if lim == '':
+            return 0
+        elif "%" in lim:
+            return round(float(lim[:-1])/100,6)
+        else:
+            return round(float(lim)/100,6)
+
     # get columns for dataframe update
     asset_map = {v: k for k, v in form_params.items()}
     inred = {}
     inblue = {}
     captable = {}
     upperlimit = {}
+    lowerlimit = {}
 
     for v in form_params:
         val = request.form.get(v)
         u_lim = request.form.get(v+"X")
+        l_lim = request.form.get(v+"Y")
         ticker = form_params[v]
         # not in blue, not in red
         if val == '' or int(float(val)) == 0:
             captable[ticker] = 0
             upperlimit[ticker] = upper_limit_handle(u_lim)
+            lowerlimit[ticker] = lower_limit_handle(l_lim)
             inblue[ticker] = False
         # in blue, in red
         else:
             captable[ticker] = int(float(val))
             upperlimit[ticker] = upper_limit_handle(u_lim)
+            lowerlimit[ticker] = lower_limit_handle(l_lim)
             inblue[ticker] = True
         if upper_limit_handle(u_lim) == 0:
             inred[ticker] = False
@@ -144,10 +156,11 @@ def get_book(request):
     book['inblue'] = book['ticker'].map(inblue)
     book['recommended'] = [0 for i in range(len(form_params))]
     book['upperlimit'] = book['ticker'].map(upperlimit)
+    book['lowerlimit'] = book['ticker'].map(lowerlimit)
 
 
     # order and sort dataframe
-    book = book[['assetclass', 'ticker', 'latex', 'allocation', 'recommended', 'upperlimit', 'inred', 'inblue']]
+    book = book[['assetclass', 'ticker', 'allocation', 'recommended', 'lowerlimit', 'upperlimit', 'inred', 'inblue', 'latex']]
     book.sort_values('ticker', inplace=True)
     book.reset_index(drop=True, inplace=True)
 

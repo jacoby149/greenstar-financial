@@ -112,18 +112,24 @@ def limits(G,h,book):
     # [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     G_ext=np.eye(n)
 
+    #upper limit
     h_ext=book['upperlimit'].tolist()
     h_ext=np.matrix([h_ext])
     h_ext=h_ext.T
 
-    # mprint("g_ext",G_ext)
-    # mprint("g shape",G_ext.shape)
-    # mprint("h_ext",h_ext)
-    # mprint("h shape",h_ext.shape)
-
-    # append limit constraints
+    #append upper limit constraints
     G = opt.matrix(np.vstack((G,G_ext)))
     h = opt.matrix(np.vstack((h,h_ext)))
+
+    # #lower limit
+    # h_ext=book['lowerlimit'].tolist()
+    # h_ext=np.matrix([h_ext])
+    # h_ext=h_ext.T
+    #
+    # #append lower limit constraints
+    # G = opt.matrix(np.vstack((G,G_ext)))
+    # h = opt.matrix(np.vstack((h,h_ext)))
+
     return G, h
 
 
@@ -146,8 +152,9 @@ def optimal_portfolio(daily_data,book):
     #add bundle boundaries bundles size l sum greater weight than c BUNDLE BUNDLE BUNDLE
     G,h = bundles(c=.1,l=n - n//4,n=n,G=G,h=h)
 
-    #add limit constraints (i.e. no more than 10% in V.C. etc)
+    #add upper limit constraints (i.e. no more than 10% in V.C. | 10% stays in Cash etc)
     G,h = limits(G,h,book)
+
     
     #all stocks add up to 1.
     #w1 + w2 + ... = 1
