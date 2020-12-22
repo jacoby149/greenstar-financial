@@ -366,6 +366,7 @@ def markowitz_run(book, info):
     images.append(graphs.line_compare(rline_data, bline_data, 7))
     # mprint("MONTECARLO FINISH",datetime.now())
 
+
     # write montecarlo data to info
     info['rlinedata'] = rline_data
     info['blinedata'] = bline_data

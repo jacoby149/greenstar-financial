@@ -2,7 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/markowitz.py" beforeDir="false" afterPath="$PROJECT_DIR$/markowitz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/bell.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/bell.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/bellcompare.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/bellcompare.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/bellfuture.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/bellfuture.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/frontier.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/frontier.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/line1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/line1.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/line7.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/line7.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/noise.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/noise.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/pie.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/pie.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plts/piefuture.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/plts/piefuture.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

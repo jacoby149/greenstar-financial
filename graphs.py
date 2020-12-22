@@ -130,7 +130,9 @@ def draw_line(plt, line_data, color="black", zorder=1):
 
     year = [int(date.today().year) + y for y in year]
     plt.plot(year, ret, color=color, marker='o', zorder=zorder)
-    plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()])
+
+    #added [1:] indexing to get_yticks so each line graph starts at the appropriate wealth number (i donut know why it was off before)
+    plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()[1:]])
 
 
 def line(line_data, title=0):
@@ -143,7 +145,7 @@ def line(line_data, title=0):
     plt.title('Expected Returns For ' + str(title) + ystring, fontsize=14)
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
-    plt.grid(True)
+    plt.grid(True, color='lightgray')
     plt.rc('grid', color='lightgray')
 
     return plt_to_img(plt, "line" + str(title))
@@ -161,7 +163,6 @@ def line_compare(rline_data, bline_data, title=1):
     plt.xlabel('Year', fontsize=14)
     plt.ylabel('Return', fontsize=14)
     plt.grid(True)
-    plt.rc('grid', color='lightgray')
     plt.legend(['Recommended','Current'], loc='upper left')
 
 
