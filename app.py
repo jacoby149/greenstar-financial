@@ -111,10 +111,8 @@ def get_book(request):
     def lower_limit_handle(lim):
         if lim == '':
             return 0
-        elif "%" in lim:
-            return round(float(lim[:-1])/100,6)
         else:
-            return round(float(lim)/100,6)
+            upper_limit_handle(lim)
 
     # get columns for dataframe update
     asset_map = {v: k for k, v in form_params.items()}

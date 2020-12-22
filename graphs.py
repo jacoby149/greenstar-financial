@@ -131,7 +131,7 @@ def draw_line(plt, line_data, color="black", zorder=1):
     year = [int(date.today().year) + y for y in year]
     plt.plot(year, ret, color=color, marker='o', zorder=zorder)
 
-    #added [1:] indexing to get_yticks so each line graph starts at the appropriate wealth number (i donut know why it was off before)
+    #added [1:] indexing so line graphs start at accurate wealth number (i donut know why it was off before)
     plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()[1:]])
 
 
