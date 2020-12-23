@@ -17,6 +17,7 @@ function linkload() {
         input = document.getElementsByName(key)[0];
         input.value = decodeURIComponent(urlParams.get(key));
     }
+    risk = document.getElementById("risk").value;
 }
 
 //Make a link with all of the form inputs
