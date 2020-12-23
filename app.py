@@ -112,7 +112,7 @@ def get_book(request):
         if lim == '':
             return 0
         else:
-            upper_limit_handle(lim)
+            return upper_limit_handle(lim)
 
     # get columns for dataframe update
     asset_map = {v: k for k, v in form_params.items()}
