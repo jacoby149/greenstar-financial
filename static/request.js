@@ -70,6 +70,7 @@ function setRisk() {
 
 // image return
 function load_graphs(data) {
+    document.getElementById("message").innerHTML = "";
     console.log(data)
     $("#graphs").empty();
     $("#graphs").append(data["images"]);
@@ -80,8 +81,6 @@ function load_graphs(data) {
     update_vals()
     cap = document.getElementById("captable");
     cap.style.display = "none";
-    document.getElementById("message").innerHTML = "";
-
 }
 
 function graphs() {
