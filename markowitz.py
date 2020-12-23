@@ -135,16 +135,16 @@ def limits(G,h,book):
     return G, h
 
 
-def optimal_portfolio(daily_data,book):
+def optimal_portfolio(daily_data,book,p,C):
     n = len(daily_data)
     daily_data = np.asmatrix(daily_data)
     mus = ops.get_mus(N=500, t=200, n=n)
     
     # Convert to cvxopt matrices
-    S = opt.matrix(ops.AC(daily_data))
+    S = opt.matrix(C)
 
     #calculate annual average return (AAR)
-    pbar = opt.matrix(ops.AAR(daily_data))
+    pbar = opt.matrix(p)
 
     # all stocks are greater than zero.
     #w0 > 0, w1> 0 ... wn > 0
@@ -152,7 +152,7 @@ def optimal_portfolio(daily_data,book):
     h = opt.matrix(0.0, (n ,1))
 
     #add bundle boundaries bundles size l sum greater weight than c BUNDLE BUNDLE BUNDLE
-    # G,h = bundles(c=.1,l=n - n//4,n=n,G=G,h=h)
+    G,h = bundles(c=.1,l=n - n//4,n=n,G=G,h=h)
 
     #add upper and lower limit constraints (i.e. no more than 10% in V.C. | 10% stays in Cash etc)
     G,h = limits(G,h,book)
@@ -182,9 +182,9 @@ def optimal_portfolio(daily_data,book):
     return portfolios,returns,risks
 
 
-def get_rand_portfolio(daily_data):
+def get_rand_portfolio(daily_data,p,C):
     # Returns the mean and standard deviation of returns for a random portfolio
-    return ops.portfolio_performance(daily_data, ops.rand_weights(daily_data.shape[0]))
+    return ops.portfolio_performance(daily_data, ops.rand_weights(daily_data.shape[0]),p,C)
 
 
 def get_weights(book):
@@ -290,7 +290,7 @@ def markowitz_run(book, info):
 
     def get_frontier_data(save=False):
         limits = [str(x) for x in book['upperlimit'].tolist()]
-        
+        p,C = ops.AAR(red_data),ops.AC(red_data)
         filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"        
         if save:
             if os.path.exists(filename):
@@ -299,18 +299,20 @@ def markowitz_run(book, info):
                     portfolios, returns, risks = pickle.load(model_pickle)
             else:
                 # get ribs data (frontier)
-                portfolios, returns, risks = optimal_portfolio(red_data,redbook)
+                portfolios, returns, risks = optimal_portfolio(red_data,redbook,p,C)
         else:
-            portfolios, returns, risks = optimal_portfolio(red_data,redbook)
+            portfolios, returns, risks = optimal_portfolio(red_data,redbook,p,C)
 
         # get wheats data (frontier)
-        means, stds = np.column_stack([get_rand_portfolio(red_data) for _ in range(500)])
+        p,C = ops.AAR(red_data),ops.AC(red_data)
+        means, stds = np.column_stack([get_rand_portfolio(red_data,p,C) for _ in range(500)])
 
         # get red data (frontier)
         ret_new, risk_new = returns[risk_level], risks[risk_level]
 
         # get blue data (frontier)
-        ret_curr, risk_curr = ops.portfolio_performance(blue_data,weights=blue_weights)
+        p,C = ops.AAR(blue_data),ops.AC(blue_data)
+        ret_curr, risk_curr = ops.portfolio_performance(blue_data,blue_weights,p,C)
 
         # pack dictionary for quick unload
         red = {"ret": ret_new, "risk": risk_new}
@@ -381,7 +383,7 @@ def markowitz_run(book, info):
 
 
     # get matrices
-    p = np.asmatrix(np.mean(yahoo_data, axis=1))
+    p = ops.AAR(yahoo_data).reshape(1,-1)
     p = frame_vector(p, ybook)
     info['p'] = p
 

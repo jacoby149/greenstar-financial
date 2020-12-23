@@ -13,7 +13,7 @@ def rand_weights(n):
     k = np.random.rand(n)
     return k / sum(k)
 
-
+"""
 def AAR(daily_data):
     ATD=252
     means=[]
@@ -28,12 +28,24 @@ def AAR(daily_data):
     means = sp.stats.mstats.gmean(means)
 
     return means
+    """
+
+def AAR(daily_data):
+    ATD = 252
+    new = daily_data[:,-1]
+    old = daily_data[:,0]
+    years = daily_data.shape[1]/ATD
+    net = (new/old)
+    mprint("net",net)
+    yearly = np.power(net,[1/years])
+    mprint("INCREASE",yearly)
+    return yearly
+
 
 
 def AC(daily_data):
     ATD=252
     cov=[]
-
     for i in range(0,daily_data.shape[1],ATD):
         # new_cov = np.cov(daily_data[:,i:i+ATD]/daily_data[:,i].reshape(-1,1))   # This shit ain't work
         new_cov = np.cov(daily_data[:,i:i+ATD])
@@ -56,10 +68,8 @@ def get_mus(N=500, t=200, n=None):
     return mus
 
 
-def portfolio_performance(daily_data, weights):
-    p = AAR(daily_data)
+def portfolio_performance(daily_data, weights ,p , C):
     w = np.asmatrix(weights)
-    C = AC(daily_data)
 
     #calculates mean earnings (mu) and risk (sigma)
     mu = w * p.reshape(-1,1)
