@@ -2,6 +2,10 @@
 // NO NETWORKING JAVASCRIPT  ///
 ////////////////////////////////
 
+//make the last selected point on the markowitz curve null
+last = null;
+
+
 //Load inputs from URL into the form.
 function linkload() {
     const queryString = window.location.search;
