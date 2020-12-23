@@ -63,7 +63,10 @@ class customHover(plugins.PluginBase):
                 .style("left",d3.event.pageX + this.props.hoffset + "px");
             }.bind(this))
             .on("mousedown.callout", function(d, i){
-                window.open(targets[i],"_blank");
+                console.log(i);
+                risk = parseInt(i);
+                //this.style.fill = "black";
+                //window.open(targets[i],"_blank");
             })
             .on("mouseout", function(d, i){
                 tooltip.style("visibility", "hidden");
