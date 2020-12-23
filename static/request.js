@@ -17,6 +17,7 @@ function linkload() {
         input = document.getElementsByName(key)[0];
         input.value = decodeURIComponent(urlParams.get(key));
     }
+    //risk = String(document.getElementById("risk").value);
 
 }
 
@@ -28,7 +29,6 @@ function linkmake() {
         urlParams.set(input.name, encodeURIComponent(input.value))
     }
     //for risk slider
-    urlParams.set("risk", document.getElementById("risk").value);
     return window.location + "?" + urlParams.toString()
 }
 
@@ -88,8 +88,13 @@ function graphs() {
     document.getElementById("link").style.display = "block";
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
-    form["risk"] = risk
-    console.log("FORM :" + form)
+
+    //adding risk to the form manually is no longer an issue
+    //console.log(risk)
+    //console.log(document.getElementById("risk").value);
+    //form["risk"] = risk
+    //console.log("FORM :" + form)
+
     document.getElementById("message").innerHTML = "Loading Graphs ...";
     $.post("/load_graphs", form, load_graphs)
         .fail(function (error) {
