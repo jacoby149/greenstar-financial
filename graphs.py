@@ -246,21 +246,29 @@ def frontier(red, blue, wheat, ribs):
     #plot random portfolios
     plt.plot([r*s for r in wheat['risk']], [r*s for r in wheat['ret']], 'o',color="wheat",markersize=ms)
 
+    # plot trans ribs
+    plt.ylabel('Return (Percentage)')
+    plt.xlabel('Risk (Standard Deviation)')
+    riskys = [r*s for r in ribs['risk']]
+    retys = [r*s for r in ribs['ret']]
+    points = plt.plot(riskys, retys, 'w-o',markersize=5*ms,alpha = 0,zorder=2)
+    labels = ['Risk: ' + str(riskys[i])[:4] + ', Return: ' + str(retys[i])[:4] for i, r in enumerate(ribs['ret'])]
+    d3dymo(plt, points, labels)
+
     # plot ribs
     plt.ylabel('Return (Percentage)')
     plt.xlabel('Risk (Standard Deviation)')
     riskys = [r*s for r in ribs['risk']]
     retys = [r*s for r in ribs['ret']]
     points = plt.plot(riskys, retys, 'y-o',markersize=ms)
-    labels = ['Risk: ' + str(riskys[i])[:4] + ', Return: ' + str(retys[i])[:4] for i, r in enumerate(ribs['ret'])]
-    d3dymo(plt, points, labels)
+    
 
     # plot slider-selected recommended portfolio
-    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=2,markersize=ms*1.6)
+    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=3,markersize=ms*1.6)
     # labels = ["Risk: " + str(red['risk'])[:4] + ", Return:"]
 
     # plot original portfolio
-    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=3,markersize=ms*1.6)
+    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=4,markersize=ms*1.6)
 
     # title the graph
     plt.title('Expected Return and Risk Of Portfolios')
