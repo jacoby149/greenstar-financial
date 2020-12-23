@@ -12,8 +12,8 @@ function linkload() {
     const urlParams = new URLSearchParams(queryString);
     keys = urlParams.keys()
     for (const key of keys) {
-        console.log(key)
-        console.log(document.getElementsByName(key))
+        //console.log(key)
+        //console.log(document.getElementsByName(key))
         input = document.getElementsByName(key)[0];
         input.value = decodeURIComponent(urlParams.get(key));
     }
@@ -50,7 +50,7 @@ function showhide() {
 // image return
 function load_graphs(data) {
     document.getElementById("message").innerHTML = "";
-    console.log(data)
+    //console.log(data)
     $("#graphs").empty();
     $("#graphs").append(data["images"]);
     //document.getElementById("graphs").innerHTML = data["images"]
@@ -92,7 +92,7 @@ function genReport() {
     if (document.getElementById("graphs").innerHTML != "") {
         form = document.getElementById('captable')
         response = form.submit()
-        console.log("response submitted")
+        //console.log("response submitted")
     }
     else {
         console.log("Hit Load Graphs to Gen a Report")
