@@ -5,7 +5,7 @@ from mpld3 import plugins
 
 class customHover(plugins.PluginBase):
     """A Plugin to enable an HTML tooltip:
-    formatted text which hovers over points.
+    formated text which hovers over points.
     Parameters
     ----------
     points : matplotlib Collection or Line2D object
@@ -108,6 +108,10 @@ class dHover(plugins.PluginBase):
     
     dHover.prototype.draw = function(){
           var obj = mpld3.get_element(this.props.id);
+          
+          var width = ##########    d3 was already confusing, this mlpd3 makes it so much more foncusing???     #############
+          
+          
           obj.elements()
             .append('rect')
             .style("fill", "none")
