@@ -135,16 +135,16 @@ def limits(G,h,book):
     return G, h
 
 
-def optimal_portfolio(daily_data,book,p,C):
+def optimal_portfolio(daily_data,book,profit,cov):
     n = len(daily_data)
     daily_data = np.asmatrix(daily_data)
     mus = ops.get_mus(N=500, t=200, n=n)
     
     # Convert to cvxopt matrices
-    S = opt.matrix(C)
+    S = opt.matrix(cov)
 
     #calculate annual average return (AAR)
-    pbar = opt.matrix(p)
+    pbar = opt.matrix(profit)
 
     # all stocks are greater than zero.
     #w0 > 0, w1> 0 ... wn > 0

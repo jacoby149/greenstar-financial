@@ -46,7 +46,7 @@ def AAR(daily_data):
 def AC(daily_data):
     ATD=252
     cov=[]
-    for i in range(0,daily_data.shape[1],ATD):
+    for i in range(0,daily_data.shape[1]-ATD,ATD):
         # new_cov = np.cov(daily_data[:,i:i+ATD]/daily_data[:,i].reshape(-1,1))   # This shit ain't work
         new_cov = np.cov(daily_data[:,i:i+ATD])
         cov.append(new_cov)
