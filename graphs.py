@@ -165,6 +165,7 @@ def line_compare(rline_data, bline_data, title=1):
     plt.grid(True)
     plt.legend(['Recommended','Current'], loc='upper left')
 
+
     return plt_to_img(plt, "line" + str(title),300)
 
 
@@ -263,11 +264,11 @@ def frontier(red, blue, wheat, ribs):
     
 
     # plot slider-selected recommended portfolio
-    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=3,markersize=ms*2.2)
+    plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=3,markersize=ms*1.6)
     # labels = ["Risk: " + str(red['risk'])[:4] + ", Return:"]
 
     # plot original portfolio
-    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=4,markersize=ms*2.2)
+    plt.plot(blue['risk'] * s,blue['ret'] * s,'o',color='blue',zorder=4,markersize=ms*1.6)
 
     # title the graph
     plt.title('Expected Return and Risk Of Portfolios')
