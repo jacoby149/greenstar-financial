@@ -388,7 +388,6 @@ def markowitz_run(book, info):
     info['p'] = p
 
     #correlation matrix rather than covariance matrix :)
-    
     cov = np.asmatrix(ops.AC(red_data))
     C = np.asmatrix(np.corrcoef(red_data))
     C = frame_matrix(C, redbook)
