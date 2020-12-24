@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/plugs.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugs.py" afterDir="false" />
+>>>>>>> parent of 6daf875... imprint comments out
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
