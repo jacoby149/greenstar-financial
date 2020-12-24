@@ -5,12 +5,19 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
 >>>>>>> parent of 928a67b... merge reqs
 =======
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
 >>>>>>> parent of 928a67b... merge reqs
+=======
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/plugs.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugs.py" afterDir="false" />
+>>>>>>> parent of 6daf875... imprint comments out
+>>>>>>> parent of 3f528e9... revert to get it to work
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
