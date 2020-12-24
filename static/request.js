@@ -2,36 +2,29 @@
 // NO NETWORKING JAVASCRIPT  ///
 ////////////////////////////////
 
-//make the last selected point on the markowitz curve null
-last = null;
-
-
 //Load inputs from URL into the form.
 function linkload() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     keys = urlParams.keys()
     for (const key of keys) {
-        //console.log(key)
-        //console.log(document.getElementsByName(key))
+        console.log(key)
+        console.log(document.getElementsByName(key))
         input = document.getElementsByName(key)[0];
         input.value = decodeURIComponent(urlParams.get(key));
     }
-    risk = document.getElementById("risk").value;
+
 }
 
 //Make a link with all of the form inputs
 function linkmake() {
-
-    //add risk to the hidden risk input value
-    document.getElementById("risk").value = risk;
-
     inputs = document.getElementById("captable").getElementsByTagName("input");
     const urlParams = new URLSearchParams();
     for (input of inputs) {
         urlParams.set(input.name, encodeURIComponent(input.value))
     }
     //for risk slider
+    urlParams.set("risk", document.getElementById("risk").value);
     return window.location + "?" + urlParams.toString()
 }
 
@@ -42,6 +35,30 @@ function showhide() {
     else cap.style.display = "none";
 }
 
+function update_vals() {
+    std = stds[risk]
+    mean = means[risk]
+    portfolio = portfolios[risk]
+    console.log(portfolios)
+    document.getElementById("std").innerHTML = "Risk: " + Math.round(std * 10000) / 100 + "%"
+    document.getElementById("mean").innerHTML = "Return: " + Math.round(mean * 10000) / 100 + "%"
+    //document.getElementById("weight").innerHTML = "Portfolio : " + portfolio + "%"
+}
+
+function setRisk() {
+    console.log("adjusting risk");
+    risk = $(this).val();
+    console.log("risk : " + risk)
+    console.log(risk + " of " + 100)
+    if (portfolios.length == 0) {
+        console.log("Please load graphs first ");
+        return;
+    }
+    update_vals();
+    //set variables that will post to flask to select risk level
+    //display this risk level on the screen.
+
+}
 
 ////////////////////////////////
 //  NETWORKING JAVASCRIPT  /////
@@ -49,16 +66,18 @@ function showhide() {
 
 // image return
 function load_graphs(data) {
-    document.getElementById("message").innerHTML = "";
-    //console.log(data)
+    console.log(data)
     $("#graphs").empty();
     $("#graphs").append(data["images"]);
     //document.getElementById("graphs").innerHTML = data["images"]
     stds = eval(data["risks"])
     means = eval(data["returns"])
     portfolios = eval(data["portfolios"])
+    update_vals()
     cap = document.getElementById("captable");
     cap.style.display = "none";
+    document.getElementById("message").innerHTML = "";
+
 }
 
 function graphs() {
@@ -66,7 +85,8 @@ function graphs() {
     document.getElementById("link").style.display = "block";
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
-
+    form["risk"] = risk
+    console.log("FORM :" + form)
     document.getElementById("message").innerHTML = "Loading Graphs ...";
     $.post("/load_graphs", form, load_graphs)
         .fail(function (error) {
@@ -87,21 +107,24 @@ function backtest() {
     $.post("/back", { "risk": risk }, load_backtest);
 }
 
-// Generate Report
-function genReport() {
-    if (document.getElementById("graphs").innerHTML != "") {
-        form = document.getElementById('captable')
-        response = form.submit()
-        //console.log("response submitted")
-    }
-    else {
-        console.log("Hit Load Graphs to Gen a Report")
-    }
-}
-
 //execution
 var portfolios = []
 var risk = document.getElementById("risk").value;
 var means = []
 var stds = []
 console.log("Default risk is " + risk);
+$("#risk").on("change", setRisk);
+
+
+// Generate Report
+function genReport() {
+    if (document.getElementById("mean").innerHTML != "") {
+        form = document.getElementById('captable')
+        form.appendChild(document.getElementById('risk'))
+        response = form.submit()
+        console.log("response submitted")
+    }
+    else {
+        console.log("Hit Load Graphs to Gen a Report")
+    }
+}

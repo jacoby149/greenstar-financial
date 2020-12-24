@@ -45,7 +45,6 @@ class customHover(plugins.PluginBase):
     };
     HtmlTooltipPlugin.prototype.draw = function(){
         var obj = mpld3.get_element(this.props.id);
-        console.log(this)
         var labels = this.props.labels;
         var targets = this.props.targets;
         var tooltip = d3.select("body").append("div")
@@ -63,21 +62,10 @@ class customHover(plugins.PluginBase):
                 .style("top", d3.event.pageY + this.props.voffset + "px")
                 .style("left",d3.event.pageX + this.props.hoffset + "px");
             }.bind(this))
-            .on("mousedown", function(d, i){
+            .on("mousedown.callout", function(d, i){
                 console.log(i);
-                console.log(this);
                 risk = parseInt(i);
-                d3.select(this).style("stroke", "magenta");
-                d3.select(this).style("fill", "magenta");
-                d3.select(this).style("stroke-opacity", ".5");
-                d3.select(this).style("fill-opacity", ".5");
-
-                if (last){
-                    d3.select(last).style("stroke-opacity", "0");
-                    d3.select(last).style("fill-opacity", "0");
-                }
-                last = this
-
+                //this.style.fill = "black";
                 //window.open(targets[i],"_blank");
             })
             .on("mouseout", function(d, i){
