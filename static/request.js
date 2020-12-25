@@ -54,8 +54,8 @@ function scale_graphs() {
         console.log(svg);
         viewbox = "0 0 900 600";
         svg.setAttribute("viewBox", viewbox);
-        svg.setAttribute("width", 600);
-        svg.setAttribute("height", 400);
+        svg.setAttribute("width", 300);
+        svg.setAttribute("height", 200);
     }
 }
 
