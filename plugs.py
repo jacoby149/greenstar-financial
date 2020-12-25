@@ -45,7 +45,6 @@ class customHover(plugins.PluginBase):
     };
     HtmlTooltipPlugin.prototype.draw = function(){
         var obj = mpld3.get_element(this.props.id);
-        console.log(this)
         var labels = this.props.labels;
         var targets = this.props.targets;
         var tooltip = d3.select("body").append("div")
@@ -53,6 +52,9 @@ class customHover(plugins.PluginBase):
             .style("position", "absolute")
             .style("z-index", "10")
             .style("visibility", "hidden");
+
+        //console.log(elem.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement);
+
         obj.elements()
             .on("mouseover", function(d, i){
                 tooltip.html(labels[i])

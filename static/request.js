@@ -47,12 +47,25 @@ function showhide() {
 //  NETWORKING JAVASCRIPT  /////
 ////////////////////////////////
 
+function scale_graphs() {
+    svgs = document.getElementsByClassName("mpld3-figure");
+    console.log("Scaling...")
+    for (let svg of svgs) {
+        console.log(svg);
+        viewbox = "0 0 900 600";
+        svg.setAttribute("viewBox", viewbox);
+        svg.setAttribute("width", 600);
+        svg.setAttribute("height", 400);
+    }
+}
+
 // image return
 function load_graphs(data) {
     document.getElementById("message").innerHTML = "";
     //console.log(data)
     $("#graphs").empty();
     $("#graphs").append(data["images"]);
+    //scale_graphs();
     //document.getElementById("graphs").innerHTML = data["images"]
     stds = eval(data["risks"])
     means = eval(data["returns"])
