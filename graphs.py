@@ -195,7 +195,7 @@ def pie(pie_data, title='pie_default'):
 
     gcolors = ["#" + hexy(255) + hexy(255) + hexy(255) for x in range(100,255,20)]
 
-    colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'k']
+    colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'sienna']
     ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=False, startangle=180,
                     wedgeprops={"edgecolor":"0", 'linewidth': 0.65, 'antialiased': True},
                     textprops={'fontsize': 14})
