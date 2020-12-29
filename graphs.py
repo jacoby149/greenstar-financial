@@ -275,10 +275,10 @@ def frontier(red, blue, wheat, ribs):
 
     #points = plt.plot(riskys, retys, 'y-o',markersize=ms, alpha = .3)
 
-    points = plt.plot(riskys[:lo+1], retys[:lo+1], 'green',markersize=ms, alpha = .5)
-    points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'royalblue',markersize=ms,alpha = .5)
-    points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'orange',markersize=ms,alpha = .5)
-    points = plt.plot(riskys[hi:], retys[hi:], 'firebrick',markersize=ms,alpha = .5)
+    points = plt.plot(riskys[:lo+1], retys[:lo+1], 'gold',markersize=ms, alpha = .5)
+    points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'darkorange',markersize=ms,alpha = .5)
+    points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'r',markersize=ms,alpha = .5)
+    points = plt.plot(riskys[hi:], retys[hi:], 'darkblue',markersize=ms,alpha = .5)
     
 
     # plot slider-selected recommended portfolio

@@ -36,9 +36,7 @@ def AAR(daily_data):
     old = daily_data[:,0]
     years = daily_data.shape[1]/ATD
     net = (new/old)
-    mprint("net",net)
     yearly = np.power(net,[1/years])
-    mprint("INCREASE",yearly)
     return yearly
 
 
