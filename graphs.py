@@ -232,6 +232,7 @@ def frontier(red, blue, wheat, ribs):
     # Format axes
     fig, ax = plt.subplots(figsize=(9,6))
 
+
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
     ax.xaxis.set_major_formatter(mtick.PercentFormatter())
 
@@ -255,12 +256,29 @@ def frontier(red, blue, wheat, ribs):
     labels = ['Risk: ' + str(riskys[i])[:4] + ', Return: ' + str(retys[i])[:4] for i, r in enumerate(ribs['ret'])]
     d3dymo(plt, points, labels)
 
+
     # plot ribs
     plt.ylabel('Return (Percentage)')
     plt.xlabel('Risk (Standard Deviation)')
     riskys = [r*s for r in ribs['risk']]
     retys = [r*s for r in ribs['ret']]
-    points = plt.plot(riskys, retys, 'y-o',markersize=ms)
+
+    def cutoff(l,c):
+        for i in range(len(l)):
+            if l[i]>c:
+                return i-1
+        return len(l)-1
+    
+    lo = cutoff(riskys,4)
+    med = cutoff(riskys,8)
+    hi = cutoff(riskys,12)
+
+    #points = plt.plot(riskys, retys, 'y-o',markersize=ms, alpha = .3)
+
+    points = plt.plot(riskys[:lo+1], retys[:lo+1], 'green',markersize=ms, alpha = .5)
+    points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'royalblue',markersize=ms,alpha = .5)
+    points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'orange',markersize=ms,alpha = .5)
+    points = plt.plot(riskys[hi:], retys[hi:], 'firebrick',markersize=ms,alpha = .5)
     
 
     # plot slider-selected recommended portfolio
