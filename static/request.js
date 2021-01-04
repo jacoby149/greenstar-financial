@@ -62,9 +62,19 @@ function scale_graphs() {
 // image return
 function load_graphs(data) {
     document.getElementById("message").innerHTML = "";
+    var img_list = eval(data['images'])
+
     //console.log(data)
-    $("#graphs").empty();
-    $("#graphs").append(data["images"]);
+    $("#frontier").empty();
+    $("#pie").empty();
+    $("#noise").empty();
+    $("#line").empty();
+    $("#normal").empty();
+    $("#frontier").append(img_list[0]);
+    $("#pie").append(img_list[1] + img_list[2]);
+    $("#noise").append(img_list[3])
+    $("#line").append(img_list[4] + img_list[5]);
+    $("#normal").append(img_list[6] + img_list[7] + img_list[8]);
     //scale_graphs();
     //document.getElementById("graphs").innerHTML = data["images"]
     stds = eval(data["risks"])
@@ -102,7 +112,7 @@ function backtest() {
 
 // Generate Report
 function genReport() {
-    if (document.getElementById("graphs").innerHTML != "") {
+    if (document.getElementById("frontier").innerHTML != "") {
         form = document.getElementById('captable')
         response = form.submit()
         //console.log("response submitted")

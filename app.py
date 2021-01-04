@@ -31,7 +31,6 @@ cors = CORS(app)
 app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 
 images = []
-#img_form = "<img src = '{}'>"
 img_form = "{}"
 form_params = {}
 #stock_symbols                                          # FAQ    https://www.portfoliovisualizer.com/faq#dataSources
@@ -178,7 +177,7 @@ def load_graphs(tickers=None):
     images, portfolios, returns, risks = markowitz.markowitz_run(book=book, info=info)
     # images, portfolios, returns, risks = markowitz.markowitz_run(book=book, info=info)
 
-    vals = {'images': "".join([img_form.format(i) for i in images]),
+    vals = {'images': str([img_form.format(i) for i in images]),
             'portfolios': str(portfolios),
             'returns': str(returns),
             'risks': str(risks),
