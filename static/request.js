@@ -75,8 +75,8 @@ function load_graphs(data) {
 }
 
 function graphs() {
-    document.getElementById("link").href = linkmake();
-    document.getElementById("link").style.display = "block";
+//    document.getElementById("link").href = linkmake();
+//    document.getElementById("link").style.display = "block";
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
 
