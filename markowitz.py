@@ -342,7 +342,8 @@ def markowitz_run(book, info):
 
 
     # make frontier graph
-    images.append(graphs.frontier(red, blue, wheat, ribs))
+    extend = []
+    images.append(graphs.frontier(red, blue, wheat, ribs, extend))
 
 
     # make pie graphs

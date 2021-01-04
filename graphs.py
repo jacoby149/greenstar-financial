@@ -131,8 +131,9 @@ def draw_line(plt, line_data, color="black", zorder=1):
     year = [int(date.today().year) + y for y in year]
     plt.plot(year, ret, color=color, marker='o', zorder=zorder)
 
-    #added [1:] indexing so line graphs start at accurate wealth number (i donut know why it was off before)
-    plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()[1:]])
+    plt.gca().set_yticks([int(x) for x in plt.gca().get_yticks()])
+    plt.gca().set_yticklabels(["$" + '{:,}'.format(int(x)) for x in plt.gca().get_yticks()])
+
 
 
 def line(line_data, title=0):
@@ -224,7 +225,7 @@ def d3dymo(plt, points, labels):
     plugins.connect(plt.gcf(), tooltip)
 
 
-def frontier(red, blue, wheat, ribs):
+def frontier(red, blue, wheat, ribs, extend):
     # Percentage plot rather than decimal plot
     s = 100
     ms = 2
@@ -273,13 +274,12 @@ def frontier(red, blue, wheat, ribs):
     med = cutoff(riskys,8)
     hi = cutoff(riskys,12)
 
-    #points = plt.plot(riskys, retys, 'y-o',markersize=ms, alpha = .3)
 
-    points = plt.plot(riskys[:lo+1], retys[:lo+1], 'gold',markersize=ms, alpha = .5)
-    points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'darkorange',markersize=ms,alpha = .5)
-    points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'r',markersize=ms,alpha = .5)
-    points = plt.plot(riskys[hi:], retys[hi:], 'darkblue',markersize=ms,alpha = .5)
-    
+    points = plt.plot(riskys[:lo+1], retys[:lo+1], 'gold',markersize=ms, alpha=1)
+    points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'darkorange',markersize=ms,alpha=.8)
+    points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'r',markersize=ms,alpha=.6)
+    points = plt.plot(riskys[hi:], retys[hi:], 'darkblue',markersize=ms,alpha=.6)
+
 
     # plot slider-selected recommended portfolio
     plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=3,markersize=ms*1.6)
