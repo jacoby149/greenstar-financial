@@ -269,10 +269,12 @@ def frontier(red, blue, wheat, ribs, extend):
             if l[i]>c:
                 return i-1
         return len(l)-1
-    
-    lo = cutoff(riskys,4)
-    med = cutoff(riskys,8)
-    hi = cutoff(riskys,12)
+
+    interval = riskys[-1] / 4
+
+    lo = cutoff(riskys,interval)
+    med = cutoff(riskys,interval*2)
+    hi = cutoff(riskys,interval*3)
 
 
     points = plt.plot(riskys[:lo+1], retys[:lo+1], 'gold',markersize=ms, alpha=1)
