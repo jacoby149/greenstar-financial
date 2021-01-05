@@ -35,7 +35,7 @@ def plt_to_img(plt, name="ghoozie",dpi=100):
     importlib.reload(matplotlib)
     s = io.BytesIO()
 
-    html = mpld3.fig_to_html(plt.gcf())
+    html = mpld3.fig_to_html(plt.gcf(),"static/d3.v5.js","static/mpld3.v0.5.2.js")
     plt.savefig("/app/plts/{}.pdf".format(name), format='pdf', facecolor="white", bbox_inches='tight')
     # plt.savefig("/app/plts/{}.png".format(name), format='png', dpi=dpi, facecolor="white", bbox_inches='tight')
     plt.clf()

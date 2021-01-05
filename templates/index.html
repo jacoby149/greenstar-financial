@@ -5,6 +5,8 @@
     <title>Greenstar Financial</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" />
 
+    <script src="static/d3.v5.js" async=""></script>
+    <script src="static/mpld3.v0.5.2.js" async=""></script>
 </head>
 
 <body>
@@ -71,7 +73,7 @@
 
     <div>
 
-<!--        <a id="link" style="display:none;">Show Form</a>-->
+        <!--        <a id="link" style="display:none;">Show Form</a>-->
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
             <p>
@@ -213,27 +215,39 @@
     </div>
 
 
-<!--    <div class="graphstable">-->
-<!--        <table>-->
-<!--            <tr>-->
-<!--                <td> Output Graphs</td>-->
-<!--            </tr>-->
-<!--            <td>-->
-                <div><p id="message"></p></div>
-                <div><p> FRONTIER </p></div>
-                <div id="frontier"></div>
-                <div><p> PIE </p></div>
-                <div id="pie"></div>
-                <div><p> NOISE </p></div>
-                <div id="noise"></div>
-                <div><p> LINE </p></div>
-                <div id="line"></div>
-                <div><p> NORMAL </p></div>
-                <div id="normal"></div>
+    <!--    <div class="graphstable">-->
+    <!--        <table>-->
+    <!--            <tr>-->
+    <!--                <td> Output Graphs</td>-->
+    <!--            </tr>-->
+    <!--            <td>-->
+    <div>
+        <p id="message"></p>
+    </div>
+    <div>
+        <p> FRONTIER </p>
+    </div>
+    <div id="frontier"></div>
+    <div>
+        <p> PIE </p>
+    </div>
+    <div id="pie"></div>
+    <div>
+        <p> NOISE </p>
+    </div>
+    <div id="noise"></div>
+    <div>
+        <p> LINE </p>
+    </div>
+    <div id="line"></div>
+    <div>
+        <p> NORMAL </p>
+    </div>
+    <div id="normal"></div>
 
     <!--            </td>-->
-<!--        </table>-->
-<!--    </div>-->
+    <!--        </table>-->
+    <!--    </div>-->
 
     <!-- Backtesting is an anti feature upon further consideration ... reload
         Why? 
