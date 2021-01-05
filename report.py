@@ -194,14 +194,19 @@ def pickle_dump(red, blue, C, book, info):
 
 
 
-def make_report():
+def make_report(demo=True):
+    if demo:
+        template = 'demo.tex'
+    else:
+        template = 'report.tex'
+
     # get variables as designed above, passed from markowitz
     with open("report_variables.pickle", 'rb') as pickle_file:
         report_variables = pickle.load(pickle_file)
 
 
     env = make_env(loader=FileSystemLoader('.'))
-    tpl = env.get_template('report.tex')
+    tpl = env.get_template(template)
 
     # create a greeting for all of our friends
     filename = 'pdfs/{} Report.pdf'.format(report_variables['info']['name'])
