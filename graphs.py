@@ -183,7 +183,7 @@ def pie(pie_data, title='pie_default'):
 
     # max_ticker = max(tickers.keys(), key=(lambda k: tickers[k]))   <-- Explode largest slice of pie
 
-    fig1, ax1 = plt.subplots(figsize=(9,6))
+    fig1, ax1 = plt.subplots(figsize=(12,8))
 
     def hexy(x):
         y = hex(x)[2:]
@@ -199,7 +199,7 @@ def pie(pie_data, title='pie_default'):
     colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'sienna']
     ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=False, startangle=180,
                     wedgeprops={"edgecolor":"0", 'linewidth': 0.65, 'antialiased': True},
-                    textprops={'fontsize': 14})
+                    textprops={'fontsize': 16})
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)
@@ -209,6 +209,7 @@ def noise(daily_data, labels):
     plt.figure(figsize=(10,6))
     plt.plot(daily_data.T, alpha=.4, )
 
+    plt.gca().set_yticks([int(x) for x in plt.gca().get_yticks()])
     plt.gca().set_yticklabels([pct_format(x * 100 - 100) for x in plt.gca().get_yticks()])
     plt.xlabel('Time (Date)')
     plt.ylabel('Price (%)')
@@ -231,7 +232,7 @@ def frontier(red, blue, wheat, ribs, extend):
     ms = 2
 
     # Format axes
-    fig, ax = plt.subplots(figsize=(9,6))
+    fig, ax = plt.subplots(figsize=(12,8))
 
 
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())

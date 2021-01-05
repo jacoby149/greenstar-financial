@@ -68,7 +68,7 @@ class customHover(plugins.PluginBase):
             .on("mousedown", function(d, i){
                 console.log(i);
                 console.log(this);
-                risk = parseInt(i);
+                document.getElementById("risk").value = parseInt(i);
                 d3.select(this).style("stroke", "magenta");
                 d3.select(this).style("fill", "magenta");
                 d3.select(this).style("stroke-opacity", ".5");

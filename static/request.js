@@ -4,6 +4,7 @@
 
 //make the last selected point on the markowitz curve null
 last = null;
+risk = 25;
 
 
 //Load inputs from URL into the form.
@@ -17,7 +18,7 @@ function linkload() {
         input = document.getElementsByName(key)[0];
         input.value = decodeURIComponent(urlParams.get(key));
     }
-    risk = document.getElementById("risk").value;
+//    risk = document.getElementById("risk").value;
 }
 
 //Make a link with all of the form inputs
@@ -70,13 +71,15 @@ function load_graphs(data) {
     $("#noise").empty();
     $("#line").empty();
     $("#normal").empty();
+
+    console.log(img_list[0]);
+
     $("#frontier").append(img_list[0]);
     $("#pie").append(img_list[1] + img_list[2]);
     $("#noise").append(img_list[3])
     $("#line").append(img_list[4] + img_list[5]);
     $("#normal").append(img_list[6] + img_list[7] + img_list[8]);
-    //scale_graphs();
-    //document.getElementById("graphs").innerHTML = data["images"]
+
     stds = eval(data["risks"])
     means = eval(data["returns"])
     portfolios = eval(data["portfolios"])
@@ -124,7 +127,7 @@ function genReport() {
 
 //execution
 var portfolios = []
-var risk = document.getElementById("risk").value;
+//var risk = document.getElementById("risk").value;
 var means = []
 var stds = []
 console.log("Default risk is " + risk);
