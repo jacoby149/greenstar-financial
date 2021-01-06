@@ -16,7 +16,13 @@ span {
 }
 
 svg{
-    height:500px;
+    height:700px;
+}
+
+button{
+    display: block;
+
+    padding:10px;
 }
 
 
