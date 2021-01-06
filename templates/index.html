@@ -15,56 +15,58 @@
 
 <body>
 
-<center>
-    <div style="width:35%">
-        <table class="desctable">
-            <tr>
-                <td>
-                    &nbsp
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img class="logo" src="{{ img }}" style="width:100%;height:auto;">
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align:center;">
-                    <i>{{ title }}</i>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    &nbsp
-                </td>
-            </tr>
-        </table>
+    <center>
+        <div style="width:35%">
+            <table class="desctable">
+                <tr>
+                    <td>
+                        &nbsp
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img class="logo" src="{{ img }}" style="width:100%;height:auto;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:center;">
+                        <i>{{ title }}</i>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        &nbsp
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </center>
+
+
+
+    <div class="row">
+        <div class="col-10" id="graphs">
+            <div id="frontier"></div>
+            <div class="btn btn-light" style="display:none;" id="current"></div>
+            <div style="display:none;" id="prescribed"></div>
+            <div style="display:none;" id="daily"></div>
+            <div style="display:none;" id="line"></div>
+            <div style="display:none;" id="bell"></div>
+        </div>
+        <div class="col-2 btn-group-vertical">
+            <button class="btn btn-dark" name="frontier" onclick="mplview(this)">Frontier</button>
+
+            <button class="btn btn-dark" name="current" onclick="mplview(this)">Current Pie</button>
+            <button class="btn btn-dark" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
+            <button class="btn btn-dark" name="daily" onclick="mplview(this)">Asset Classes </button>
+            <button class="btn btn-dark" name="line" onclick="mplview(this)">Line Graph</button>
+            <button class="btn btn-dark" name="bell" onclick="mplview(this)">Bell Curve</button>
+            <button class="btn btn-dark" onclick="showhide()">Form</button>
+            <button class="btn btn-dark" onclick="request_graphs()">Generate Report</button>
+            <button class="btn btn-dark" onclick="genReport()">Download Report</button>
+        </div>
+
     </div>
-</center>
-
-    <div class="controltable">
-        <table>
-            <tr>
-                <td>
-                    <button onclick="showhide()">Show/Hide Form</button>
-                </td>
-                <td>
-                    <button onclick="request_graphs()">Load Graphs</button>
-                </td>
-                <td>
-                    <button onclick="genReport()">Generate Report</button>
-                </td>
-
-                <!-- 
-
-                    Backtesting is an anti feature upon further consideration ...
-                <td>
-                    <button onclick="backtest()"> Load Backtest</button>
-                </td>
-                -->
-
-    </tr>
-    </table>
 
     <!--
         <table>
@@ -246,16 +248,7 @@
         <p id="message"></p>
     </div>
 
-    <div class="row">
-        <div class="graphs" id="graphs">
-            <div id="frontier"></div>
-            <div class="btn btn-light" style="display:none;" id="current"></div>
-            <div style="display:none;" id="prescribed"></div>
-            <div style="display:none;" id="daily"></div>
-            <div style="display:none;" id="line"></div>
-            <div style="display:none;" id="bell"></div>
-        </div>
-    </div>
+
 
     &nbsp;
     <center>
@@ -268,6 +261,7 @@
     <button class="btn btn-dark" name="bell" onclick="mplview(this)">Portfolio Bell Curves</button>
     </div>
     </center>
+
     <!--            </td>-->
     <!--        </table>-->
     <!--    </div>-->
