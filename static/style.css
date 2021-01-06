@@ -119,3 +119,6 @@ button{
     box-shadow:none!important;
 }
 
+.graph{
+    position:absolute;
+}

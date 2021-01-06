@@ -64,28 +64,11 @@ function mplview(button) {
     graphs = document.getElementById("graphs").children
     curr = document.getElementById(button.name)
     for (i = 0; i < graphs.length; i++) {
-        graphs[i].style.display = "none";
+        graphs[i].style.visibility = "hidden";
     }
-    curr.style.display = "block";
+    curr.style.visibility = "visible";
 
 
-}
-
-function mplStrongView() {
-    graphs = document.getElementById("graphs").children
-    for (i = 1; i < graphs.length; i++) {
-        graphs[i].style.display = "block";
-    }
-
-}
-
-function frontierView() {
-    graphs = document.getElementById("graphs").children
-    curr = document.getElementById("frontier")
-    for (i = 0; i < graphs.length; i++) {
-        graphs[i].style.display = "none";
-    }
-    curr.style.display = "block";
 }
 
 
@@ -95,7 +78,6 @@ function load_graphs(data) {
     var img_list = eval(data['images'])
 
 
-    mplStrongView();
     //console.log(data)
     $("#frontier").empty();
     $("#current").empty();
