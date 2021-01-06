@@ -6,12 +6,12 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # main imports
 import os
-from flask import Flask, request, jsonify, render_template, send_file, session, redirect,send_from_directory 
+from flask import Flask, request, jsonify, render_template, send_file, session, redirect,send_from_directory #reload
 from flask_cors import CORS
 import sys
 import pandas as pd
 from datetime import date,datetime
-from sqlalchemy import insert
+from query import *
 
 # display whole book
 pd.set_option('display.width', 260)
@@ -34,6 +34,7 @@ app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 images = []
 img_form = "{}"
 form_params = {}
+vars = {}
 #stock_symbols                                          # FAQ    https://www.portfoliovisualizer.com/faq#dataSources
 form_params["Large Cap Growth"] = "VIGRX"                # FSPGX
 form_params["Large Cap Value"] = "JKD"                  # FLCOX S&P 500 Value Index
@@ -63,20 +64,28 @@ def favicon():
 # do machine learning
 @app.route("/", methods=["GET", "POST"])
 def load_home():
+    global vars
     if 'logged_in' in session:
-        return render_template('index.html')
+        return render_template('index.html', **vars)
     else:
         return render_template('password_page.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    global vars
     passcode = request.form.get("passcode")
     if passcode == 'Provins1!':
         session['logged_in'] = True
-        
+        session['image'] = "../Clients/Tom Provins/Provins.png"
+        session['title'] = "Cardiff, Provins, Angel's Custom Algorithms - Markowitz Model"
     if passcode == 'Greenstar1!':
         session['logged_in'] = True
+        session['image'] = "../Clients/demo/GreenstarBanner.png"
+        session['title'] = "Greenstar Demo Custom Algorithms - Markowitz Model"
+
+    vars['img'] = session['image']
+    vars['title'] = session['title']
 
     return redirect("/")
 

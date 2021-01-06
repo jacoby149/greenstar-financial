@@ -288,10 +288,11 @@ def markowitz_run(book, info):
     blue_data = yahoo_assets(btickers, info)
     yahoo_data = yahoo_assets(ytickers, info)
 
-    def get_frontier_data(save=False):
+    def get_frontier_data(save=True):
         limits = [str(x) for x in book['upperlimit'].tolist()]
+        bot_limits = [str(x) for x in book['lowerlimit'].tolist()]
         p,C = ops.AAR(red_data),ops.AC(red_data)
-        filename = "models/" + str(info['end_date']) + " ".join(limits) + ".pickle"        
+        filename = "models/" + str(info['end_date']) + " ".join(limits) + " ".join(bot_limits) + ".pickle"
         if save:
             if os.path.exists(filename):
                 print(filename + " exists\n")

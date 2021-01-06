@@ -3,15 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clients/Tom Provins/Provins.png" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom-Provins/Provins.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clients/Tom Provins/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom-Provins/report.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GreenStar.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/GreenStar.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GreenstarBanner.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/GreenstarBanner.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GreenstarDemoReport - Inputs.png" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/GreenstarDemoReport - Inputs.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/demo.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/Provins.png" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom Provins/Provins.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom Provins/report.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/request.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/markowitz.py" beforeDir="false" afterPath="$PROJECT_DIR$/markowitz.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/password_page.php" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +47,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Clients/demo" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -57,6 +55,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Clients/demo" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$/compose" />
