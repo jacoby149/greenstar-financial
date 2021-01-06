@@ -195,15 +195,11 @@ def pickle_dump(red, blue, C, book, info):
 
 
 def make_report(client='demo'):
-    if client == 'Tom-Provins':
-        template = 'Clients/Tom-Provins/report.tex'
-    else:
-        template = 'Clients/demo/demo.tex'
-
     # get variables as designed above, passed from markowitz
     with open("report_variables.pickle", 'rb') as pickle_file:
         report_variables = pickle.load(pickle_file)
 
+    template = 'Clients/{}/report.tex'.format(client)
 
     env = make_env(loader=FileSystemLoader('.'))
     tpl = env.get_template(template)
