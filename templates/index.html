@@ -2,8 +2,12 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>Greenstar Financial</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="static/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
     <script src="static/d3.v5.js" async=""></script>
     <script src="static/mpld3.v0.5.2.js" async=""></script>
@@ -29,7 +33,7 @@
                     <button onclick="showhide()">Show/Hide Form</button>
                 </td>
                 <td>
-                    <button onclick="graphs()">Load Graphs</button>
+                    <button onclick="request_graphs()">Load Graphs</button>
                 </td>
                 <td>
                     <button onclick="genReport()">Generate Report</button>
@@ -84,7 +88,7 @@
             <input type="hidden" value="25" id="risk" name="risk">
 
 
-            <table class="table table-dark">
+            <table>
                 <tr>
                     <th>Name</th>
                     <th>Birthday</th>
@@ -224,26 +228,26 @@
     <div>
         <p id="message"></p>
     </div>
-    <div>
-        <p> FRONTIER </p>
+
+    <div class="row">
+        <div class="col-10" id="graphs">
+            <div id="frontier"></div>
+            <div style="display:none;" id="current"></div>
+            <div style="display:none;" id="prescribed"></div>
+            <div style="display:none;" id="daily"></div>
+            <div style="display:none;" id="line"></div>
+            <div style="display:none;" id="bell"></div>
+        </div>
     </div>
-    <div id="frontier"></div>
-    <div>
-        <p> PIE </p>
-    </div>
-    <div id="pie"></div>
-    <div>
-        <p> NOISE </p>
-    </div>
-    <div id="noise"></div>
-    <div>
-        <p> LINE </p>
-    </div>
-    <div id="line"></div>
-    <div>
-        <p> NORMAL </p>
-    </div>
-    <div id="normal"></div>
+
+    &nbsp;&nbsp;
+    <button name="frontier" onclick="mplview(this)">Frontier</button>
+    <button name="current" onclick="mplview(this)">Current Portfolio Pie</button>
+    <button name="prescribed" onclick="mplview(this)">Prescribed Portfolio Pie</button>
+    <button name="daily" onclick="mplview(this)">Daily Asset Class Performance</button>
+    <button name="line" onclick="mplview(this)">Yearly Portfolio Performance</button>
+    <button name="bell" onclick="mplview(this)">Portfolio Bell Curves</button>
+
 
     <!--            </td>-->
     <!--        </table>-->
@@ -260,6 +264,10 @@
     <div style="position: relative; padding-left: 90%;">
         <a href="/logout">Secure Log Out</a>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -276,95 +284,6 @@
     document.getElementById("date-input").value = String(y) + "-" + String(m) + "-" + String(d);
     linkload();
 </script>
-<style>
-    body {
-        background-color: white;
-    }
-
-    img {
-        height: 250px;
-        float: left;
-    }
-
-    div {
-        clear: left;
-        padding: 10px;
-    }
-
-    span {
-        padding-bottom: 10px;
-    }
-
-
-    .logo {
-        height: 50pt;
-        padding: 10px;
-        float: none;
-    }
-
-    .desctable {
-        padding: 10px;
-    }
-
-    .captable {
-        width: 60%;
-    }
-
-    .captable table {
-        border: 1px solid black;
-        float: left;
-        margin-bottom: 10px;
-        margin-right: 10px;
-
-    }
-
-    .captable td {
-        border: 1px solid black;
-    }
-
-    .captable th {
-        border: 1px solid black;
-        font-size: 10pt;
-    }
-
-
-    .gtable table {
-        border: 1px solid black;
-        float: left;
-        margin-bottom: 10px;
-        margin-right: 10px;
-
-    }
-
-    .gtable td {
-        border: 1px solid black;
-    }
-
-    .gtable th {
-        border: 1px solid black;
-        font-size: 10pt;
-    }
-
-
-    .controltable {
-        width: 90%;
-    }
-
-    .controltable table {
-        float: left;
-        margin-bottom: 10px;
-        margin-right: 10px;
-    }
-
-    .controltable td {
-        /*border: 1px solid black;*/
-        vertical-align: top;
-    }
-
-    .slidecontainer {
-        margin-top: -10px;
-    }
-</style>
 
 
 </html>
