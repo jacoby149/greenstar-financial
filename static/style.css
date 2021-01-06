@@ -121,4 +121,5 @@ button{
 
 .graph{
     position:absolute;
+    visibility:hidden;
 }
