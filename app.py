@@ -11,6 +11,7 @@ from flask_cors import CORS
 import sys
 import pandas as pd
 from datetime import date,datetime
+from sqlalchemy import insert
 
 # display whole book
 pd.set_option('display.width', 260)
@@ -62,7 +63,7 @@ def favicon():
 # do machine learning
 @app.route("/", methods=["GET", "POST"])
 def load_home():
-    if 'logged_in'in session:
+    if 'logged_in' in session:
         return render_template('index.html')
     else:
         return render_template('password_page.html')
@@ -73,6 +74,10 @@ def login():
     passcode = request.form.get("passcode")
     if passcode == 'Provins1!':
         session['logged_in'] = True
+        
+    if passcode == 'Greenstar1!':
+        session['logged_in'] = True
+
     return redirect("/")
 
 

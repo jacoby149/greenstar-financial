@@ -2,7 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/report.py" beforeDir="false" afterPath="$PROJECT_DIR$/report.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GreenStar.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/GreenStar.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GreenstarBanner.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/GreenstarBanner.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GreenstarDemoReport - Inputs.png" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/GreenstarDemoReport - Inputs.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/demo.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/Provins.png" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom Provins/Provins.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom Provins/report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/request.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +63,8 @@
       <recent name="$PROJECT_DIR$/static" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Clients/demo" />
+      <recent name="$PROJECT_DIR$/Clients/Tom Provins" />
       <recent name="$PROJECT_DIR$/templates" />
     </key>
   </component>

@@ -125,6 +125,7 @@ function genReport() {
     }
 }
 
+
 //execution
 var portfolios = []
 //var risk = document.getElementById("risk").value;

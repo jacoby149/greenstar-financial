@@ -30,6 +30,7 @@ RUN pip install opencv-python
 RUN pip install pandas_datareader
 RUN pip install sympy
 RUN pip install mpld3
+RUN pip install SQLAlchemy
 
 COPY . /app
 CMD pip freeze > requirements.txt
