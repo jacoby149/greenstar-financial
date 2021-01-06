@@ -87,8 +87,8 @@ function load_graphs(data) {
     console.log(img_list[0]);
 
     $("#frontier").append(img_list[0]);
-    $("#current").append(img_list[1]);
-    $("#prescribed").append(img_list[2]);
+    $("#current").append(img_list[2]);
+    $("#prescribed").append(img_list[1]);
 
     $("#daily").append(img_list[3])
     $("#line").append(img_list[4]);
