@@ -77,7 +77,7 @@
     <div style="padding-left:10px;">
 
         <!--        <a id="link" style="display:none;">Show Form</a>-->
-        <div style="padding-bottom:8px;">
+        <div class="control-buttons">
             <button class="btn btn-dark" onclick="showhide()">Show Form</button>
             <button class="btn btn-dark" onclick="request_graphs()">Run Computation</button>
             <button class="btn btn-dark" onclick="genReport()">Print Report</button>
@@ -235,13 +235,13 @@
     </div>
 
     <div class="row">
-        <div class="col-10" id="graphs">
-            <div id="frontier"></div>
-            <div class="btn btn-light" style="display:none;" id="current"></div>
-            <div style="display:none;" id="prescribed"></div>
-            <div style="display:none;" id="daily"></div>
-            <div style="display:none;" id="line"></div>
-            <div style="display:none;" id="bell"></div>
+        <div class="col-10 graph-container" id="graphs">
+            <div class="graph" id="frontier"></div>
+            <div class="graph" style="display:none;" id="current"></div>
+            <div class="graph" style="display:none;" id="prescribed"></div>
+            <div class="graph" style="display:none;" id="daily"></div>
+            <div class="graph" style="display:none;" id="line"></div>
+            <div class="graph" style="display:none;" id="bell"></div>
         </div>
         <div class="col-2">
             <div class="btn-group-vertical btn-group-toggle graph-buttons">

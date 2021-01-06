@@ -97,7 +97,7 @@ button{
 
 .graph-buttons {
     width: 100%;
-    top:20%;
+    top:10%;
     padding-top: 50px;
 }
 
@@ -105,6 +105,23 @@ button{
     padding-top: 4px;
     background-color:#181818;
     color:#fff;
+    outline:0!important;
+    box-shadow:none!important;
+}
+
+.graph {
+    height:100%;
+}
+
+.graph-container {
+    height:650px;
+}
+
+.control-buttons {
+    padding-bottom:8px;
+}
+
+.control-buttons button {
     outline:0!important;
     box-shadow:none!important;
 }
