@@ -9,11 +9,14 @@ img {
 
 div {
     clear: left;
-    padding: 10px;
 }
 
 span {
     padding-bottom: 10px;
+}
+
+svg{
+    height:500px;
 }
 
 
@@ -85,10 +88,3 @@ span {
 .slidecontainer {
     margin-top: -10px;
 }
-
-
-.allpiecontainer{
-    float:right;
-
-}
-
