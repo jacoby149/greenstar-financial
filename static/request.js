@@ -18,7 +18,7 @@ function linkload() {
         input = document.getElementsByName(key)[0];
         input.value = decodeURIComponent(urlParams.get(key));
     }
-//    risk = document.getElementById("risk").value;
+    //    risk = document.getElementById("risk").value;
 }
 
 //Make a link with all of the form inputs
@@ -60,6 +60,17 @@ function scale_graphs() {
     }
 }
 
+function mplview(button) {
+    graphs = document.getElementById("graphs").children
+    curr = document.getElementById(button.name)
+    for (i = 0; i < graphs.length; i++) {
+        graphs[i].style.display = "none";
+    }
+    curr.style.display = "block";
+
+
+}
+
 // image return
 function load_graphs(data) {
     document.getElementById("message").innerHTML = "";
@@ -67,18 +78,21 @@ function load_graphs(data) {
 
     //console.log(data)
     $("#frontier").empty();
-    $("#pie").empty();
-    $("#noise").empty();
+    $("#current").empty();
+    $("#prescribed").empty();
+    $("#daily").empty();
     $("#line").empty();
-    $("#normal").empty();
+    $("#bell").empty();
 
     console.log(img_list[0]);
 
     $("#frontier").append(img_list[0]);
-    $("#pie").append(img_list[1] + img_list[2]);
-    $("#noise").append(img_list[3])
-    $("#line").append(img_list[4] + img_list[5]);
-    $("#normal").append(img_list[6] + img_list[7] + img_list[8]);
+    $("#current").append(img_list[2]);
+    $("#prescribed").append(img_list[1]);
+
+    $("#daily").append(img_list[3])
+    $("#line").append(img_list[4]);
+    $("#bell").append(img_list[6]);
 
     stds = eval(data["risks"])
     means = eval(data["returns"])
@@ -87,9 +101,9 @@ function load_graphs(data) {
     cap.style.display = "none";
 }
 
-function graphs() {
-//    document.getElementById("link").href = linkmake();
-//    document.getElementById("link").style.display = "block";
+function request_graphs() {
+    //    document.getElementById("link").href = linkmake();
+    //    document.getElementById("link").style.display = "block";
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
 
