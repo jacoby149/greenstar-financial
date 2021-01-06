@@ -77,10 +77,12 @@ def login():
     passcode = request.form.get("passcode")
     if passcode == 'Provins1!':
         session['logged_in'] = True
+        session['client'] = 'Tom-Provins'
         session['image'] = "static/Provins.png"
         session['title'] = "Cardiff, Provins, Angel's Custom Algorithms - Markowitz Model"
     if passcode == 'gsdev':
         session['logged_in'] = True
+        session['client'] = 'demo'
         session['image'] = "static/GreenstarBanner.png"
         session['title'] = "Greenstar Custom Algorithms - Markowitz Model"
 
@@ -204,7 +206,7 @@ def load_graphs(tickers=None):
 def make_report():
     book, info = get_book(request)
 
-    report.make_report()
+    report.make_report(session['client'])
 
     return send_file("/app/pdfs/{} Report.pdf".format(info['name']))
 

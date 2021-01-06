@@ -194,11 +194,11 @@ def pickle_dump(red, blue, C, book, info):
 
 
 
-def make_report(demo=False):
-    if demo:
-        template = 'demo.tex'
+def make_report(client='demo'):
+    if client == 'Tom-Provins':
+        template = 'Clients/Tom-Provins/report.tex'
     else:
-        template = 'report.tex'
+        template = 'Clients/demo/demo.tex'
 
     # get variables as designed above, passed from markowitz
     with open("report_variables.pickle", 'rb') as pickle_file:
