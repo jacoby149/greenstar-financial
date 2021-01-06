@@ -77,12 +77,12 @@ def login():
     passcode = request.form.get("passcode")
     if passcode == 'Provins1!':
         session['logged_in'] = True
-        session['image'] = "../Clients/Tom Provins/Provins.png"
+        session['image'] = "static/Provins.png"
         session['title'] = "Cardiff, Provins, Angel's Custom Algorithms - Markowitz Model"
-    if passcode == 'Greenstar1!':
+    if passcode == 'gsdev':
         session['logged_in'] = True
-        session['image'] = "../Clients/demo/GreenstarBanner.png"
-        session['title'] = "Greenstar Demo Custom Algorithms - Markowitz Model"
+        session['image'] = "static/GreenstarBanner.png"
+        session['title'] = "Greenstar Custom Algorithms - Markowitz Model"
 
     vars['img'] = session['image']
     vars['title'] = session['title']
