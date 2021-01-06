@@ -243,13 +243,15 @@
             <div style="display:none;" id="line"></div>
             <div style="display:none;" id="bell"></div>
         </div>
-        <div class="col-2 btn-group-vertical">
-            <button class="btn btn-dark" name="frontier" onclick="mplview(this)">Frontier</button>
-            <button class="btn btn-dark" name="current" onclick="mplview(this)">Current Pie</button>
-            <button class="btn btn-dark" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
-            <button class="btn btn-dark" name="daily" onclick="mplview(this)">Asset Classes </button>
-            <button class="btn btn-dark" name="line" onclick="mplview(this)">Line Graph</button>
-            <button class="btn btn-dark" name="bell" onclick="mplview(this)">Bell Curve</button>
+        <div class="col-2">
+            <div class="btn-group-vertical btn-group-toggle graph-buttons">
+            <button class="btn btn-secondary" name="frontier" onclick="mplview(this)">Frontier</button>
+            <button class="btn btn-secondary" name="current" onclick="mplview(this)">Current Pie</button>
+            <button class="btn btn-secondary" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
+            <button class="btn btn-secondary" name="daily" onclick="mplview(this)">Asset Classes </button>
+            <button class="btn btn-secondary" name="line" onclick="mplview(this)">Line Graph</button>
+            <button class="btn btn-secondary" name="bell" onclick="mplview(this)">Bell Curve</button>
+            </div>
         </div>
 
     </div>
@@ -278,7 +280,7 @@
     <div id="backtest"></div>
     <div id="weights"></div>
     -->
-    <div style="position: relative; padding-left: 90%;">
+    <div style="position: relative; padding-left: 90%; top:10%">
         <a href="/logout">Secure Log Out</a>
     </div>
 

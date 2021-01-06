@@ -16,7 +16,7 @@ span {
 }
 
 svg{
-    height:700px;
+
 }
 
 button{
@@ -93,4 +93,18 @@ button{
 
 .slidecontainer {
     margin-top: -10px;
+}
+
+.graph-buttons {
+    width: 100%;
+    top:20%;
+    padding-top: 50px;
+}
+
+.graph-buttons button {
+    padding-top: 4px;
+    background-color:#181818;
+    color:#fff;
+    outline:0!important;
+    box-shadow:none!important;
 }
