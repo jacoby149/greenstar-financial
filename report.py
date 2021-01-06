@@ -194,7 +194,7 @@ def pickle_dump(red, blue, C, book, info):
 
 
 
-def make_report(demo=True):
+def make_report(demo=False):
     if demo:
         template = 'demo.tex'
     else:
