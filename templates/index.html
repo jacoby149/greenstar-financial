@@ -44,29 +44,6 @@
 
 
 
-    <div class="row">
-        <div class="col-10" id="graphs">
-            <div id="frontier"></div>
-            <div class="btn btn-light" style="display:none;" id="current"></div>
-            <div style="display:none;" id="prescribed"></div>
-            <div style="display:none;" id="daily"></div>
-            <div style="display:none;" id="line"></div>
-            <div style="display:none;" id="bell"></div>
-        </div>
-        <div class="col-2 btn-group-vertical">
-            <button class="btn btn-dark" name="frontier" onclick="mplview(this)">Frontier</button>
-
-            <button class="btn btn-dark" name="current" onclick="mplview(this)">Current Pie</button>
-            <button class="btn btn-dark" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
-            <button class="btn btn-dark" name="daily" onclick="mplview(this)">Asset Classes </button>
-            <button class="btn btn-dark" name="line" onclick="mplview(this)">Line Graph</button>
-            <button class="btn btn-dark" name="bell" onclick="mplview(this)">Bell Curve</button>
-            <button class="btn btn-dark" onclick="showhide()">Form</button>
-            <button class="btn btn-dark" onclick="request_graphs()">Generate Report</button>
-            <button class="btn btn-dark" onclick="genReport()">Download Report</button>
-        </div>
-
-    </div>
 
     <!--
         <table>
@@ -93,10 +70,18 @@
 
     </div>
 
-
     <div>
 
+    </div>
+
+    <div style="padding-left:10px;">
+
         <!--        <a id="link" style="display:none;">Show Form</a>-->
+        <div style="padding-bottom:8px;">
+            <button class="btn btn-dark" onclick="showhide()">Show Form</button>
+            <button class="btn btn-dark" onclick="request_graphs()">Run Computation</button>
+            <button class="btn btn-dark" onclick="genReport()">Print Report</button>
+        </div>
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
             <p>
@@ -105,6 +90,7 @@
             </p>
 
             <input type="hidden" value="25" id="risk" name="risk">
+
 
 
             <table>
@@ -244,23 +230,41 @@
     <!--                <td> Output Graphs</td>-->
     <!--            </tr>-->
     <!--            <td>-->
-    <div>
+    <div style="padding-left:12px;">
         <p id="message"></p>
     </div>
 
+    <div class="row">
+        <div class="col-10" id="graphs">
+            <div id="frontier"></div>
+            <div class="btn btn-light" style="display:none;" id="current"></div>
+            <div style="display:none;" id="prescribed"></div>
+            <div style="display:none;" id="daily"></div>
+            <div style="display:none;" id="line"></div>
+            <div style="display:none;" id="bell"></div>
+        </div>
+        <div class="col-2 btn-group-vertical">
+            <button class="btn btn-dark" name="frontier" onclick="mplview(this)">Frontier</button>
+            <button class="btn btn-dark" name="current" onclick="mplview(this)">Current Pie</button>
+            <button class="btn btn-dark" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
+            <button class="btn btn-dark" name="daily" onclick="mplview(this)">Asset Classes </button>
+            <button class="btn btn-dark" name="line" onclick="mplview(this)">Line Graph</button>
+            <button class="btn btn-dark" name="bell" onclick="mplview(this)">Bell Curve</button>
+        </div>
 
+    </div>
 
     &nbsp;
-    <center>
-    <div>
-    <button class="btn btn-dark" name="frontier" onclick="mplview(this)">Frontier</button>
-    <button class="btn btn-dark" name="current" onclick="mplview(this)">Current Portfolio Pie</button>
-    <button class="btn btn-dark" name="prescribed" onclick="mplview(this)">Prescribed Portfolio Pie</button>
-    <button class="btn btn-dark" name="daily" onclick="mplview(this)">Daily Asset Class Performance</button>
-    <button class="btn btn-dark" name="line" onclick="mplview(this)">Yearly Portfolio Performance</button>
-    <button class="btn btn-dark" name="bell" onclick="mplview(this)">Portfolio Bell Curves</button>
-    </div>
-    </center>
+<!--    <center>-->
+<!--    <div>-->
+<!--    <button class="btn btn-dark" name="frontier" onclick="mplview(this)">Frontier</button>-->
+<!--    <button class="btn btn-dark" name="current" onclick="mplview(this)">Current Portfolio Pie</button>-->
+<!--    <button class="btn btn-dark" name="prescribed" onclick="mplview(this)">Prescribed Portfolio Pie</button>-->
+<!--    <button class="btn btn-dark" name="daily" onclick="mplview(this)">Daily Asset Class Performance</button>-->
+<!--    <button class="btn btn-dark" name="line" onclick="mplview(this)">Yearly Portfolio Performance</button>-->
+<!--    <button class="btn btn-dark" name="bell" onclick="mplview(this)">Portfolio Bell Curves</button>-->
+<!--    </div>-->
+<!--    </center>-->
 
     <!--            </td>-->
     <!--        </table>-->
