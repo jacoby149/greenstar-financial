@@ -16,6 +16,7 @@ span {
 }
 
 svg{
+    height:600px;
 
 }
 
@@ -37,7 +38,7 @@ button{
 }
 
 .captable {
-    width: 60%;
+    width: 90%;
 }
 
 .captable table {
@@ -109,14 +110,6 @@ button{
     box-shadow:none!important;
 }
 
-.graph {
-    height:100%;
-}
-
-.graph-container {
-    height:650px;
-}
-
 .control-buttons {
     padding-bottom:8px;
 }
@@ -125,3 +118,4 @@ button{
     outline:0!important;
     box-shadow:none!important;
 }
+
