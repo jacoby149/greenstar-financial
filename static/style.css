@@ -96,6 +96,7 @@ button{
     width: 100%;
     top:10%;
     padding-top: 50px;
+    float:right;
 }
 
 .graph-buttons button {
@@ -117,6 +118,9 @@ button{
 
 .control-buttons {
     padding-bottom:8px;
+    outline:0!important;
+    box-shadow:none!important;
+    float:right;
 }
 
 .control-buttons button {
@@ -124,20 +128,36 @@ button{
     box-shadow:none!important;
 }
 
+.logout-link {
+    position:relative;
+    float:right;
+    padding-right:8px;
+    top:95%;
+}
+
+.input-tables {
+    position:relative;
+    left:2%;
+}
+
+.message-box {
+    position:relative;
+    left:40%;
+    padding-top:30px;
+}
+
 .graph{
     position:absolute;
     visibility:hidden;
+    margin: auto;
 }
 
 
 .graph-container{
     position:absolute;
-    top:20%;
-    left:18%;
-    bottom:5%;
-    right:18%;
-    border-style:solid;
-    border-color:rgb(255, 226, 182);
+    margin: auto;
+    /*border-style:solid;
+    border-color:rgb(255, 226, 182);*/
     z-index:-1;
 
 }

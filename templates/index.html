@@ -13,7 +13,12 @@
     <script src="static/mpld3.v0.5.2.js" async=""></script>
 </head>
 
-<body style="background-color:#fff8e7;">
+<body style="background-color:#fff;">
+
+        <div class="logout-link">
+            <a href="/logout">Secure Log Out</a>
+        </div>
+
 
     <center class="firm">
         <div style="width:35%;padding-bottom:15px;">
@@ -74,15 +79,15 @@
 
     </div>
 
-    <div style="float:right;">
-        <div style="position:fixed;top:13%;right:0;">
+    <div style="float:right;height:100%">
+        <div style="position:fixed;top:25%;right:0;">
+            <div class="btn-group-vertical control-buttons">
+                <button class="btn btn-success" onclick="showhide()" id="show_hide_form">Hide Form</button>
+                <button class="btn btn-success" onclick="request_graphs()">Run Computation</button>
+                <button class="btn btn-success" onclick="genReport()">Print Report</button>
+            </div>
+        <br>
             <div class="btn-group-vertical btn-group-toggle graph-buttons">
-
-                <button class="btn btn-secondary" onclick="showhide()">Show Form</button>
-                <button class="btn btn-secondary" onclick="request_graphs()">Run Computation</button>
-                <button class="btn btn-secondary" onclick="genReport()">Print Report</button>
-
-                <br>
                 <button class="btn btn-secondary" name="frontier" onclick="mplview(this)">Frontier</button>
                 <button class="btn btn-secondary" name="current" onclick="mplview(this)">Current Pie</button>
                 <button class="btn btn-secondary" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
@@ -90,8 +95,8 @@
                 <button class="btn btn-secondary" name="line" onclick="mplview(this)">Line Graph</button>
                 <button class="btn btn-secondary" name="bell" onclick="mplview(this)">Bell Curve</button>
                 <br>
-                <a class="btn btn-secondary" href="/logout">Secure Log Out</a>
             </div>
+        <br>
         </div>
     </div>
 
@@ -110,10 +115,19 @@
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
 
+            <p style="padding-bottom:8px;">
+                Type the dollar amounts invested within the current portfolio into the empty boxes below. <br>
+                Change the minimum and maximum allowed percentages of each asset for the new portfolio. <br><br>
+                Risk can be adjusted by selecting points on the Frontier Curve when the graphs load. <br>
+                Click 'Run Computation' to apply your algorithms to data in the table or after adjusting risk. <br><br>
+                When the graphs look okay, click 'Print Report' to generate your custom report.
+
+            </p>
+
+
             <input type="hidden" value="25" id="risk" name="risk">
 
-
-
+            <div class="input-tables">
             <table>
                 <tr>
                     <th>Name</th>
@@ -277,6 +291,7 @@
                         <td><input type="text" name="CashX" size="4" value=100%></td>
                     </tr>
                 </table>
+                </div>
             </div>
         </form>
     </div>
@@ -288,7 +303,7 @@
     <!--                <td> Output Graphs</td>-->
     <!--            </tr>-->
     <!--            <td>-->
-    <div style="padding-left:12px;">
+    <div class="message-box">
         <p id="message"></p>
     </div>
 
