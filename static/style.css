@@ -15,10 +15,6 @@ span {
     padding-bottom: 10px;
 }
 
-svg{
-    height:570px;
-
-}
 
 button{
     display: block;
@@ -133,9 +129,20 @@ button{
     visibility:hidden;
 }
 
+
 .graph-container{
     position:absolute;
-    top:80px;
-    left:18%
+    top:20%;
+    left:18%;
+    bottom:5%;
+    right:18%;
+    border-style:solid;
+    border-color:rgb(255, 226, 182);
+    z-index:-1;
 
 }
+
+svg{
+    height:75vh;
+}
+
