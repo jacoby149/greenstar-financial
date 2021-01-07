@@ -16,7 +16,7 @@
 <body style="background-color:#fff8e7;">
 
     <center class="firm">
-        <div style="width:35%;padding-bottom:25px;padding-top:7px;">
+        <div style="width:35%;padding-bottom:15px;">
             <table class="desctable">
                 <tr>
                     <td>
@@ -75,14 +75,22 @@
     </div>
 
     <div style="float:right;">
-        <div style="position:fixed;top:30%;right:0;">
+        <div style="position:fixed;top:13%;right:0;">
             <div class="btn-group-vertical btn-group-toggle graph-buttons">
+
+                <button class="btn btn-secondary" onclick="showhide()">Show Form</button>
+                <button class="btn btn-secondary" onclick="request_graphs()">Run Computation</button>
+                <button class="btn btn-secondary" onclick="genReport()">Print Report</button>
+
+                <br>
                 <button class="btn btn-secondary" name="frontier" onclick="mplview(this)">Frontier</button>
                 <button class="btn btn-secondary" name="current" onclick="mplview(this)">Current Pie</button>
                 <button class="btn btn-secondary" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
                 <button class="btn btn-secondary" name="daily" onclick="mplview(this)">Asset Classes </button>
                 <button class="btn btn-secondary" name="line" onclick="mplview(this)">Line Graph</button>
                 <button class="btn btn-secondary" name="bell" onclick="mplview(this)">Bell Curve</button>
+                <br>
+                <a class="btn btn-secondary" href="/logout">Secure Log Out</a>
             </div>
         </div>
     </div>
@@ -90,11 +98,13 @@
     <div style="padding-left:10px;">
 
         <!--        <a id="link" style="display:none;">Show Form</a>-->
+        <!--
         <div class="control-buttons">
             <button class="btn btn-dark" onclick="showhide()">Show Form</button>
             <button class="btn btn-dark" onclick="request_graphs()">Run Computation</button>
             <button class="btn btn-dark" onclick="genReport()">Print Report</button>
         </div>
+        -->
 
 
 
@@ -283,17 +293,15 @@
     </div>
 
 
-    <div class="row">
-        <div class="col-10 graph-container" id="graphs">
-            <div class="graph" style="visibility:visible;" id="frontier"></div>
-            <div class="graph" id="current"></div>
-            <div class="graph" id="prescribed"></div>
-            <div class="graph" id="daily"></div>
-            <div class="graph" id="line"></div>
-            <div class="graph" id="bell"></div>
-        </div>
-
+    <div class="graph-container" id="graphs">
+        <div class="graph" style="visibility:visible;" id="frontier"></div>
+        <div class="graph" id="current"></div>
+        <div class="graph" id="prescribed"></div>
+        <div class="graph" id="daily"></div>
+        <div class="graph" id="line"></div>
+        <div class="graph" id="bell"></div>
     </div>
+
 
     &nbsp;
     <!--    <center>-->
@@ -319,9 +327,6 @@
     <div id="backtest"></div>
     <div id="weights"></div>
     -->
-    <div style="position: relative; padding-left: 90%; top:10%">
-        <a href="/logout">Secure Log Out</a>
-    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"

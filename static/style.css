@@ -16,7 +16,7 @@ span {
 }
 
 svg{
-    height:600px;
+    height:570px;
 
 }
 
@@ -110,6 +110,15 @@ button{
     box-shadow:none!important;
 }
 
+.graph-buttons a {
+    padding-top: 4px;
+    background-color:#181818;
+    color:#fff;
+    outline:0!important;
+    box-shadow:none!important;
+}
+
+
 .control-buttons {
     padding-bottom:8px;
 }
@@ -122,4 +131,11 @@ button{
 .graph{
     position:absolute;
     visibility:hidden;
+}
+
+.graph-container{
+    position:absolute;
+    top:80px;
+    left:18%
+
 }
