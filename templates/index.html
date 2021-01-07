@@ -74,6 +74,17 @@
 
     </div>
 
+    <div style="float:right;">
+        <div class="btn-group-vertical btn-group-toggle graph-buttons">
+            <button class="btn btn-secondary" name="frontier" onclick="mplview(this)">Frontier</button>
+            <button class="btn btn-secondary" name="current" onclick="mplview(this)">Current Pie</button>
+            <button class="btn btn-secondary" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
+            <button class="btn btn-secondary" name="daily" onclick="mplview(this)">Asset Classes </button>
+            <button class="btn btn-secondary" name="line" onclick="mplview(this)">Line Graph</button>
+            <button class="btn btn-secondary" name="bell" onclick="mplview(this)">Bell Curve</button>
+        </div>
+    </div>
+
     <div style="padding-left:10px;">
 
         <!--        <a id="link" style="display:none;">Show Form</a>-->
@@ -82,6 +93,8 @@
             <button class="btn btn-dark" onclick="request_graphs()">Run Computation</button>
             <button class="btn btn-dark" onclick="genReport()">Print Report</button>
         </div>
+
+
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
 
@@ -108,7 +121,8 @@
                     <th>End Date (YYYY-MM-DD)</th>
                 </tr>
                 <tr>
-                    <td style="text-align:center;"><input type="text" id="date-input" name="date-input" size="10"></td>
+                    <td style="text-align:center;"><input type="text" id="date-input" name="date-input" size="10">
+                    </td>
                 </tr>
             </table>
 
@@ -266,6 +280,7 @@
         <p id="message"></p>
     </div>
 
+
     <div class="row">
         <div class="col-10 graph-container" id="graphs">
             <div class="graph" style="visibility:visible;" id="frontier"></div>
@@ -274,16 +289,6 @@
             <div class="graph" id="daily"></div>
             <div class="graph" id="line"></div>
             <div class="graph" id="bell"></div>
-        </div>
-        <div class="col-2">
-            <div class="btn-group-vertical btn-group-toggle graph-buttons">
-                <button class="btn btn-secondary" name="frontier" onclick="mplview(this)">Frontier</button>
-                <button class="btn btn-secondary" name="current" onclick="mplview(this)">Current Pie</button>
-                <button class="btn btn-secondary" name="prescribed" onclick="mplview(this)">Prescribed Pie</button>
-                <button class="btn btn-secondary" name="daily" onclick="mplview(this)">Asset Classes </button>
-                <button class="btn btn-secondary" name="line" onclick="mplview(this)">Line Graph</button>
-                <button class="btn btn-secondary" name="bell" onclick="mplview(this)">Bell Curve</button>
-            </div>
         </div>
 
     </div>
