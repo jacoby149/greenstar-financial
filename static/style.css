@@ -152,6 +152,7 @@ button{
     position:relative;
     width:88%;
     left:2%;
+    padding-bottom:50px;
 }
 
 .message-box {
@@ -161,7 +162,7 @@ button{
 }
 
 .graph{
-    position:relative;
+    position:absolute;
     visibility:hidden;
 }
 
@@ -172,7 +173,7 @@ button{
     float:left;
     text-align:center;
     left:4%;
-    top:-50px;
+    top:-70px;
     z-index:1;
 }
 
