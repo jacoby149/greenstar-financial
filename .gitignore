@@ -13,7 +13,6 @@
 *.xml
 *.xml
 .idea/workspace.xml
-*.pdf
-*.pdf
 *.svg
 *.pyc
+plts/*.pdf
