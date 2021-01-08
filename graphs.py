@@ -1,6 +1,7 @@
 #  GRAPH CREATION FOR MARKOWITZ.PY
 
 # graph requirements
+import random
 import mpld3
 from mpld3 import plugins
 import io
@@ -179,13 +180,14 @@ def pie(pie_data, title='pie_default'):
         tickers, sizes = pie_data.keys(), pie_data.values()
 
     explode = [0 for t in tickers]
-    explode[0] = .1
+    #explode[0] = .1
 
     # max_ticker = max(tickers.keys(), key=(lambda k: tickers[k]))   <-- Explode largest slice of pie
 
     fig1, ax1 = plt.subplots(figsize=(12,8))
 
     def hexy(x):
+        x = int(x)
         y = hex(x)[2:]
         if len(y) == 1:
             return "0" + y
@@ -193,13 +195,26 @@ def pie(pie_data, title='pie_default'):
             return "ff"
         else:
             return y
+    
+    random.seed(a=8978987)#make the same pie colors
+    def colormix():
+        r,g,b=255,255,255
+        y,z=1,2
+        r = (random.randint(0,200)*y + r*z)/(y+z)
+        g = (random.randint(0,200)*y + g*z)/(y+z)
+        b = (random.randint(0,200)*y + b*z)/(y+z)
+        if max(abs(r-g),abs(g-b),abs(b-r))<60:return colormix()
+        return "#"+hexy(r)+hexy(g)+hexy(b)
 
-    gcolors = ["#" + hexy(255) + hexy(255) + hexy(255) for x in range(100,255,20)]
+    rcolors = [colormix() for x in range(20)]
+    rcolors.sort()
+
+    #gcolors = ["#" + hexy(10*x**.3+60) + hexy(255-x) + hexy(7*x**.5+60) for x in range(100,255,20)]
 
     colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'sienna']
-    ax1.pie(sizes, labels=tickers, explode=explode, colors=colors, autopct='%1.1f%%', shadow=False, startangle=180,
-                    wedgeprops={"edgecolor":"0", 'linewidth': 0.65, 'antialiased': True},
-                    textprops={'fontsize': 16})
+    ax1.pie(sizes, labels=tickers, explode=explode, colors=rcolors,pctdistance=0.75, autopct='%1.1f%%', shadow=False, startangle=180,
+                    wedgeprops={ "width":.55, 'antialiased': True},
+                    textprops={'fontsize': 20})
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
     return plt_to_img(plt, title)
