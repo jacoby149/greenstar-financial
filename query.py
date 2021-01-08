@@ -9,9 +9,9 @@ show = False
 
 def creds():
     sql_gs = dict()
-    sql_gs["user"] = "admin"
-    sql_gs["password"] = "Uncommoncore1!"
-    sql_gs["host"] = "104.197.118.44"
+    sql_gs["user"] = "root"
+    sql_gs["password"] = "od41zLDLwosDmonr"
+    sql_gs["host"] = "34.123.165.253"
     sql_gs["database"] = "greenstar"
     return sql_gs
 
