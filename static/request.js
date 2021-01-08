@@ -42,12 +42,12 @@ function showhide() {
     if (cap.style.display == "none") {
         cap.style.display = "block";
         document.getElementById("show_hide_form").innerHTML = "Hide Form";
-        document.getElementById("show_hide_form").className = "btn btn-success";
+        document.getElementById("show_hide_form").className = "btn btn-primary";
     }
     else {
         cap.style.display = "none";
         document.getElementById("show_hide_form").innerHTML = "Show Form";
-        document.getElementById("show_hide_form").className = "btn btn-outline-success";
+        document.getElementById("show_hide_form").className = "btn btn-outline-primary";
     }
 }
 
@@ -109,7 +109,7 @@ function load_graphs(data) {
     shoe = document.getElementById("show_hide_form");
     cap.style.display = "none";
     shoe.innerHTML = "Show Form";
-    shoe.className = "btn btn-outline-success";
+    shoe.className = "btn btn-outline-primary";
 }
 
 function request_graphs() {

@@ -123,22 +123,26 @@ button{
     box-shadow:none!important;
 }
 
+.btn-outline-primary {
+    background-color: #fff8e7 !important;
+}
+
 
 .btn-success:hover {
     background-color: #007d4b !important;
 }
 
-.btn-outline-success:hover {
+.btn-outline-primary:hover {
     background-color:#fff8e7 !important;
-    color:#007d4b !important;
+    color:#0275d8 !important;
 }
 
-.btn-outline-success:focus {
+.btn-outline-primary:focus {
     background-color:#fff8e7 !important;
 }
 
 .btn-success:focus {
-    background-color:#007d4b!important;
+    background-color:#007d4b !important;
 }
 
 .logout-link {
