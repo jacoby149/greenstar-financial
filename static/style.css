@@ -97,7 +97,7 @@ button{
     width:100%;
     padding-top: 50px;
     float:right;
-    z-index:2;
+    z-index:20000;
 }
 
 .graph-buttons button {
@@ -108,31 +108,37 @@ button{
     box-shadow:none!important;
 }
 
+.control-buttons {
+    position:absolute;
+    padding-bottom:8px;
+    outline:0!important;
+    box-shadow:none!important;
+    float:right;
+    z-index:2000;
+}
+
+
+.control-buttons button {
+    outline:0!important;
+    box-shadow:none!important;
+}
+
+
 .btn-success:hover {
     background-color: #007d4b !important;
 }
 
 .btn-outline-success:hover {
-    background-color:none !important;
+    background-color:#fff8e7 !important;
+    color:#007d4b !important;
+}
+
+.btn-outline-success:focus {
+    background-color:#fff8e7 !important;
 }
 
 .btn-success:focus {
     background-color:#007d4b!important;
-}
-
-
-.control-buttons {
-    position:relative;
-    padding-bottom:8px;
-    outline:0!important;
-    box-shadow:none!important;
-    float:right;
-    z-index:2;
-}
-
-.control-buttons button {
-    outline:0!important;
-    box-shadow:none!important;
 }
 
 .logout-link {
@@ -144,6 +150,7 @@ button{
 
 .input-tables {
     position:relative;
+    width:88%;
     left:2%;
 }
 
@@ -154,18 +161,18 @@ button{
 }
 
 .graph{
-    position:absolute;
+    position:relative;
     visibility:hidden;
 }
 
 
 .graph-container{
-    position:absolute;
-    width:50%;
+    position:relative;
+    width:40%;
     float:left;
     text-align:center;
     left:4%;
-    top:20%;
+    top:-50px;
     z-index:1;
 }
 
