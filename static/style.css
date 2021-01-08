@@ -156,13 +156,13 @@ button{
 .graph-container{
     position:absolute;
     margin: auto;
+    margin-top:-11vh;
     /*border-style:solid;
     border-color:rgb(255, 226, 182);*/
-    z-index:-1;
 
 }
 
 svg{
-    height:75vh;
+    height:80vh;
 }
 

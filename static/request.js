@@ -119,9 +119,11 @@ function request_graphs() {
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
 
     document.getElementById("message").innerHTML = "Running computation...";
+
     $.post("/load_graphs", form, load_graphs)
         .fail(function (error) {
             document.getElementById("message").innerHTML = "Please Fill Out The Form.";
+
         });
 
 }

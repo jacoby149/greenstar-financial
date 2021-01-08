@@ -15,9 +15,9 @@
 
 <body style="background-color:#fff8e7;">
 
-        <div class="logout-link">
-            <a href="/logout">Secure Log Out</a>
-        </div>
+    <div class="logout-link">
+        <a href="/logout">Secure Log Out</a>
+    </div>
 
 
     <center class="firm">
@@ -86,7 +86,7 @@
                 <button class="btn btn-success" onclick="request_graphs()">Run Computation</button>
                 <button class="btn btn-success" onclick="genReport()">Print Report</button>
             </div>
-        <br>
+            <br>
             <div class="btn-group-vertical btn-group-toggle graph-buttons">
                 <button class="btn btn-secondary" name="frontier" onclick="mplview(this)">Frontier</button>
                 <button class="btn btn-secondary" name="current" onclick="mplview(this)">Current Pie</button>
@@ -96,7 +96,7 @@
                 <button class="btn btn-secondary" name="bell" onclick="mplview(this)">Bell Curve</button>
                 <br>
             </div>
-        <br>
+            <br>
         </div>
     </div>
 
@@ -114,7 +114,7 @@
 
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
-
+            <!--
             <p style="padding-bottom:8px;">
                 Type the dollar amounts invested within the current portfolio into the empty boxes below. <br>
                 Change the minimum and maximum allowed percentages of each asset for the new portfolio. <br><br>
@@ -123,174 +123,175 @@
                 When the graphs look okay, click 'Print Report' to generate your custom report.
 
             </p>
+            -->
 
 
             <input type="hidden" value="25" id="risk" name="risk">
 
             <div class="input-tables">
-            <table>
-                <tr>
-                    <th>Name</th>
-                    <th>Birthday</th>
-                    <th>Term (yrs.)</th>
-                </tr>
-                <tr>
-                    <td><input type="text" name="name" placeholder="John Smith" size="13"></td>
-                    <td><input type="text" name="birthday" placeholder="12/28/1960" size="9"></td>
-                    <td><input type="text" name="term" placeholder="7" size="3"></td>
-
-                </tr>
-            </table>
-
-            <table>
-                <tr>
-                    <th>End Date (YYYY-MM-DD)</th>
-                </tr>
-                <tr>
-                    <td style="text-align:center;"><input type="text" id="date-input" name="date-input" size="10">
-                    </td>
-                </tr>
-            </table>
-
-
-            <div>
                 <table>
                     <tr>
-                        <th>Stock Assets</th>
-                        <th>$$$</th>
-                        <th>min.</th>
-                        <th>max.</th>
+                        <th>Name</th>
+                        <th>Birthday</th>
+                        <th>Term (yrs.)</th>
                     </tr>
                     <tr>
-                        <td>Lg. Cap Growth</td>
-                        <td><input type="text" name="Large Cap Growth" size="8"></td>
-                        <td><input type="text" name="Large Cap GrowthY" size="2" value=0%></td>
-                        <td><input type="text" name="Large Cap GrowthX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Lg. Cap Value</td>
-                        <td><input type="text" name="Large Cap Value" size="8"></td>
-                        <td><input type="text" name="Large Cap ValueY" size="2" value=0%></td>
-                        <td><input type="text" name="Large Cap ValueX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Sm. Cap Growth</td>
-                        <td><input type="text" name="Small Cap Growth" size="8"></td>
-                        <td><input type="text" name="Small Cap GrowthY" size="2" value=0%></td>
-                        <td><input type="text" name="Small Cap GrowthX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Sm. Cap Value</td>
-                        <td><input type="text" name="Small Cap Value" size="8"></td>
-                        <td><input type="text" name="Small Cap ValueY" size="2" value=0%></td>
-                        <td><input type="text" name="Small Cap ValueX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Mid Cap</td>
-                        <td><input type="text" name="Mid Cap" size="8"></td>
-                        <td><input type="text" name="Mid CapY" size="2" value=0%></td>
-                        <td><input type="text" name="Mid CapX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Mid Cap</td>
-                        <td><input type="text" name="International Stock" size="8"></td>
-                        <td><input type="text" name="International StockY" size="2" value=0%></td>
-                        <td><input type="text" name="International StockX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Mid Cap</td>
-                        <td><input type="text" name="Emerging Mkt Stock" size="8"></td>
-                        <td><input type="text" name="Emerging Mkt StockY" size="2" value=0%></td>
-                        <td><input type="text" name="Emerging Mkt StockX" size="4" value=100%></td>
-                    </tr>
-                </table>
+                        <td><input type="text" name="name" placeholder="John Smith" size="13"></td>
+                        <td><input type="text" name="birthday" placeholder="12/28/1960" size="9"></td>
+                        <td><input type="text" name="term" placeholder="7" size="3"></td>
 
-
-
-                <table>
-                    <tr>
-                        <th>Bond Assets</th>
-                        <th>$$$</th>
-                        <th>min.</th>
-                        <th>max.</th>
-                    </tr>
-                    <tr>
-                        <td>Int. Gov. Bonds</td>
-                        <td><input type="text" name="International Gov Bonds" size="8"></td>
-                        <td><input type="text" name="International Gov BondsY" size="2" value=0%></td>
-                        <td><input type="text" name="International Gov BondsX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Long Gov. Bonds</td>
-                        <td><input type="text" name="Long Gov Bonds" size="8"></td>
-                        <td><input type="text" name="Long Gov BondsY" size="2" value=0%></td>
-                        <td><input type="text" name="Long Gov BondsX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Corp. Bonds</td>
-                        <td><input type="text" name="Corporate Bonds" size="8"></td>
-                        <td><input type="text" name="Corporate BondsY" size="2" value=0%></td>
-                        <td><input type="text" name="Corporate BondsX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>High Yield Bonds</td>
-                        <td><input type="text" name="High Yield Bonds" size="8"></td>
-                        <td><input type="text" name="High Yield BondsY" size="2" value=0%></td>
-                        <td><input type="text" name="High Yield BondsX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Muni. Bonds</td>
-                        <td><input type="text" name="Municipal Bonds" size="8"></td>
-                        <td><input type="text" name="Municipal BondsY" size="2" value=0%></td>
-                        <td><input type="text" name="Municipal BondsX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Foreign Bonds</td>
-                        <td><input type="text" name="Foreign Bonds" size="8"></td>
-                        <td><input type="text" name="Foreign BondsY" size="2" value=0%></td>
-                        <td><input type="text" name="Foreign BondsX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Em. Mkt. Debt</td>
-                        <td><input type="text" name="Emerging Mkt Debt" size="8"></td>
-                        <td><input type="text" name="Emerging Mkt DebtY" size="2" value=0%></td>
-                        <td><input type="text" name="Emerging Mkt DebtX" size="4" value=100%></td>
                     </tr>
                 </table>
 
                 <table>
                     <tr>
-                        <th>Other Assets</th>
-                        <th>$$$</th>
-                        <th>min.</th>
-                        <th>max.</th>
-
+                        <th>End Date (YYYY-MM-DD)</th>
                     </tr>
                     <tr>
-                        <td>V.C.</td>
-                        <td><input type="text" name="V.C." size="8"></td>
-                        <td><input type="text" name="V.C.Y" size="2" value=0%></td>
-                        <td><input type="text" name="V.C.X" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Real Estate</td>
-                        <td><input type="text" name="Real Estate" size="8"></td>
-                        <td><input type="text" name="Real EstateY" size="2" value=0%></td>
-                        <td><input type="text" name="Real EstateX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Commodities</td>
-                        <td><input type="text" name="Commodities" size="8"></td>
-                        <td><input type="text" name="CommoditiesY" size="2" value=0%></td>
-                        <td><input type="text" name="CommoditiesX" size="4" value=100%></td>
-                    </tr>
-                    <tr>
-                        <td>Cash</td>
-                        <td><input type="text" name="Cash" size="8"></td>
-                        <td><input type="text" name="CashY" size="2" value=0%></td>
-                        <td><input type="text" name="CashX" size="4" value=100%></td>
+                        <td style="text-align:center;"><input type="text" id="date-input" name="date-input" size="10">
+                        </td>
                     </tr>
                 </table>
+
+
+                <div>
+                    <table>
+                        <tr>
+                            <th>Stock Assets</th>
+                            <th>$$$</th>
+                            <th>min.</th>
+                            <th>max.</th>
+                        </tr>
+                        <tr>
+                            <td>Lg. Cap Growth</td>
+                            <td><input type="text" name="Large Cap Growth" size="8"></td>
+                            <td><input type="text" name="Large Cap GrowthY" size="2" value=0%></td>
+                            <td><input type="text" name="Large Cap GrowthX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Lg. Cap Value</td>
+                            <td><input type="text" name="Large Cap Value" size="8"></td>
+                            <td><input type="text" name="Large Cap ValueY" size="2" value=0%></td>
+                            <td><input type="text" name="Large Cap ValueX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Sm. Cap Growth</td>
+                            <td><input type="text" name="Small Cap Growth" size="8"></td>
+                            <td><input type="text" name="Small Cap GrowthY" size="2" value=0%></td>
+                            <td><input type="text" name="Small Cap GrowthX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Sm. Cap Value</td>
+                            <td><input type="text" name="Small Cap Value" size="8"></td>
+                            <td><input type="text" name="Small Cap ValueY" size="2" value=0%></td>
+                            <td><input type="text" name="Small Cap ValueX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Mid Cap</td>
+                            <td><input type="text" name="Mid Cap" size="8"></td>
+                            <td><input type="text" name="Mid CapY" size="2" value=0%></td>
+                            <td><input type="text" name="Mid CapX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Mid Cap</td>
+                            <td><input type="text" name="International Stock" size="8"></td>
+                            <td><input type="text" name="International StockY" size="2" value=0%></td>
+                            <td><input type="text" name="International StockX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Mid Cap</td>
+                            <td><input type="text" name="Emerging Mkt Stock" size="8"></td>
+                            <td><input type="text" name="Emerging Mkt StockY" size="2" value=0%></td>
+                            <td><input type="text" name="Emerging Mkt StockX" size="4" value=100%></td>
+                        </tr>
+                    </table>
+
+
+
+                    <table>
+                        <tr>
+                            <th>Bond Assets</th>
+                            <th>$$$</th>
+                            <th>min.</th>
+                            <th>max.</th>
+                        </tr>
+                        <tr>
+                            <td>Int. Gov. Bonds</td>
+                            <td><input type="text" name="International Gov Bonds" size="8"></td>
+                            <td><input type="text" name="International Gov BondsY" size="2" value=0%></td>
+                            <td><input type="text" name="International Gov BondsX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Long Gov. Bonds</td>
+                            <td><input type="text" name="Long Gov Bonds" size="8"></td>
+                            <td><input type="text" name="Long Gov BondsY" size="2" value=0%></td>
+                            <td><input type="text" name="Long Gov BondsX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Corp. Bonds</td>
+                            <td><input type="text" name="Corporate Bonds" size="8"></td>
+                            <td><input type="text" name="Corporate BondsY" size="2" value=0%></td>
+                            <td><input type="text" name="Corporate BondsX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>High Yield Bonds</td>
+                            <td><input type="text" name="High Yield Bonds" size="8"></td>
+                            <td><input type="text" name="High Yield BondsY" size="2" value=0%></td>
+                            <td><input type="text" name="High Yield BondsX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Muni. Bonds</td>
+                            <td><input type="text" name="Municipal Bonds" size="8"></td>
+                            <td><input type="text" name="Municipal BondsY" size="2" value=0%></td>
+                            <td><input type="text" name="Municipal BondsX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Foreign Bonds</td>
+                            <td><input type="text" name="Foreign Bonds" size="8"></td>
+                            <td><input type="text" name="Foreign BondsY" size="2" value=0%></td>
+                            <td><input type="text" name="Foreign BondsX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Em. Mkt. Debt</td>
+                            <td><input type="text" name="Emerging Mkt Debt" size="8"></td>
+                            <td><input type="text" name="Emerging Mkt DebtY" size="2" value=0%></td>
+                            <td><input type="text" name="Emerging Mkt DebtX" size="4" value=100%></td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <th>Other Assets</th>
+                            <th>$$$</th>
+                            <th>min.</th>
+                            <th>max.</th>
+
+                        </tr>
+                        <tr>
+                            <td>V.C.</td>
+                            <td><input type="text" name="V.C." size="8"></td>
+                            <td><input type="text" name="V.C.Y" size="2" value=0%></td>
+                            <td><input type="text" name="V.C.X" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Real Estate</td>
+                            <td><input type="text" name="Real Estate" size="8"></td>
+                            <td><input type="text" name="Real EstateY" size="2" value=0%></td>
+                            <td><input type="text" name="Real EstateX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Commodities</td>
+                            <td><input type="text" name="Commodities" size="8"></td>
+                            <td><input type="text" name="CommoditiesY" size="2" value=0%></td>
+                            <td><input type="text" name="CommoditiesX" size="4" value=100%></td>
+                        </tr>
+                        <tr>
+                            <td>Cash</td>
+                            <td><input type="text" name="Cash" size="8"></td>
+                            <td><input type="text" name="CashY" size="2" value=0%></td>
+                            <td><input type="text" name="CashX" size="4" value=100%></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </form>
