@@ -156,11 +156,14 @@ button{
 .graph-container{
     position:absolute;
     margin: auto;
-    margin-top:-11vh;
+    text-align:center;
+    margin-top:-13vh;
+    margin-left:25vh;
     /*border-style:solid;
     border-color:rgb(255, 226, 182);*/
 
 }
+
 
 svg{
     height:80vh;
