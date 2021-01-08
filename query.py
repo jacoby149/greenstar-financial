@@ -1,6 +1,7 @@
 # Executes a query on the given cursor. and returns te result in a list.
 
 # MYSQL greenstar passsword od41zLDLwosDmonr
+# MYSQL greenstar ip 34.123.165.253
 from mysql.connector import connection
 
 show = False
