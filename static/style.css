@@ -142,8 +142,8 @@ button{
 
 .message-box {
     position:relative;
-    left:40%;
     padding-top:30px;
+    text-align:center;
 }
 
 .graph{
