@@ -1,5 +1,6 @@
 # Executes a query on the given cursor. and returns te result in a list.
 
+# MYSQL greenstar passsword od41zLDLwosDmonr
 from mysql.connector import connection
 
 show = False
