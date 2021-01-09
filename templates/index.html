@@ -48,41 +48,11 @@
     </center>
 
 
-
-
-    <!--
-        <table>
-            <tr>
-                <td>
-                    <div class="slidecontainer">
-                        <input type="range" min="0" max="199" value="25" class="slider" id="risk" name="risk">
-                    </div>
-                </td>
-                <td id="std"> Risk % </td>
-                <td> | </td>
-                <td id="mean"> Return % </td>
-                <td></td>
-            </tr>
-        </table>
-        -->
-
-    <!--        <table>
-            <tr>
-                <td id="weight"> Portfolio : FB : 25% , NT : 25% , NVD : 25% , LSA : 25%</td>
-            </tr>
-        </table>
-        -->
-
-    </div>
-
-    <div>
-
-    </div>
-
     <div style="float:right;width:10%;z-index:100000;">
         <div style="position:fixed;top:25%;right:0;z-index:100000;">
             <div class="btn-group-vertical control-buttons">
-                <button class="btn btn-primary" onclick="showhide()" id="show_hide_form" style="margin-bottom:12px;">Hide Form</button>
+                <button class="btn btn-primary" onclick="showhide()" id="show_hide_form"
+                    style="margin-bottom:12px;">Hide Form</button>
                 <button class="btn btn-success" onclick="request_graphs()">Run Computation</button>
                 <button class="btn btn-success" onclick="genReport()">Print Report</button>
             </div>
@@ -100,7 +70,7 @@
         </div>
     </div>
 
-    <div style="padding-left:10px;">
+    <div class="capcontainer" id="capcontainer">
 
         <!--        <a id="link" style="display:none;">Show Form</a>-->
         <!--
@@ -115,14 +85,14 @@
 
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
 
-<!--            <p style="padding-bottom:8px;">-->
-<!--                Type the dollar amounts invested within the current portfolio into the empty boxes below. <br>-->
-<!--                Change the minimum and maximum allowed percentages of each asset for the new portfolio. <br><br>-->
-<!--                Risk can be adjusted by selecting points on the Frontier Curve when the graphs load. <br>-->
-<!--                Click 'Run Computation' to apply your algorithms to data in the table or after adjusting risk. <br><br>-->
-<!--                When the graphs look okay, click 'Print Report' to generate your custom report.-->
+            <!--            <p style="padding-bottom:8px;">-->
+            <!--                Type the dollar amounts invested within the current portfolio into the empty boxes below. <br>-->
+            <!--                Change the minimum and maximum allowed percentages of each asset for the new portfolio. <br><br>-->
+            <!--                Risk can be adjusted by selecting points on the Frontier Curve when the graphs load. <br>-->
+            <!--                Click 'Run Computation' to apply your algorithms to data in the table or after adjusting risk. <br><br>-->
+            <!--                When the graphs look okay, click 'Print Report' to generate your custom report.-->
 
-<!--            </p>-->
+            <!--            </p>-->
 
 
 
@@ -154,7 +124,7 @@
                 </table>
 
 
-                <div>
+                <div class="stock-tables">
                     <table>
                         <tr>
                             <th>Stock Assets</th>
@@ -304,8 +274,10 @@
     <!--                <td> Output Graphs</td>-->
     <!--            </tr>-->
     <!--            <td>-->
-    <div class="message-box">
+    <div class="message-box" id="message-box">
         <p id="message"></p>
+        <br>
+        <br>
     </div>
 
 

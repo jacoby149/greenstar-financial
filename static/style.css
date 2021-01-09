@@ -1,5 +1,13 @@
+
+
+
+/**************/
+/* Tag Styles */
+/**************/
+
 body {
     background-color:#fff8e7;   /*cosmic latte*/
+    overflow-x: hidden
 }
 
 img {
@@ -22,6 +30,12 @@ button{
 }
 
 
+
+/****************************/
+/* Logo + Description Style */
+/****************************/
+
+
 .logo {
     height: 50pt;
     padding: 10px;
@@ -32,14 +46,24 @@ button{
     padding: 10px;
 }
 
+
+/**********************/
+/* Input Table Styles */
+/**********************/
+
+
+.capcontainer{
+    padding-left:10px;
+}
+
 .captable {
-    width: 90%;
+    width: 100%;
 }
 
 .captable table {
     border: 1px solid black;
     float: left;
-    margin-bottom: 10px;
+    margin-bottom:10px;
     margin-right: 10px;
 
 }
@@ -53,43 +77,75 @@ button{
     font-size: 10pt;
 }
 
-
-.gtable table {
-    border: 1px solid black;
-    float: left;
-    margin-bottom: 10px;
-    margin-right: 10px;
-
+.input-tables {
+    position:relative;
+    width:88%;
+    left:2%;
 }
 
-.gtable td {
-    border: 1px solid black;
-}
-
-.gtable th {
-    border: 1px solid black;
-    font-size: 10pt;
+.stock-tables{
+    padding-bottom:30px;
 }
 
 
-.controltable {
-    width: 90%;
+/*********************/
+/* Message Box Style */
+/*********************/
+
+
+.message-box {
+    position:relative;
+    text-align:center;
 }
 
-.controltable table {
-    float: left;
-    margin-bottom: 10px;
-    margin-right: 10px;
+
+
+
+/************************/
+/* Graph Related Styles */
+/************************/
+
+
+.graph{
+    position:absolute;
+    visibility:hidden;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
-.controltable td {
-    /*border: 1px solid black;*/
-    vertical-align: top;
+
+.graph-container{
+    position:relative;
+    top:-70px;
+    z-index:1;
 }
 
-.slidecontainer {
-    margin-top: -10px;
+
+svg{
+    height:80vh;
+    width:100vw;
 }
+
+
+
+/*********************/
+/* Logout Link Style */
+/*********************/
+
+
+.logout-link {
+    position:fixed;
+    right:0;
+    padding-right:8px;
+    top:95%;
+}
+
+
+/*****************/
+/* Button Styles */
+/*****************/
+
 
 .graph-buttons {
     position:relative;
@@ -143,46 +199,5 @@ button{
 
 .btn-success:focus {
     background-color:#007d4b !important;
-}
-
-.logout-link {
-    position:fixed;
-    right:0;
-    padding-right:8px;
-    top:95%;
-}
-
-.input-tables {
-    position:relative;
-    width:88%;
-    left:2%;
-    padding-bottom:50px;
-}
-
-.message-box {
-    position:relative;
-    padding-top:30px;
-    text-align:center;
-}
-
-.graph{
-    position:absolute;
-    visibility:hidden;
-}
-
-
-.graph-container{
-    position:relative;
-    width:40%;
-    float:left;
-    text-align:center;
-    left:4%;
-    top:-70px;
-    z-index:1;
-}
-
-
-svg{
-    height:80vh;
 }
 
