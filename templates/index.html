@@ -13,7 +13,7 @@
     <script src="static/mpld3.v0.5.2.js" async=""></script>
 </head>
 
-<body style="background-color:#fff8e7;">
+<body>
 
     <div class="logout-link">
         <a href="/logout">Secure Log Out</a>
@@ -21,7 +21,7 @@
 
 
     <center class="firm">
-        <div style="width:35%;padding-bottom:15px;">
+        <div class="tdcontainer">
             <table class="desctable">
                 <tr>
                     <td>
@@ -30,11 +30,11 @@
                 </tr>
                 <tr>
                     <td>
-                        <img class="logo" src="{{ img }}" style="width:100%;height:auto;">
+                        <img class="logo" src="{{ img }}">
                     </td>
                 </tr>
                 <tr>
-                    <td style="text-align:center;">
+                    <td>
                         <i>{{ title }}</i>
                     </td>
                 </tr>
@@ -48,11 +48,10 @@
     </center>
 
 
-    <div style="float:right;width:10%;z-index:100000;">
-        <div style="position:fixed;top:25%;right:0;z-index:100000;">
+    <div class="allbuttonscontainer">
+        <div class="allbuttons">
             <div class="btn-group-vertical control-buttons">
-                <button class="btn btn-primary" onclick="showhide()" id="show_hide_form"
-                    style="margin-bottom:12px;">Hide Form</button>
+                <button class="btn btn-primary showhide" onclick="showhide()" id="show_hide_form">Hide Form</button>
                 <button class="btn btn-success" onclick="request_graphs()">Run Computation</button>
                 <button class="btn btn-success" onclick="genReport()">Print Report</button>
             </div>
@@ -72,29 +71,7 @@
 
     <div class="capcontainer" id="capcontainer">
 
-        <!--        <a id="link" style="display:none;">Show Form</a>-->
-        <!--
-        <div class="control-buttons">
-            <button class="btn btn-dark" onclick="showhide()">Show Form</button>
-            <button class="btn btn-dark" onclick="request_graphs()">Run Computation</button>
-            <button class="btn btn-dark" onclick="genReport()">Print Report</button>
-        </div>
-        -->
-
-
-
         <form class="captable" id="captable" action="/report" target="_blank" method="POST">
-
-            <!--            <p style="padding-bottom:8px;">-->
-            <!--                Type the dollar amounts invested within the current portfolio into the empty boxes below. <br>-->
-            <!--                Change the minimum and maximum allowed percentages of each asset for the new portfolio. <br><br>-->
-            <!--                Risk can be adjusted by selecting points on the Frontier Curve when the graphs load. <br>-->
-            <!--                Click 'Run Computation' to apply your algorithms to data in the table or after adjusting risk. <br><br>-->
-            <!--                When the graphs look okay, click 'Print Report' to generate your custom report.-->
-
-            <!--            </p>-->
-
-
 
             <input type="hidden" value="25" id="risk" name="risk">
 
@@ -118,7 +95,7 @@
                         <th>End Date (YYYY-MM-DD)</th>
                     </tr>
                     <tr>
-                        <td style="text-align:center;"><input type="text" id="date-input" name="date-input" size="10">
+                        <td><input type="text" id="date-input" name="date-input" size="17">
                         </td>
                     </tr>
                 </table>
@@ -272,6 +249,7 @@
         <p id="message"></p>
     </div>
 
+    <div class="spacer"></div>
     <div class="spacer"></div>
 
 

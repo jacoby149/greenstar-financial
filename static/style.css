@@ -6,7 +6,7 @@
 /**************/
 
 body {
-    background-color:#fff8e7;   /*cosmic latte*/
+    background-color:#fff8e7!important;   /*cosmic latte*/
 }
 
 img {
@@ -34,15 +34,25 @@ button{
 /* Logo + Description Style */
 /****************************/
 
+.tdcontainer{
+    margin-top:-15px;
+    width:35%;
+    padding-bottom:15px;
+}
 
 .logo {
-    height: 50pt;
+    width:100%;
+    height:auto;
     padding: 10px;
     float: none;
 }
 
 .desctable {
     padding: 10px;
+}
+
+.desctable td{
+    text-align:center;
 }
 
 
@@ -98,7 +108,7 @@ button{
 }
 
 .spacer{
-    height:28px;
+    height:22px;
 }
 
 
@@ -147,6 +157,22 @@ svg{
 /* Button Styles */
 /*****************/
 
+.allbuttonscontainer{
+    float:right;
+    width:10%;
+    z-index:100000;
+}
+
+.allbuttons{
+    position:fixed;
+    top:25%;
+    right:0;
+    z-index:100000;
+}
+
+.showhide{
+    margin-bottom:12px;
+}
 
 .graph-buttons {
     position:relative;
