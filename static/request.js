@@ -38,7 +38,7 @@ function linkmake() {
 
 
 function showhide() {
-    cap = document.getElementById("captable")
+    cap = document.getElementById("capcontainer");
     if (cap.style.display == "none") {
         cap.style.display = "block";
         document.getElementById("show_hide_form").innerHTML = "Hide Form";
@@ -81,6 +81,7 @@ function mplview(button) {
 // image return
 function load_graphs(data) {
     document.getElementById("message").innerHTML = "";
+    document.getElementById("message-box").style.display = "none";
     var img_list = eval(data['images'])
 
 
@@ -105,7 +106,7 @@ function load_graphs(data) {
     stds = eval(data["risks"])
     means = eval(data["returns"])
     portfolios = eval(data["portfolios"])
-    cap = document.getElementById("captable");
+    cap = document.getElementById("capcontainer");
     shoe = document.getElementById("show_hide_form");
     cap.style.display = "none";
     shoe.innerHTML = "Show Form";
@@ -119,10 +120,13 @@ function request_graphs() {
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
 
     document.getElementById("message").innerHTML = "Running computation...";
+    document.getElementById("message-box").style.display = "block";
 
     $.post("/load_graphs", form, load_graphs)
         .fail(function (error) {
             document.getElementById("message").innerHTML = "Please Fill Out The Form.";
+            document.getElementById("message-box").style.display = "block";
+
 
         });
 
