@@ -213,7 +213,7 @@ def pie(pie_data, title='pie_default'):
 
     colors = ['cornflowerblue', 'limegreen', 'orangered', 'gold', 'm', 'c', 'sienna']
     ax1.pie(sizes, labels=tickers, explode=explode, colors=rcolors,pctdistance=0.75, autopct='%1.1f%%', shadow=False, startangle=180,
-                    wedgeprops={ "width":.55, 'antialiased': True},
+                    wedgeprops={ "width":.55,"edgecolor":"w", "antialiased": True},
                     textprops={'fontsize': 20})
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
 
