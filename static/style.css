@@ -155,30 +155,30 @@ svg{
     width:100%;
     padding-top: 50px;
     float:right;
-    z-index:20000;
+    z-index: 20000;
 }
 
 .graph-buttons button {
     padding-top: 4px;
     background-color:#181818;
     color:#fff;
-    outline:0!important;
-    box-shadow:none!important;
+    outline:0 !important;
+    box-shadow:none !important;
 }
 
 .control-buttons {
     position:absolute;
     padding-bottom:8px;
-    outline:0!important;
-    box-shadow:none!important;
+    outline:0 !important;
+    box-shadow:none !important;
     float:right;
     z-index:2000;
 }
 
 
 .control-buttons button {
-    outline:0!important;
-    box-shadow:none!important;
+    outline:0 !important;
+    box-shadow:none !important;
 }
 
 .btn-outline-primary {
