@@ -260,7 +260,7 @@ def frontier(red, blue, wheat, ribs, extend):
                        Line2D([0], [0], alpha = 1,color='gold', lw=2.0, label='Low Risk Portfolios'),
                        Line2D([0], [0], alpha = .8,color='darkorange', lw=2.0, label='Medium Risk Portfolios'),
                        Line2D([0], [0], alpha = .6,color='r', lw=2.0, label='High Risk Portfolios'),
-                       Line2D([0], [0], alpha = .6,color='black', lw=2.0, label='Extension',),
+                       Line2D([0], [0], alpha = .6,color='black', lw=2.0, label='Extension (18% Risk)',),
                        ]
 
     ax.legend(handles=legend_elements)
