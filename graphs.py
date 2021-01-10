@@ -247,7 +247,7 @@ def frontier(red, blue, wheat, ribs, extend):
     ms = 2
 
     # Format axes
-    fig, ax = plt.subplots(figsize=(12,8))
+    fig, ax = plt.subplots(figsize=(9,6))
 
 
     ax.yaxis.set_major_formatter(mtick.PercentFormatter())
@@ -257,7 +257,11 @@ def frontier(red, blue, wheat, ribs, extend):
     legend_elements = [Line2D([0], [0], marker='o', lw=0, color='b', label='Current Strategy', markersize=5),
                        Line2D([0], [0], marker='o', lw=0, color='r', label='Recommended Strategy', markersize=5),
                        Line2D([0], [0], marker='o', lw=0, color='wheat', label='Generic Portfolios', markersize=5),
-                       Line2D([0], [0], color='y', lw=2.0, label='Optimal Portfolios')]
+                       Line2D([0], [0], alpha = 1,color='gold', lw=2.0, label='Low Risk Portfolios'),
+                       Line2D([0], [0], alpha = .8,color='darkorange', lw=2.0, label='Medium Risk Portfolios'),
+                       Line2D([0], [0], alpha = .6,color='r', lw=2.0, label='High Risk Portfolios'),
+                       Line2D([0], [0], alpha = .6,color='black', lw=2.0, label='Extension',),
+                       ]
 
     ax.legend(handles=legend_elements)
 
@@ -286,20 +290,18 @@ def frontier(red, blue, wheat, ribs, extend):
                 return i-1
         return len(l)-1
 
-    interval = riskys[-1] / 4
+    interval = riskys[-1] / 3
 
     lo = cutoff(riskys,interval)
     med = cutoff(riskys,interval*2)
-    hi = cutoff(riskys,interval*3)
 
 
     points = plt.plot(riskys[:lo+1], retys[:lo+1], 'gold',markersize=ms, alpha=1)
     points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'darkorange',markersize=ms,alpha=.8)
-    points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'r',markersize=ms,alpha=.6)
-    points = plt.plot(riskys[hi:], retys[hi:], 'darkblue',markersize=ms,alpha=.6)
+    points = plt.plot(riskys[med:], retys[med:], 'r',markersize=ms,alpha=.6)
 
     risk_extension = [riskys[-1],17]
-    ret_extension = [retys[-1],retys[-1]+.5]
+    ret_extension = [retys[-1],retys[-1]+.3]
     points = plt.plot(risk_extension, ret_extension, 'black',markersize=ms,alpha=.6)
 
 
