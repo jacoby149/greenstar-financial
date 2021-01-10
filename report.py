@@ -50,7 +50,7 @@ def latexify(book, info):
                     "Real Estate": " Land and buildings.",
                     "V.C.": " New and innovative companies.",
 
-                    "International Gov Bonds": " Govt. bonds that mature in 5-10 years.",
+                    "Intermediate Gov Bonds": " Govt. bonds that mature in 5-10 years.",
                     "Long Gov Bonds": " Govt. bonds mature in more than 10 years.",
 
                     "Corporate Bonds": " Bonds issued by a corporation.",
