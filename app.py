@@ -65,7 +65,7 @@ def favicon():
 @app.route("/", methods=["GET", "POST"])
 def load_home():
     global vars
-    if 'logged_in' in session:
+    if 'logged_in' in session and session['logged_in'] == True:
         return render_template('index.html', **vars)
     else:
         return render_template('password_page.html')
