@@ -300,8 +300,10 @@ def frontier(red, blue, wheat, ribs, extend):
     points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'darkorange',markersize=ms,alpha=.8)
     points = plt.plot(riskys[med:], retys[med:], 'r',markersize=ms,alpha=.6)
 
-    risk_extension = [riskys[-1],17]
-    ret_extension = [retys[-1],retys[-1]+.3]
+    maxx = 18
+    dist = maxx - riskys[-1]
+    risk_extension = [riskys[-1],maxx]
+    ret_extension = [retys[-1],retys[-1]+ dist*.1 ]
     points = plt.plot(risk_extension, ret_extension, 'black',markersize=ms,alpha=.6)
 
 
