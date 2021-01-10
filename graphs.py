@@ -298,6 +298,11 @@ def frontier(red, blue, wheat, ribs, extend):
     points = plt.plot(riskys[med:hi+1], retys[med:hi+1], 'r',markersize=ms,alpha=.6)
     points = plt.plot(riskys[hi:], retys[hi:], 'darkblue',markersize=ms,alpha=.6)
 
+    risk_extension = [riskys[-1],17]
+    ret_extension = [retys[-1],12]
+    points = plt.plot(risk_extension, ret_extension, 'black',markersize=ms,alpha=.6)
+
+
 
     # plot slider-selected recommended portfolio
     plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=3,markersize=ms*1.6)
