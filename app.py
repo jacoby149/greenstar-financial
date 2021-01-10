@@ -34,7 +34,7 @@ app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 images = []
 img_form = "{}"
 form_params = {}
-vars = {}
+
 #stock_symbols                                          # FAQ    https://www.portfoliovisualizer.com/faq#dataSources
 form_params["Large Cap Growth"] = "VIGRX"                # FSPGX
 form_params["Large Cap Value"] = "JKD"                  # FLCOX S&P 500 Value Index
@@ -64,16 +64,14 @@ def favicon():
 # do machine learning
 @app.route("/", methods=["GET", "POST"])
 def load_home():
-    global vars
     if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('index.html', **vars)
+        return render_template('index.html', **session)
     else:
         return render_template('password_page.html')
 
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    global vars
     passcode = request.form.get("passcode")
     if passcode == 'Provins1!':
         session['logged_in'] = True
@@ -85,9 +83,6 @@ def login():
         session['client'] = 'demo'
         session['image'] = "static/GreenstarBanner.png"
         session['title'] = "Greenstar Custom Algorithms - Markowitz Model"
-
-    vars['img'] = session['image']
-    vars['title'] = session['title']
 
     return redirect("/")
 
