@@ -199,12 +199,13 @@ button{
     position:relative;
     top:-70px;
     z-index:1;
+    left:11%;
 }
 
 
 svg{
     height:80vh;
-    width:100vw;
+    width:80vw;
 }
 
 
