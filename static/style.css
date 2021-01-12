@@ -1,4 +1,73 @@
+/*****************/
+/* Button Styles */
+/*****************/
 
+.allbuttonscontainer{
+    float:right;
+    width:10%;
+    z-index:100000;
+}
+
+.allbuttons{
+    position:fixed;
+    top:25%;
+    right:0;
+    z-index:100000;
+}
+
+.graph-buttons {
+    position:relative;
+    top:10%;
+    width:100%;
+    padding-top: 50px;
+    float:right;
+    z-index: 20000;
+}
+
+.graph-buttons button {
+    padding-top: 4px;
+    background-color:#181818;
+    color:#fff;
+    outline:0 !important;
+    box-shadow:none !important;
+}
+
+.control-buttons {
+    position:absolute;
+    padding-bottom:8px;
+    outline:0 !important;
+    box-shadow:none !important;
+    float:right;
+    z-index:2000;
+}
+
+
+.control-buttons button {
+    outline:0 !important;
+    box-shadow:none !important;
+}
+
+.btn-outline-primary {
+    background-color: #fff8e7 !important;
+}
+
+
+.btn-success:hover {
+    background-color: #007d4b !important;
+}
+
+.btn-outline-primary:hover {
+    background-color:#fff8e7 !important;
+    color:#0275d8 !important;
+}
+
+.btn-outline-primary:focus {
+    background-color:#fff8e7 !important;
+}
+
+.btn-success:focus {
+    background-color:#007d4b !important;
+}
 
 
 /**************/
@@ -130,12 +199,13 @@ button{
     position:relative;
     top:-70px;
     z-index:1;
+    left:11%;
 }
 
 
 svg{
     height:80vh;
-    width:100vw;
+    width:80vw;
 }
 
 
@@ -150,77 +220,9 @@ svg{
     right:0;
     padding-right:8px;
     top:95%;
+    z-index: 1000001!important;
 }
 
 
-/*****************/
-/* Button Styles */
-/*****************/
 
-.allbuttonscontainer{
-    float:right;
-    width:10%;
-    z-index:100000;
-}
-
-.allbuttons{
-    position:fixed;
-    top:25%;
-    right:0;
-    z-index:100000;
-}
-
-.graph-buttons {
-    position:relative;
-    top:10%;
-    width:100%;
-    padding-top: 50px;
-    float:right;
-    z-index: 20000;
-}
-
-.graph-buttons button {
-    padding-top: 4px;
-    background-color:#181818;
-    color:#fff;
-    outline:0 !important;
-    box-shadow:none !important;
-}
-
-.control-buttons {
-    position:absolute;
-    padding-bottom:8px;
-    outline:0 !important;
-    box-shadow:none !important;
-    float:right;
-    z-index:2000;
-}
-
-
-.control-buttons button {
-    outline:0 !important;
-    box-shadow:none !important;
-}
-
-.btn-outline-primary {
-    background-color: #fff8e7 !important;
-}
-
-
-.btn-success:hover {
-    background-color: #007d4b !important;
-}
-
-.btn-outline-primary:hover {
-    background-color:#fff8e7 !important;
-    color:#0275d8 !important;
-}
-
-.btn-outline-primary:focus {
-    background-color:#fff8e7 !important;
-}
-
-.btn-success:focus {
-    background-color:#007d4b !important;
-}
 
