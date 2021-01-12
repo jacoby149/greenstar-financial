@@ -150,6 +150,7 @@ svg{
     right:0;
     padding-right:8px;
     top:95%;
+    z-index: 1000001;
 }
 
 
