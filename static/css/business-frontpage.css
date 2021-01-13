@@ -9,6 +9,7 @@ body {
 }
 
 .gs-top-nav {
+    background-color: #018749 !important;
     border-bottom: 1px solid darkGreen !important;
 }
 
