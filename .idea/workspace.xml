@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clients/demo/Greenstar Demo Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/Greenstar Demo Report.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Clients/demo/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/report.tex" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfs/ Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/ Report.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pdfs/Client Name Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/Client Name Report.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +40,7 @@
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Clients/demo" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Clients/Ashwin-Sharma" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
