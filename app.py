@@ -67,6 +67,16 @@ def homepage():
     return render_template("homepage.html")
 
 
+@app.route("/finance_home", methods=["GET", "POST"])
+def finance_home():
+    return render_template("finance_home.html")
+
+
+@app.route("/crm_home", methods=["GET", "POST"])
+def crm_home():
+    return render_template("crm_home.html")
+
+
 @app.route("/modules", methods=["GET", "POST"])
 def load_home():
     if 'logged_in' in session and session['logged_in'] == True:
