@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/templates/crm_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/crm_home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/finance_home.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/finance_home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/homepage.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
