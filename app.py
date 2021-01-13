@@ -83,6 +83,11 @@ def login():
         session['client'] = 'demo'
         session['image'] = "static/GreenstarBanner.png"
         session['title'] = "Greenstar Custom Algorithms - Markowitz Model"
+    if passcode == 'Sharma1!':
+        session['logged_in'] = True
+        session['client'] = 'Ashwin-Sharma'
+        session['image'] = 'static/Moore.png'
+        session['title'] = "Moore Financial Custom Algorithms - Portfolio Comparisons"
 
     return redirect("/")
 
