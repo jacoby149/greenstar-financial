@@ -3,8 +3,29 @@
   <component name="ChangeListManager">
     <list default="true" id="d8e321ca-6816-45c3-a473-ff46d5c094bc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clients/Ashwin-Sharma/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Ashwin-Sharma/report.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Clients/Tom-Provins/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/Tom-Provins/report.tex" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Clients/demo/report.tex" beforeDir="false" afterPath="$PROJECT_DIR$/Clients/demo/report.tex" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/graphs.py" beforeDir="false" afterPath="$PROJECT_DIR$/graphs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pdfs/ Report.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/pdfs/ Report.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/GreenStar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/GreenstarBanner.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Moore.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/Provins.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/US-Standard-BC-Squared.psd.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/bootstrap-3.3.7-dist.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/bootstrap-theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/bootstrap.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/d3.v5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/jquerymin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/mpld3.v0.5.2.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/ny.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/request.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/serialize.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/password_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/password_page.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +36,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
