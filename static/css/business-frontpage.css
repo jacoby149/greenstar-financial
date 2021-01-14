@@ -40,14 +40,14 @@ gs-center-header {
 
 @media only screen and (max-width: 1000px) {
     .team-picture {
-        width: 100vw;
+        width: 100%;
         text-align:center;
     }
     .team-picture img {
         width:100vw;
     }
     .team-writing {
-        width:100vw;
+        width:100%;
         padding-left:10px;
         padding-right:10px;
         padding-top:15px;
