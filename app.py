@@ -83,21 +83,29 @@ def team_home():
     return render_template("team_home.html")
 
 
-@app.route("/modules", methods=["GET", "POST"])
-def load_home():
-    if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('index.html', **session)
-    else:
-        return render_template('password_page.html')
 
 
-
+# ########################################
+# ########      CRM ROUTES       #########
+# ########################################
+# 
+# @app.route("/crm_login", methods=["GET", "POST"])
+# def crm_password_page():
+#     return render_template("crm_password_page.html")
 
 
 
 ########################################
 ########   FINANCIAL ROUTES    #########
 ########################################
+
+@app.route("/modules", methods=["GET", "POST"])
+def load_home():
+    if 'logged_in' in session and session['logged_in'] == True:
+        return render_template('index.html', **session)
+    else:
+        return render_template('password_page.html')
+    
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

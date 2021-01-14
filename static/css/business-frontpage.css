@@ -16,3 +16,9 @@ body {
 gs-center-header {
     background-color: #fff8e7 !important;
 }
+
+.team-row tr td:nth-child(2) {
+    vertical-align:top;
+    padding-top: 26px;
+    padding-left:25px;
+}
