@@ -40,7 +40,7 @@ gs-center-header {
 
 @media only screen and (max-width: 1000px) {
     .team-picture {
-        width: 100%;
+        width: 100vw;
         text-align:center;
     }
     .team-picture img {
