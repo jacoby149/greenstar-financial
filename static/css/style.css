@@ -197,15 +197,14 @@ button{
 
 .graph-container{
     position:relative;
-    top:-70px;
+    top:-90px;
     z-index:1;
-    left:11%;
 }
 
 
 svg{
     height:80vh;
-    width:80vw;
+    width:100vw;
 }
 
 
