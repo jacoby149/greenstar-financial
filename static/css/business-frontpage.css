@@ -17,8 +17,27 @@ gs-center-header {
     background-color: #fff8e7 !important;
 }
 
-.team-row tr td:nth-child(2) {
-    vertical-align:top;
-    padding-top: 26px;
-    padding-left:25px;
+.row {
+    width:100%;
+}
+
+.team-picture {
+    position:relative;
+    width:45%;
+    float:left;
+}
+
+.team-writing {
+    position:relative;
+    padding-top:20px;
+    width:55%;
+}
+
+@media only screen and (max-width: 1000px) {
+    .team-picture {
+        width: 100%;
+    }
+    .team-writing {
+        width:100%;
+    }
 }
