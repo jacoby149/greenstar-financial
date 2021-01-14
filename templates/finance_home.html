@@ -13,6 +13,9 @@
     <!-- Bootstrap core CSS -->
     <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Modal CSS -->
+    <link href="static/css/modal.css" rel="stylesheet">
+
     <!-- Custom styles for this template -->
     <link href="static/css/business-frontpage.css" rel="stylesheet">
 
@@ -29,9 +32,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Home</a>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="/">Home</a>-->
+<!--                </li>-->
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Finance Software</a>
                 </li>
@@ -39,7 +42,7 @@
                     <a class="nav-link" href="/crm_home">CRM Software</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/">Our Team</a>
+                    <a class="nav-link" href="/team_home">Our Team</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/modules">Log In</a>
@@ -70,7 +73,8 @@
             <hr>
             <p>Large wealth management corporations have full-time tech departments that work with their advisors to custom fit financial software to their specific needs.</p>
             <p>We are the premiere independent company that provides this same level of attention and one-on-one focus to smaller wealth management firms.</p>
-            <a class="btn btn-primary btn-lg" href="#">View Gallery &raquo;</a>
+            <p>Reach out to us today to set up a free initial consult!</p><br>
+            <a class="btn btn-primary btn-lg" href="mailto:jacob@greenstargroup.org;oliver@greenstargroup.com">Email Us &raquo;</a>
         </div>
         <div class="col-md-4 mb-5">
             <h2>Contact Us</h2>
@@ -103,10 +107,10 @@
                 <img class="card-img-top" src="static/img/teamwork-business.jpg" alt="">
                 <div class="card-body">
                     <h4 class="card-title">How It Works</h4>
-                    <p class="card-text">Click here to learn more about what working with Greenstar will be like.</p>
+                    <p class="card-text">Learn more about what working with Greenstar will be like.</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#teamwork">Find Out More!</button>
                 </div>
             </div>
         </div>
@@ -115,10 +119,10 @@
                 <img class="card-img-top" src="static/img/promise.jpg" alt="">
                 <div class="card-body">
                     <h4 class="card-title">Our Promise</h4>
-                    <p class="card-text">Click here to view our company mission and our pledge to our clients.</p>
+                    <p class="card-text">View our company mission and our pledge to our clients.</p>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#promise">Find Out More!</button>
                 </div>
             </div>
         </div>
@@ -129,9 +133,9 @@
                     <h4 class="card-title">Compliance</h4>
                     <p class="card-text">We are in the process of gaining all requisite compliance certifications to deliver the safest, most reliable models to you and your team.</p>
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
-                </div>
+<!--                <div class="card-footer">-->
+<!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
+<!--                </div>-->
             </div>
         </div>
     </div>
@@ -147,6 +151,49 @@
     </div>
     <!-- /.container -->
 </footer>
+
+
+<!-- Modals -->
+<div id="teamwork" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Work With Us</h4>
+            </div>
+            <div class="modal-body">
+                <p>We work with you to discover what you like and don't like about your current software. We talk about what we are able to do for you, then build you a custom suite of tools catered to your needs.</p>
+                <p>As we show you progress along the way, there will be no charge to you. Once you are satisfied with the product, then we will send the initial invoice and set up a monthly payment structure.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="promise" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Our Promise</h4>
+            </div>
+            <div class="modal-body">
+                <p>Here at Greenstar we love to invest our time and services to help small businesses. It is our promise to deliver the same level of customization that large firms get to those who prefer a community-driven approach to financial health.</p>
+                <p>We treat each client with the respect and one-on-one attention they deserve. Consider us your own personal software department.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 
 <!-- Bootstrap core JavaScript -->
 <script src="static/vendor/jquery/jquery.min.js"></script>

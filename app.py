@@ -62,11 +62,12 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
+
+########################################
+########   HOME PAGE ROUTES    #########
+########################################
+
 @app.route("/", methods=["GET", "POST"])
-def homepage():
-    return render_template("homepage.html")
-
-
 @app.route("/finance_home", methods=["GET", "POST"])
 def finance_home():
     return render_template("finance_home.html")
@@ -77,6 +78,11 @@ def crm_home():
     return render_template("crm_home.html")
 
 
+@app.route("/team_home", methods=["GET", "POST"])
+def team_home():
+    return render_template("team_home.html")
+
+
 @app.route("/modules", methods=["GET", "POST"])
 def load_home():
     if 'logged_in' in session and session['logged_in'] == True:
@@ -84,6 +90,14 @@ def load_home():
     else:
         return render_template('password_page.html')
 
+
+
+
+
+
+########################################
+########   FINANCIAL ROUTES    #########
+########################################
 
 @app.route("/login", methods=["GET", "POST"])
 def login():

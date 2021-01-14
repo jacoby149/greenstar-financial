@@ -1,0 +1,65 @@
+
+/* ----- MODAL STYLE ----- */
+.modal-content {
+    color: #000;
+    border-radius: 0;
+    border: none;
+}
+
+.modal-header {
+    text-align: left;
+    color: #fff;
+    border-bottom-color: #EEEEEE;
+    background-color: #018749;
+}
+
+.modal-footer {
+    background-color:#fff8e7;
+}
+
+.modal-dialog {
+    background-color:#fff;
+}
+
+.ImgThumbnail {
+    width:100%;
+}
+
+.thumbnail-topbar {
+    height:70px;
+    padding-top:30px;
+    font-weight:bold;
+    font-size:26px;
+    text-align:center;
+    background-color:#fff8e7;
+    border-bottom: 1px solid darkGreen;
+}
+
+.thumbnail-separator {
+    height:70px;
+    padding-top:30px;
+    font-weight:bold;
+    font-size:26px;
+    text-align:center;
+    background-color:#fff8e7;
+    border-top: 1px solid darkGreen;
+    border-bottom: 1px solid darkGreen;
+}
+
+.thumbnail-endbar {
+    height:15px;
+    background-color:#fff8e7;
+    border-top:1px solid darkGreen;
+}
+
+
+.modal-title {
+    color:#fff;
+    text-align:left;
+    float:left;
+}
+
+
+.modal-gallery {
+    width:68vw;
+}
