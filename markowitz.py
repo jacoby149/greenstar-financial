@@ -152,7 +152,7 @@ def optimal_portfolio(daily_data,book,profit,cov):
     h = opt.matrix(0.0, (n ,1))
 
     #add bundle boundaries bundles size l sum greater weight than c BUNDLE BUNDLE BUNDLE
-    #G,h = bundles(c=.1,l=n - n//4,n=n,G=G,h=h)
+    G,h = bundles(c=.1,l=n - n//4,n=n,G=G,h=h)
 
     #add upper and lower limit constraints (i.e. no more than 10% in V.C. | 10% stays in Cash etc)
     G,h = limits(G,h,book)
