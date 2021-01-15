@@ -51,6 +51,23 @@ function showhide() {
     }
 }
 
+function showhidetax() {
+    tax = document.getElementById("taxrate");
+    cap = document.getElementById("taxcap");
+    if (cap.style.display == "none") {
+        cap.style.display = "block";
+        tax.style.display = "block";
+        document.getElementById("show_hide_tax").innerHTML = "Hide Tax(coming)";
+        document.getElementById("show_hide_tax").className = "btn btn-secondary";
+    }
+    else {
+        cap.style.display = "none";
+        tax.style.display = "none";
+        document.getElementById("show_hide_tax").innerHTML = "Show Tax(coming)";
+        document.getElementById("show_hide_tax").className = "btn btn-outline-secondary";
+    }
+}
+
 
 ////////////////////////////////
 //  NETWORKING JAVASCRIPT  /////

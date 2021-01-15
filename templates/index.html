@@ -62,6 +62,8 @@
     <div class="allbuttonscontainer">
         <div class="allbuttons">
             <div class="btn-group-vertical control-buttons">
+                <button class="btn btn-secondary" onclick="showhidetax()" id="show_hide_tax">Show Tax (coming)</button>
+
                 <button class="btn btn-primary" style="margin-bottom:12px;" onclick="showhide()"
                     id="show_hide_form">Hide Form</button>
                 <button class="btn btn-success" onclick="request_graphs()">Run Computation</button>
@@ -111,6 +113,96 @@
                         </td>
                     </tr>
                 </table>
+
+
+                <table id="taxrate" style="display:none;">
+                    <tr>
+                        <th>Fed. Rate</th>
+                        <th>State Rate</th>
+                        <th>Fed. C.G. Rate</th>
+                        <th>State C.G. Rate</th>
+                        <th>Medicare Tax</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" name="limit_1" size="10" value=28%></td>
+                        <td><input type="text" name="limit_1" size="10" value=3.07%></td>
+                        <td><input type="text" name="limit_1" size="10" value=15%></td>
+                        <td><input type="text" name="limit_1" size="10" value=3.8%></td>
+                        <td><input type="text" name="limit_1" size="10" value=3.8%></td>
+
+                    </tr>
+                </table>
+
+
+                <div class="stock-tables" id="taxcap" style="display:none;">
+
+                    <table>
+                        <tr>
+                            <th>Account Name</th>
+                            <th>Acct. Type</th>
+                            <th>Allocation</th>
+                            <th>Allowance</th>
+                            <th>Control</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="Account_1" size="10" value="Main Account"></td>
+                            <td>
+
+                                <select id="type" name="type">
+                                    <option value="NULL">Select Type</option>
+                                    <option value="unsheltered">Unsheltered</option>
+                                    <option value="roth">Roth 401K</option>
+                                    <option value="retirement">Standard 401K</option>
+                                </select>
+                            </td>
+                            <td><input type="text" class="input-disabled" name="limit_1" size="10" value=10000 readonly>
+                            </td>
+                            <td><input type="text" name="limit_1" size="10" value=20000></td>
+                            <td>
+                                <select id="type" name="type">
+                                    <option value="Forced">Bundle</option>
+                                    <option value="unsheltered">Choice</option>
+                                </select>
+                            </td>
+
+                        </tr>
+                    </table>
+
+
+
+                    <table>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Amount</th>
+                            <th>Acct.</th>
+                            <th>Asset Class</th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="Ticker_1" size="10" value="ESPY"></td>
+                            <td><input type="text" name="limit_1" size="10" value=20000></td>
+                            <td>
+                                <select id="type" name="type">
+                                    <option value="NULL">Select Acct.</option>
+                                    <option value="unsheltered">Main Acct.</option>
+                                    <option value="roth">Roth Acct.</option>
+                                    <option value="retirement">Retirement Acct.</option>
+                                    <option value="roth">Roth Acct. 2</option>
+                                    <option value="retirement">Retirement Acct. 2</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select id="type" name="type">
+                                    <option value="NULL">Select Class</option>
+                                    <option value="unsheltered">Lg. Cap</option>
+                                    <option value="roth">Small Cap</option>
+                                    <option value="retirement">Mid Cap</option>
+                                </select>
+
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
 
 
                 <div class="stock-tables">
