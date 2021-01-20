@@ -55,8 +55,6 @@ form_params["V.C."] = "VFINX"                       # looks just like LDVIX but 
 form_params["Commodities"] = "GSG"            #USCI  # US commodity index instead of dow jones intl. very similar models "^DJCI"
 form_params["Cash"] = "BIL"
 
-
-
 @app.route('/favicon.ico') 
 def favicon(): 
     return send_from_directory(os.path.join(app.root_path, 'static'), 'favicon.ico', mimetype='image/vnd.microsoft.icon')
@@ -110,22 +108,16 @@ def load_home():
 @app.route("/login", methods=["GET", "POST"])
 def login():
     passcode = request.form.get("passcode")
-    if passcode == 'Provins1!':
-        session['logged_in'] = True
-        session['client'] = 'Tom-Provins'
-        session['image'] = "static/img/Provins.png"
-        session['title'] = "Cardiff, Provins, Angel's Custom Algorithms - Markowitz Model"
-    if passcode == 'gsdev':
-        session['logged_in'] = True
-        session['client'] = 'demo'
-        session['image'] = "static/img/GreenstarBanner.png"
-        session['title'] = "Greenstar Custom Algorithms - Markowitz Model"
-    if passcode == 'Sharma1!':
-        session['logged_in'] = True
-        session['client'] = 'Ashwin-Sharma'
-        session['image'] = 'static/img/Moore.png'
-        session['title'] = "Moore Financial Custom Algorithms - Portfolio Comparisons"
+    eq_dict = {'passcode' : passcode}
+    resp = select_query("clients",eq_dict)
 
+    print(passcode,"\n",resp,flush=True)
+    if (len(resp)>0):
+        client = resp[0]
+        session['logged_in'] = True
+        session['client'] = client["name"]
+        session['image'] = "static/img/{}".format(client["logo"])
+        session['title'] = "{} Custom Algorithms - {}".format(client["firm"],client["header_title"])       
     return redirect("/modules")
 
 

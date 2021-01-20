@@ -12,7 +12,7 @@ def creds():
     sql_gs["user"] = "root"
     sql_gs["password"] = "od41zLDLwosDmonr"
     sql_gs["host"] = "34.123.165.253"
-    sql_gs["database"] = "greenstar"
+    sql_gs["database"] = "finance"
     return sql_gs
 
 
@@ -107,7 +107,7 @@ def eq_string(eq_dict, separator='and'):
     statements = []
     for field in eq_dict:
         value = eq_dict[field]
-        comp = " {} = {} ".format(field, value)
+        comp = " {} = '{}' ".format(field, value)
         # for range statements.
         if isinstance(value, tuple):
             lo = value[0]
@@ -128,6 +128,7 @@ def select_query(table, eq_dict=None, desc_field=None):
     if desc_field is not None:
         qp2 = "ORDER BY {} DESC;".format(desc_field)
     query = qp1 + qp2
+    print(query,flush=True)
     return make_query(query, commit=True)
 
 
