@@ -81,18 +81,6 @@ def team_home():
     return render_template("team_home.html")
 
 
-
-
-# ########################################
-# ########      CRM ROUTES       #########
-# ########################################
-# 
-# @app.route("/crm_login", methods=["GET", "POST"])
-# def crm_password_page():
-#     return render_template("crm_password_page.html")
-
-
-
 ########################################
 ########   FINANCIAL ROUTES    #########
 ########################################
@@ -240,17 +228,117 @@ def make_report():
     return send_file("/app/pdfs/{} Report.pdf".format(info['name']))
 
 
-# @app.route("/back", methods=["GET", "POST"])
-# def back():
-#     global images
-#     images = []
-#     risk_level = int(request.form.get('risk'))
-#     vals=dict()
-#     vals["weights"],images = markowitz.backtest(risk_level=risk_level)
-#     html_images = [img_form.format(i) for i in images]
-#     vals["backtest"]= "".join(html_images)
-#     return vals
+# ########################################
+# ########      CRM ROUTES       #########
+# ########################################
+ 
+#Logging out of CRM
+@app.route("/crm_logout", methods=["GET", "POST"])
+def crm_logout():
+    session.clear()
+    return redirect("/crm")
 
+#Verify a submitted CRM login attempt
+@app.route("/crm_verify", methods=["GET", "POST"])
+def crm_verify():
+    passcode = request.form.get("passcode")
+    eq_dict = {'passcode' : passcode}
+    resp = select_query("clients",eq_dict)
+
+    print(passcode,"\n",resp,flush=True)
+    if (len(resp)>0):
+        client = resp[0]
+        session['logged_in'] = True
+        session['client'] = client["name"]
+        session['image'] = "static/img/{}".format(client["logo"])
+    return redirect("/crm")
+
+#CRM Dashboard
+@app.route("/crm", methods=["GET", "POST"])
+def crm():
+    if 'logged_in' in session and session['logged_in'] == True:
+        return render_template('crm.html', **session)
+    else:
+        return render_template('crm_password_page.html')
+
+#Loading of contacts into the CRM dashboard
+@app.route("/load_contacts", methods=["GET", "POST"])
+def load_contacts():
+    eq_dict = {rolodex:session['rolodex'],archived:NULL}
+    contacts = select_query("contacts",eq_dict)
+    #TODO jsonify
+    return contacts
+
+#Loading all notes for a contact
+@app.route("/load_notes", methods=["GET", "POST"])
+def load_notes():
+    eq_dict = {"contact_id" : request.form.get('id')}
+    notes = select_query("notes",eq_dict,'date')
+    #TODO jsonify notes
+    return notes
+
+#Loading all ledger entries for a contact
+@app.route("/load_ledger", methods=["GET", "POST"])
+def load_ledge():
+    eq_dict = {"contact_id" : request.form.get('id')}
+    ledger = select_query("ledger",eq_dict,'date')
+    #TODO jsonify notes
+    return ledger
+
+
+#Adding a contact to the DB and ...
+@app.route("/add_contact", methods=["GET", "POST"])
+def add_contact():
+    name = request.form.get("name")
+    company = request.form.get("company")
+    phone = request.form.get("phone")
+    email = request.form.get("email")
+    rolodex = request.form.get("rolodex")
+    insert_dict = {'name':name,'company':company,
+            'phone':phone,'email':email,
+                'rolodex':rolodex}
+    #TODO get id from mysql python insert query
+    return insert_query('contacts',insert_dict)
+
+#Submitting a ledge for a contact
+@app.route("/add_note", methods=["GET", "POST"])
+def add_notes():
+    contact_id = request.form.get("id")
+    note = request.form.get("note")    
+    date = str(datetime.now())
+    insert_dict = {'contact_id':contact_id,'note':note,'date':date}
+    note_id = insert_query('notes',insert_dict)
+    return note_id
+
+#Submitting a ledge for a contact
+@app.route("/add_ledge", methods=["GET", "POST"])
+def add_ledge():
+
+    contact_id = request.form.get('contact_id')
+    amount = request.form.get('amount')
+    check_number = request.form.get('check_number')
+    description = request.form.get('description')
+    date = request.form.get('date')
+    recurring = request.form.get('recurring')
+    
+    insert_dict = {'contact_id':contact_id,'amount':amount,
+            'check_number':check_number,'description':description,
+                'date':date,'recurring':recurring} 
+    
+    ledge_id = insert_query('ledger',insert_dict)
+    return ledge_id
+
+#Removing a contact from the DB and ...
+@app.route("/remove_contact", methods=["GET", "POST"])
+def remove_contact():
+    name = request.form.get('name')
+    company = request.form.get('company')
+    phone = request.form.get('phone')
+    email = request.form.get('email')
+    eq_dict = {'name':name,'company':company,'phone':phone,'email':email}
+    insert_dict = {'archived': str(datetime.now()) }
+    update_query('contacts',eq_dict,insert_dict)    
+    return "success"
 
 # start flask
 if __name__ == "__main__":

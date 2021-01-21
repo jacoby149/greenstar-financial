@@ -7,16 +7,15 @@ from mysql.connector import connection
 show = False
 
 
-def creds():
+def creds(db="finance"):
     sql_gs = dict()
     sql_gs["user"] = "root"
     sql_gs["password"] = "od41zLDLwosDmonr"
     sql_gs["host"] = "34.123.165.253"
-    sql_gs["database"] = "finance"
+    sql_gs["database"] = db
     return sql_gs
 
 
-db_dict = creds()
 # Making the Mysql connection
 # cnx = connection.MySQLConnection(
 #     user=db_dict["user"],
@@ -26,8 +25,7 @@ db_dict = creds()
 # )
 
 
-def make_connection():
-    global db_dict
+def make_connection(db_dict = creds()):
     cnx = connection.MySQLConnection(
         user=db_dict["user"],
         password=db_dict["password"],
@@ -64,7 +62,7 @@ def multi_q(querylist, cursor):
 
 
 # sends a query or list of queries to a db.
-def make_query(query, array=False, commit=True):
+def make_query(query,array=False, commit=True):
     cnx = make_connection()
     # make an sql query q where q is a query string.
     cursor = cnx.cursor(dictionary=True)
