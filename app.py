@@ -104,6 +104,7 @@ def login():
         client = resp[0]
         session['logged_in'] = True
         session['client'] = client["name"]
+        session['directory'] = client['directory_name']
         session['image'] = "static/img/{}".format(client["logo"])
         session['title'] = "{} Custom Algorithms - {}".format(client["firm"],client["header_title"])       
     return redirect("/modules")
@@ -223,7 +224,7 @@ def load_graphs(tickers=None):
 def make_report():
     book, info = get_book(request)
 
-    report.make_report(session['client'])
+    report.make_report(session['directory'])
 
     return send_file("/app/pdfs/{} Report.pdf".format(info['name']))
 
@@ -249,6 +250,7 @@ def crm_verify():
     if (len(resp)>0):
         client = resp[0]
         session['logged_in'] = True
+        session['directory'] = client['directory_name']
         session['client'] = client["name"]
         session['image'] = "static/img/{}".format(client["logo"])
     return redirect("/crm")
