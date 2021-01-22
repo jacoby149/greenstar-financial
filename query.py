@@ -4,7 +4,7 @@
 # MYSQL greenstar ip 34.123.165.253
 from mysql.connector import connection
 
-show = False
+show = True
 
 
 def creds(db="finance"):
@@ -104,18 +104,27 @@ def send_waiting_queries_raw():
 def eq_string(eq_dict, separator='and'):
     statements = []
     for field in eq_dict:
+        
+        #modify the value to be proper
         value = eq_dict[field]
-        comp = " {} = '{}' ".format(field, value)
-        # for range statements.
+        if isinstance(value, str):
+            value = "'"+value + "'"
+        elif value == None:
+            value = "NULL"
+        
+        #make the corresponding statement
+        comp = " {} = {} ".format(field, value)
+
+        #for anything other than = comparisons
         if isinstance(value, tuple):
-            lo = value[0]
-            hi = value[1]
-            complo = " {} <= {} ".format(lo, field)
-            comphi = " {} < {} ".format(field, hi)
-            comp = complo + separator + comphi
+            sym = value[0]
+            val = value[1]
+            comp = " {} {} {} ".format(field, sym, val)
         statements.append(comp)
+
     eq_string = separator.join(statements)
     return eq_string
+
 
 
 # takes a table, list of fields, and list of values.

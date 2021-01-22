@@ -10,12 +10,3 @@ services:
       FLASK_ENV: development
     ports:
       - "5000:80"
-
-
-#  testing:
-#    restart: always
-#    build:
-#      dockerfile: Dockerfile
-#      context: ../../UCTesting
-#    ports:
-#      - '5000:5000'

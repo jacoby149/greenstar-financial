@@ -6,7 +6,8 @@ upload full packet images to s3 with id packet grade IN packets folder
 
 # main imports
 import os
-from flask import Flask, request, jsonify, render_template, send_file, session, redirect,send_from_directory #reload
+import json
+from flask import Flask, request, render_template, send_file, session, redirect,send_from_directory #reload
 from flask_cors import CORS
 import sys
 import pandas as pd
@@ -104,6 +105,7 @@ def login():
         client = resp[0]
         session['logged_in'] = True
         session['client'] = client["name"]
+        session['rolodex'] = client["rolodex"]
         session['directory'] = client['directory_name']
         session['image'] = "static/img/{}".format(client["logo"])
         session['title'] = "{} Custom Algorithms - {}".format(client["firm"],client["header_title"])       
@@ -251,6 +253,7 @@ def crm_verify():
         client = resp[0]
         session['logged_in'] = True
         session['directory'] = client['directory_name']
+        session['rolodex'] = client["rolodex"]
         session['client'] = client["name"]
         session['image'] = "static/img/{}".format(client["logo"])
     return redirect("/crm")
@@ -266,10 +269,9 @@ def crm():
 #Loading of contacts into the CRM dashboard
 @app.route("/load_contacts", methods=["GET", "POST"])
 def load_contacts():
-    eq_dict = {rolodex:session['rolodex'],archived:NULL}
+    eq_dict = {'rolodex':session['rolodex']}#,'archived':("IS",None)}
     contacts = select_query("contacts",eq_dict)
-    #TODO jsonify
-    return contacts
+    return json.dumps(contacts)
 
 #Loading all notes for a contact
 @app.route("/load_notes", methods=["GET", "POST"])
