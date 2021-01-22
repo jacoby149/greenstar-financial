@@ -45,11 +45,15 @@ def single_q(query, cursor):
         if show:
             print(query, "\nError is:\n", e)
     result = []
+    if "insert" == query[0:len("insert")]:
+        return cursor.lastrowid
+
     try:
         result = cursor.fetchall()
     except:
         if show:
             print("\nThis is an insert query\n")
+
     return result
 
 
@@ -62,15 +66,12 @@ def multi_q(querylist, cursor):
 
 
 # sends a query or list of queries to a db.
-def make_query(query,array=False, commit=True):
+def make_query(query, commit=True):
     cnx = make_connection()
     # make an sql query q where q is a query string.
     cursor = cnx.cursor(dictionary=True)
     result = []
-    if array:
-        result = multi_q(query, cursor)
-    else:
-        result = single_q(query, cursor)
+    result = single_q(query, cursor)
     if commit:
         cnx.commit()
     cnx.close()

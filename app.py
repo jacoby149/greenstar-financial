@@ -300,7 +300,7 @@ def add_contact():
             'phone':phone,'email':email,
                 'rolodex':rolodex}
     #TODO get id from mysql python insert query
-    return insert_query('contacts',insert_dict)
+    return json.dumps(insert_query('contacts',insert_dict))
 
 #Submitting a ledge for a contact
 @app.route("/add_note", methods=["GET", "POST"])
@@ -310,7 +310,7 @@ def add_notes():
     date = str(datetime.now())
     insert_dict = {'contact_id':contact_id,'note':note,'date':date}
     note_id = insert_query('notes',insert_dict)
-    return note_id
+    return json.dumps(note_id)
 
 #Submitting a ledge for a contact
 @app.route("/add_ledge", methods=["GET", "POST"])
@@ -328,7 +328,7 @@ def add_ledge():
                 'date':date,'recurring':recurring} 
     
     ledge_id = insert_query('ledger',insert_dict)
-    return ledge_id
+    return json.dumps(ledge_id)
 
 #Removing a contact from the DB and ...
 @app.route("/remove_contact", methods=["GET", "POST"])
