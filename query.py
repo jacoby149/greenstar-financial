@@ -4,7 +4,7 @@
 # MYSQL greenstar ip 34.123.165.253
 from mysql.connector import connection
 
-show = True
+show = False
 
 
 def creds(db="finance"):
@@ -109,8 +109,10 @@ def eq_string(eq_dict, separator='and'):
         value = eq_dict[field]
         if isinstance(value, str):
             value = "'"+value + "'"
-        elif value == None:
+        elif value is None:
             value = "NULL"
+        elif isinstance(value,tuple) and None in value:
+            value = (value[0],"NULL")
         
         #make the corresponding statement
         comp = " {} = {} ".format(field, value)
@@ -158,4 +160,3 @@ def safe_query_literal(query):
         return
     except Exception as e:
         print("There was an error submitting your query to the database: ", e)
-

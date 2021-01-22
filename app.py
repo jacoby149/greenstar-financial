@@ -269,7 +269,7 @@ def crm():
 #Loading of contacts into the CRM dashboard
 @app.route("/load_contacts", methods=["GET", "POST"])
 def load_contacts():
-    eq_dict = {'rolodex':session['rolodex']}#,'archived':("IS",None)}
+    eq_dict = {'rolodex':session['rolodex'],'archived':("IS",None)}
     contacts = select_query("contacts",eq_dict)
     return json.dumps(contacts)
 
@@ -278,16 +278,14 @@ def load_contacts():
 def load_notes():
     eq_dict = {"contact_id" : request.form.get('id')}
     notes = select_query("notes",eq_dict,'date')
-    #TODO jsonify notes
-    return notes
+    return json.dumps(notes)
 
 #Loading all ledger entries for a contact
 @app.route("/load_ledger", methods=["GET", "POST"])
 def load_ledge():
     eq_dict = {"contact_id" : request.form.get('id')}
     ledger = select_query("ledger",eq_dict,'date')
-    #TODO jsonify notes
-    return ledger
+    return json.dumps(ledger)
 
 
 #Adding a contact to the DB and ...
