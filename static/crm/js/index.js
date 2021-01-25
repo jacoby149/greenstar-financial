@@ -185,7 +185,7 @@ function loadLedger(i) {
     var contact = userContacts[i];
     modalBannerColor(contact.color);
     console.log(contact.color);
-    document.getElementById('myModalLabel').innerHTML = contact.name + " <a class = 'statusbutton' onclick='flip(" + i + ")'> &#9851;</a>";
+    document.getElementById('ledgerlabel').innerHTML = contact.name + " <a class = 'statusbutton' onclick='flip(" + i + ")'> &#9851;</a>";
     currentIndex = i;
     console.log("Index Changed To : " + currentIndex)
     var id = contact.id;

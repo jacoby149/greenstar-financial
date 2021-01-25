@@ -278,6 +278,8 @@ def load_contacts():
 def load_notes():
     eq_dict = {"contact_id" : request.form.get('id')}
     notes = select_query("notes",eq_dict,'date')
+    for n in notes:
+        n["date"] = str(n["date"])
     return json.dumps(notes)
 
 #Loading all ledger entries for a contact
@@ -285,6 +287,8 @@ def load_notes():
 def load_ledge():
     eq_dict = {"contact_id" : request.form.get('id')}
     ledger = select_query("ledger",eq_dict,'date')
+    for l in ledger:
+        l["date"] = str(l["date"])
     return json.dumps(ledger)
 
 
@@ -316,7 +320,7 @@ def add_notes():
 @app.route("/add_ledge", methods=["GET", "POST"])
 def add_ledge():
 
-    contact_id = request.form.get('contact_id')
+    contact_id = request.form.get('id')
     amount = request.form.get('amount')
     check_number = request.form.get('check_number')
     description = request.form.get('description')
@@ -345,6 +349,6 @@ def remove_contact():
 # start flask
 if __name__ == "__main__":
     # Threaded option to enable multiple instances for multiple user access support
-    app.run(host="0.0.0.0", threaded=True)
+    app.run(host="0.0.0.0")
 
 

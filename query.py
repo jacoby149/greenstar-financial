@@ -4,7 +4,7 @@
 # MYSQL greenstar ip 34.123.165.253
 from mysql.connector import connection
 
-show = False
+show = True
 
 
 def creds(db="finance"):
@@ -46,6 +46,7 @@ def single_q(query, cursor):
             print(query, "\nError is:\n", e)
     result = []
     if "insert" == query[0:len("insert")]:
+        print("returning insert id!")
         return cursor.lastrowid
 
     try:
