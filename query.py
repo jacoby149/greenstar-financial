@@ -4,7 +4,7 @@
 # MYSQL greenstar ip 34.123.165.253
 from mysql.connector import connection
 
-show = True
+show = False;
 
 
 def creds(db="finance"):
@@ -46,7 +46,7 @@ def single_q(query, cursor):
             print(query, "\nError is:\n", e)
     result = []
     if "insert" == query[0:len("insert")]:
-        print("returning insert id!")
+        if show : print("returning insert id!")
         return cursor.lastrowid
 
     try:
@@ -138,7 +138,7 @@ def select_query(mysql,table, eq_dict=None, desc_field=None):
     if desc_field is not None:
         qp2 = "ORDER BY {} DESC;".format(desc_field)
     query = qp1 + qp2
-    print(query,flush=True)
+    if show : print(query,flush=True)
     return make_query(mysql,query, commit=True)
 
 
