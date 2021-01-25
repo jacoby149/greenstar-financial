@@ -156,7 +156,14 @@ function fillLedger(entries) {
         var recurring = entries[z].recurring;
         var check_number = entries[z].check_number
 
-        log += "<b>" + date + "</b><p>" + description + "</p><p>" + amount + "</p>";
+        log += "<div class = 'ledge'>" + "<p><b>"
+            + date + "</b></p><p>"
+            + "Recurring? : " + recurring + "</p><p>"
+            + "Check Num. : " + check_number + "</p><p>"
+            + "Amount ($) : " + amount + "</p><p>"
+            + "Description: " + description + "</p>"
+            + "</div > ";
+
     }
 
     document.getElementById('ledger_log').innerHTML = log;
@@ -167,7 +174,7 @@ function loadNotes(i) {
     var contact = userContacts[i];
     modalBannerColor(contact.color);
     console.log(contact.color);
-    document.getElementById('myModalLabel').innerHTML = contact.name + " <a class = 'statusbutton' onclick='flip(" + i + ")'> &#9851;</a>";
+    document.getElementById('myModalLabel').innerHTML = contact.name + " <a class = 'statusbutton' onclick='flip(" + i + ")'> &#9851;</a> &#128337;";
     currentIndex = i;
     console.log("Index Changed To : " + currentIndex)
     var id = contact.id;

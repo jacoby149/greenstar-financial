@@ -93,6 +93,15 @@ footer
 
 }
 
+.ledge {
+    margin:1em;
+}
+
+.ledge p{
+    margin:0;
+    padding:0;
+}
+
 .red {
     background-color:#f05a3433 !important;
 }
