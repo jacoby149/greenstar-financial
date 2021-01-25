@@ -334,6 +334,19 @@ def add_ledge():
     ledge_id = insert_query('ledger',insert_dict)
     return json.dumps(ledge_id)
 
+@app.route("/toggle_status", methods=["GET", "POST"])
+def toggle_status():
+    contact_id = request.form.get('id')
+    color = request.form.get('color')
+    new_color = "green"
+    if color == "green":new_color = "red"
+    if color == "red":new_color = "yellow"
+    eq_dict = {'id':contact_id}
+    change_dict = {'color': new_color }
+    update_query('contacts',eq_dict,change_dict)    
+    return "success"
+
+
 #Removing a contact from the DB and ...
 @app.route("/remove_contact", methods=["GET", "POST"])
 def remove_contact():
