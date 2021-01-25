@@ -39,7 +39,7 @@ def make_connection(db_dict = creds()):
 def single_q(query, cursor):
     # for submitting big one liner queries.
     try:
-        for _ in cursor.execute(query, multi=True):
+        for _ in cursor.execute(query):
             pass
     except Exception as e:
         if show:
@@ -67,15 +67,14 @@ def multi_q(querylist, cursor):
 
 
 # sends a query or list of queries to a db.
-def make_query(query, commit=True):
-    cnx = make_connection()
+def make_query(mysql,query, commit=True):
     # make an sql query q where q is a query string.
-    cursor = cnx.cursor(dictionary=True)
+    cursor = mysql.connection.cursor()
     result = []
     result = single_q(query, cursor)
     if commit:
-        cnx.commit()
-    cnx.close()
+        mysql.connection.commit()
+    cursor.close()
     return result
 
 
@@ -83,22 +82,22 @@ wait_string = ""
 
 
 # takes a table, list of fields, and list of values.
-def insert_query(table, insertdict, wait=False):
+def insert_query(mysql,table, insertdict, wait=False):
     fields = [f for f in insertdict]
     values = [str(insertdict[f]) for f in fields]
     f_string = ", ".join(fields)
     v_string = "', '".join(values)
     query = "insert into {} ({}) VALUES ('{}'); ".format(table, f_string, v_string)
     if not wait:
-        return make_query(query)
+        return make_query(mysql,query)
     else:
         global wait_string
         wait_string = wait_string + query
 
 
-def send_waiting_queries_raw():
+def send_waiting_queries_raw(mysql):
     global wait_string
-    make_query(wait_string)
+    make_query(mysql,wait_string)
     wait_string = ""
 
 
@@ -132,7 +131,7 @@ def eq_string(eq_dict, separator='and'):
 
 
 # takes a table, list of fields, and list of values.
-def select_query(table, eq_dict=None, desc_field=None):
+def select_query(mysql,table, eq_dict=None, desc_field=None):
     # make the query
     qp1 = "select * from {} where".format(table) + eq_string(eq_dict)
     qp2 = ";"
@@ -140,25 +139,14 @@ def select_query(table, eq_dict=None, desc_field=None):
         qp2 = "ORDER BY {} DESC;".format(desc_field)
     query = qp1 + qp2
     print(query,flush=True)
-    return make_query(query, commit=True)
+    return make_query(mysql,query, commit=True)
 
 
 def change_string(change_dict):
     return eq_string(change_dict, separator=',')
 
 
-def update_query(table, eq_dict, change_dict):
+def update_query(mysql,table, eq_dict, change_dict):
     query = "UPDATE {} SET {} WHERE {};".format(table, change_string(change_dict), eq_string(eq_dict))
-    return make_query(query)
+    return make_query(mysql,query)
 
-
-def safe_query_literal(query):
-    global cnx
-    cursor = cnx.cursor(dictionary=True, buffered=True)
-    try:
-        cursor.execute(query)
-        cursor.fetchall()
-        cnx.commit()
-        return
-    except Exception as e:
-        print("There was an error submitting your query to the database: ", e)

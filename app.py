@@ -29,6 +29,18 @@ from operations import mprint
 app = Flask(__name__)
 cors = CORS(app)
 
+from flask_mysqldb import MySQL
+  
+app.config['MYSQL_HOST'] = creds()['host']
+app.config['MYSQL_USER'] = creds()['user']
+app.config['MYSQL_PASSWORD'] = creds()['password']
+app.config['MYSQL_DB'] = creds()['database']
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+
+print(app.config,flush=True)
+ 
+mysql = MySQL(app)
+
 # Secret key for passcodes
 app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 
@@ -98,7 +110,7 @@ def load_home():
 def login():
     passcode = request.form.get("passcode")
     eq_dict = {'passcode' : passcode}
-    resp = select_query("clients",eq_dict)
+    resp = select_query(mysql,"clients",eq_dict)
 
     print(passcode,"\n",resp,flush=True)
     if (len(resp)>0):
@@ -246,7 +258,7 @@ def crm_logout():
 def crm_verify():
     passcode = request.form.get("passcode")
     eq_dict = {'passcode' : passcode}
-    resp = select_query("clients",eq_dict)
+    resp = select_query(mysql,"clients",eq_dict)
 
     print(passcode,"\n",resp,flush=True)
     if (len(resp)>0):
@@ -270,14 +282,14 @@ def crm():
 @app.route("/load_contacts", methods=["GET", "POST"])
 def load_contacts():
     eq_dict = {'rolodex':session['rolodex'],'archived':("IS",None)}
-    contacts = select_query("contacts",eq_dict)
+    contacts = select_query(mysql,"contacts",eq_dict)
     return json.dumps(contacts)
 
 #Loading all notes for a contact
 @app.route("/load_notes", methods=["GET", "POST"])
 def load_notes():
     eq_dict = {"contact_id" : request.form.get('id')}
-    notes = select_query("notes",eq_dict,'date')
+    notes = select_query(mysql,"notes",eq_dict,'date')
     for n in notes:
         n["date"] = str(n["date"])
     return json.dumps(notes)
@@ -286,7 +298,7 @@ def load_notes():
 @app.route("/load_ledger", methods=["GET", "POST"])
 def load_ledge():
     eq_dict = {"contact_id" : request.form.get('id')}
-    ledger = select_query("ledger",eq_dict,'date')
+    ledger = select_query(mysql,"ledger",eq_dict,'date')
     for l in ledger:
         l["date"] = str(l["date"])
     return json.dumps(ledger)
@@ -304,7 +316,7 @@ def add_contact():
             'phone':phone,'email':email,
                 'rolodex':rolodex}
     #TODO get id from mysql python insert query
-    return json.dumps(insert_query('contacts',insert_dict))
+    return json.dumps(insert_query(mysql,'contacts',insert_dict))
 
 #Submitting a ledge for a contact
 @app.route("/add_note", methods=["GET", "POST"])
@@ -313,7 +325,7 @@ def add_notes():
     note = request.form.get("note")    
     date = str(datetime.now())
     insert_dict = {'contact_id':contact_id,'note':note,'date':date}
-    note_id = insert_query('notes',insert_dict)
+    note_id = insert_query(mysql,'notes',insert_dict)
     return json.dumps(note_id)
 
 #Submitting a ledge for a contact
@@ -331,7 +343,7 @@ def add_ledge():
             'check_number':check_number,'description':description,
                 'date':date,'recurring':recurring} 
     
-    ledge_id = insert_query('ledger',insert_dict)
+    ledge_id = insert_query(mysql,'ledger',insert_dict)
     return json.dumps(ledge_id)
 
 @app.route("/toggle_status", methods=["GET", "POST"])
@@ -343,7 +355,7 @@ def toggle_status():
     if color == "red":new_color = "yellow"
     eq_dict = {'id':contact_id}
     change_dict = {'color': new_color }
-    update_query('contacts',eq_dict,change_dict)    
+    update_query(mysql,'contacts',eq_dict,change_dict)    
     return "success"
 
 
@@ -356,7 +368,7 @@ def remove_contact():
     email = request.form.get('email')
     eq_dict = {'name':name,'company':company,'phone':phone,'email':email}
     insert_dict = {'archived': str(datetime.now()) }
-    update_query('contacts',eq_dict,insert_dict)    
+    update_query(mysql,'contacts',eq_dict,insert_dict)    
     return "success"
 
 # start flask

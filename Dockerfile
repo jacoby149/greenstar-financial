@@ -31,6 +31,7 @@ RUN pip install pandas_datareader
 RUN pip install sympy
 RUN pip install mpld3
 RUN pip install mysql-connector-python
+RUN pip install flask_mysqldb
 
 COPY . /app
 CMD pip freeze > requirements.txt
