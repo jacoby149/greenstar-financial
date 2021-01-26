@@ -311,7 +311,7 @@ def add_contact():
     company = request.form.get("company")
     phone = request.form.get("phone")
     email = request.form.get("email")
-    rolodex = request.form.get("rolodex")
+    rolodex = session['rolodex']
     insert_dict = {'name':name,'company':company,
             'phone':phone,'email':email,
                 'rolodex':rolodex}

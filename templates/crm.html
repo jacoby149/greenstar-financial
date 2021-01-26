@@ -109,7 +109,26 @@
                     </div>
 
                     <div class="modal-body">
-                        <textarea name="newnote" id="newnote" cols="50" rows="4" maxlength="500"
+
+
+                        <div class="row">
+                            <div class="col-6">
+                                Scheduled Status Change : <select name="recurring" class="form-control">
+                                    <option value="none">None Scheduled</option>
+                                    <option value="green">Green</option>
+                                    <option value="yellow">Yellow</option>
+                                    <option value="red">Red</option>
+                                </select>
+                            </div>
+                            <div class="col-6"> Change Date : <input class="form-control" type="date" name="date"
+                                    maxlength="10"></div>
+
+                        </div>
+                        <br>
+
+
+
+                        Add Note Here : <textarea name="newnote" id="newnote" cols="50" rows="4" maxlength="500"
                             placeholder="Add note"></textarea> <br>
                         <div style="float:right;padding-right:50px;padding-top:10px;"> <button type="submit"
                                 onclick="submitNote()">Create Entry</button> </div>
@@ -160,6 +179,7 @@
                                 <div class="col-6" style="padding:24px;">
                                     <button type="button" onclick="submitLedger()">Create Entry</button>
                                 </div>
+
                                 <br><br>
                         </form>
                     </div>
