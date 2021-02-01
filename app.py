@@ -120,7 +120,7 @@ def login():
         session['rolodex'] = client["rolodex"]
         session['directory'] = client['directory_name']
         session['image'] = "static/img/GreenstarBanner.png"
-        session['title'] = "{} Custom Algorithms - {}".format(client["firm"],client["header_title"])       
+        session['title'] = "{} Custom Algorithms - {}".format(client["firm"], client["header_title"])
     return redirect("/modules")
 
 
