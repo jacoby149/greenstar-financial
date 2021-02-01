@@ -133,6 +133,7 @@ function load_graphs(data) {
 function request_graphs() {
     //    document.getElementById("link").href = linkmake();
     //    document.getElementById("link").style.display = "block";
+    showhide();
     form = {}
     $('#captable').serializeArray().map(function (x) { form[x.name] = x.value })
 
