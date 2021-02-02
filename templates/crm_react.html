@@ -7,31 +7,28 @@
     <link rel="stylesheet" href="static/crm/css/index_style.css" />
     <link rel="stylesheet" href="static/crm/css/modal.css" />
 
-
-
-
 </head>
 
 <body>
 
-    <div id="crmReact" name="crmReact">
+    <div id="crmReact" name="crmReact"></div>
 
-    </div>
+    <!-- Core React JS -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.min.js"></script>
 
+    <!-- Babel JS for transpiling -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<!-- Core React JS -->
-<!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-<script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- Component JS -->
+    <script type="text/babel" src='static/js/crm_index.js'></script>
 
-<!-- Component JS -->
-<script type="text/babel" src='static/js/crm_index.js'></script>
-
-<!-- Non-React JS -->
-<script src="static/crm/js/jquery-3.3.1.min.js"></script>
-<script src="static/crm/js/popper.min.js"></script>
-<script src="static/crm/js/bootstrap.min.js"></script>
-<script src="static/crm/js/index.js"></script>
+    <!-- Non-React JS -->
+    <script src="static/crm/js/jquery-3.3.1.min.js"></script>
+    <script src="static/crm/js/popper.min.js"></script>
+    <script src="static/crm/js/bootstrap.min.js"></script>
+    <script src="static/crm/js/index.js"></script>
 
 </body>
 
