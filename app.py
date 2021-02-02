@@ -26,7 +26,7 @@ from operations import mprint
 
 
 # Initialize the Flask application
-app = Flask(__name__)
+app = Flask(__name__, template_folder="templates")
 cors = CORS(app)
 
 from flask_mysqldb import MySQL
@@ -254,8 +254,9 @@ def crm_logout():
     return redirect("/crm")
 
 #Verify a submitted CRM login attempt
-@app.route("/crm_verify", methods=["GET", "POST"])
-def crm_verify():
+@app.route("/crm_verify<name_var>", methods=["GET", "POST"])
+def crm_verify(name_var):
+    mprint("name var",name_var)
     passcode = request.form.get("passcode")
     eq_dict = {'passcode' : passcode}
     resp = select_query(mysql,"clients",eq_dict)
