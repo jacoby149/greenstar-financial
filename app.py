@@ -278,6 +278,15 @@ def crm():
     else:
         return render_template('crm_password_page.html')
 
+
+#CRM React Dashboard
+@app.route("/crm_react", methods=["GET", "POST"])
+def crm_react():
+    if 'logged_in' in session and session['logged_in'] == True:
+        return render_template('crm_react.html', **session)
+    else:
+        return render_template('crm_password_page.html')
+
 #Loading of contacts into the CRM dashboard
 @app.route("/load_contacts", methods=["GET", "POST"])
 def load_contacts():
