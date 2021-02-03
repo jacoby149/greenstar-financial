@@ -269,7 +269,7 @@ def crm_verify(name_var):
         session['rolodex'] = client["rolodex"]
         session['client'] = client["name"]
         session['image'] = "static/img/{}".format(client["logo"])
-    return redirect("/crm")
+    return redirect("/crm_react")
 
 #CRM Dashboard
 @app.route("/crm", methods=["GET", "POST"])
