@@ -1,7 +1,43 @@
-class Crm extends React.Component {
-    render() {
-        return (
-            <div>
+function TableHeader(props) {
+    const labels = props.labels;
+
+    console.log("LABLESHEADER:");
+    console.log(labels);
+
+    const final = [];
+
+    for (let label of labels) {
+        final.push(<th>{label}</th>);
+    }
+    return (
+        <thead className="tableh1">
+            {final}
+        </thead>
+    );
+}
+
+
+function DataTable(props) {
+    const labels = props.labels;
+
+    console.log("LABELS:");
+    console.log(labels);
+    return <table id="myTable" className="table text-justify">
+
+            <TableHeader labels={labels}/>
+
+            <tbody id="tableBody"></tbody>
+
+            </table>;
+}
+
+
+
+function Crm() {
+        const [labels, setLabels] = React.useState(['Name','Company','Phone','Email',''])
+        const [contacts, setContacts] = React.useState({});
+
+        return <div>
                 <div style={{ position: 'absolute', right: '10px', top: '10px', width: '120px' }}>
                     <a href="/crm_logout">Secure Log Out</a>
                 </div>
@@ -49,33 +85,15 @@ class Crm extends React.Component {
                         <div className="col-lg-8">
                             <div id="container demo">
                                 <div className="options">
-                                    <button id="statusbutton" onclick="toggleStatus()"> Viewing Notes </button>
-                            Green <input type="checkbox" onclick="statusFilter(this)" id="green" checked />
-                            Yellow <input type="checkbox" onclick="statusFilter(this)" id="yellow" checked />
-                            Red <input type="checkbox" id="red" onclick="statusFilter(this)" checked />
+                                    <button id="statusbutton" onClick="toggleStatus()"> Viewing Notes </button>
+                            Green <input type="checkbox" onClick="statusFilter(this)" id="green" checked />
+                            Yellow <input type="checkbox" onClick="statusFilter(this)" id="yellow" checked />
+                            Red <input type="checkbox" id="red" onClick="statusFilter(this)" checked />
                                 </div>
                                 {/* <!-- table-striped class for striped--> */}
-                                <table id="myTable" className="table text-justify">
-
-                                    <thead className="tableh1">
-                                        <th className="">Name</th>
-                                        <th className="">Company</th>
-                                        <th className="">Phone</th>
-                                        <th className="">E-mail</th>
-                                        <th className="col-1"></th>
-                                        {/* <!--
-                            <th className="col-1"></th>
-                            --> */}
-
-                                    </thead>
-
-                                    <tbody id="tableBody">
-
-
-
-                                    </tbody>
-
-                                </table>
+                                
+                                
+                                <DataTable labels={labels}/>
 
 
                             </div>
@@ -177,9 +195,7 @@ class Crm extends React.Component {
                 </div>{/* <!-- modal --> */}
 
                 <footer className="text-center"> Designed by Greenstar Group Inc. &#169; 2020. <br /></footer>
-            </div>
-        );
-    }
+            </div>;
 }
 
 ReactDOM.render(
