@@ -7,7 +7,9 @@ function Logout() {
 
 function Banner() {
     return <div className="logo">
-        <img src="static/crm/images/GreenstarBanner.png" />
+        <br></br><br></br>
+        <img src="static/img/GreenstarBanner.png" />
+        <br></br>
     </div>
 
 }
@@ -51,7 +53,7 @@ function CrmInput(props) {
         <input className="form-control mb-3" placeholder="add e-mail" id="userEmail" />
         <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
 
-        <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className={"btn w-100 btn1"}>Add</button>
+        <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className="btn btn-success w-100 ">Add</button>
 
 
     </div>
@@ -59,9 +61,12 @@ function CrmInput(props) {
 
 function TopMenu() {
     return <div className="options">
-        <button id="statusbutton" onClick="toggleStatus()"> Viewing Notes </button>
+        <button id="statusbutton" className="btn btn-success" onClick="toggleStatus()"> Viewing Notes </button>
+        &nbsp;
     Green <input type="checkbox" onClick="statusFilter(this)" id="green" defaultChecked />
+    &nbsp;
     Yellow <input type="checkbox" onClick="statusFilter(this)" id="yellow" defaultChecked />
+    &nbsp;
     Red <input type="checkbox" id="red" onClick="statusFilter(this)" defaultChecked />
     </div>
 
