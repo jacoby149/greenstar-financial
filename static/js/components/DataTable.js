@@ -1,8 +1,8 @@
 /* The column columns of DataTable */
 function TableHeader(props) {
     const header = [];
-    for (let column of props.columns) {
-        header.push(<th>{column.title}</th>);
+    for (const [i, column] of props.columns.entries()) {
+        header.push(<th key={i}>{column.title}</th>);
     }
     return <thead className="tableh1"><tr>{header}</tr></thead>;
 }
@@ -12,8 +12,8 @@ function TableRow(props) {
     const attributes = props.columns.map(column => column.label.toLowerCase());
 
     const row = [];
-    for (let attribute of attributes) {
-        row.push(<td>{props.entry[attribute]}</td>);
+    for (const [i, attribute] of attributes.entries()) {
+        row.push(<td key={i} >{props.entry[attribute]}</td>);
     }
     return <tr className={props.entry.color}>{row}</tr>;
 }
@@ -21,8 +21,8 @@ function TableRow(props) {
 /* Body of DataTable */
 function TableBody(props) {
     const body = [];
-    for (let entry of props.data) {
-        body.push(<TableRow entry={entry} columns={props.columns} />);
+    for (const [i, entry] of props.data.entries()) {
+        body.push(<TableRow key={i} entry={entry} columns={props.columns} />);
     }
     return <tbody id="tableBody">{body}</tbody>;
 }

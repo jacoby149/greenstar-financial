@@ -22,11 +22,12 @@ function Logo() {
 
 
 function newContactJSON() {
-    return {name:$('#userName').val(),
-            company:$('#userCompany').val(),
-            phone:$('#userPhone').val(),
-            email:$('#userEmail').val(),
-            };
+    return {
+        name: $('#userName').val(),
+        company: $('#userCompany').val(),
+        phone: $('#userPhone').val(),
+        email: $('#userEmail').val(),
+    };
 }
 
 
@@ -167,8 +168,8 @@ function GreenStarFooter() {
 
 function Crm() {
     /* State Variables */
-    var initColumns = [['name','Name'], ['company','Company'], ['phone','Phone'], ['email','Email'], ['remove','']];
-    initColumns = initColumns.map(function(e) {return {'title':e[1], 'label':e[0]}});
+    var initColumns = [['name', 'Name'], ['company', 'Company'], ['phone', 'Phone'], ['email', 'Email'], ['remove', '']];
+    initColumns = initColumns.map(function (e) { return { 'title': e[1], 'label': e[0] } });
     const [columns, setColumns] = React.useState(initColumns);
     const [data, setData] = React.useState([]);
 
@@ -184,8 +185,8 @@ function Crm() {
     /* Converts data entries to contacts */
     function contactFormat(e) {
         function shorten(s) {
-            if (s.length > 25) {return s.slice(0,25) + '...';}
-            else {return s;}
+            if (s.length > 25) { return s.slice(0, 25) + '...'; }
+            else { return s; }
         }
         e.name = <a href="/" onClick="">{e.name}</a>;
         e.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
