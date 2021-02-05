@@ -7,7 +7,7 @@ upload full packet images to s3 with id packet grade IN packets folder
 # main imports
 import os
 import json
-from flask import Flask, request, render_template, send_file, session, redirect,send_from_directory #reload
+from flask import Flask, request, render_template, send_file, session,jsonify,redirect,send_from_directory #reload
 from flask_cors import CORS
 import sys
 import pandas as pd
@@ -293,7 +293,7 @@ def crm_react():
 def load_contacts():
     eq_dict = {'rolodex':session['rolodex'],'archived':("IS",None)}
     contacts = select_query(mysql,"contacts",eq_dict)
-    return json.dumps(contacts)
+    return jsonify(contacts)
 
 #Loading all notes for a contact
 @app.route("/load_notes", methods=["GET", "POST"])
