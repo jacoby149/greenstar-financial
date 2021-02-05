@@ -2,6 +2,7 @@
 
 var userContacts = {};
 
+
 $.post('/load_contacts', {}, loadUserContacts);
 
 var currentIndex = -1;
