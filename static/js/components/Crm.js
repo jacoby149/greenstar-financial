@@ -1,48 +1,3 @@
-/* The column labels of DataTable */
-function TableHeader(props) {
-    console.log("In TableHeader")
-    console.log(props.labels)
-    const header = [];
-    for (let label of props.labels) {
-        header.push(<th>{label}</th>);
-    }
-    return <thead className="tableh1"><tr>{header}</tr></thead>;
-}
-
-/* Entry in the DataTable */
-function TableRow(props) {
-    console.log("In TableRows")
-    const attributes = props.labels.map(label => label.toLowerCase());
-    const row = [];
-    for (let attribute of attributes) {
-        row.push(<td>{props.entry[attribute]}</td>);
-    }
-    return <tr className={props.entry.color}>{row}</tr>;
-}
-
-/* Body of DataTable */
-function TableBody(props) {
-    console.log("In TableBody")
-    console.log(props)
-    const body = [];
-    for (let entry of props.data) {
-        body.push(<TableRow entry={entry} labels={props.labels} />);
-    }
-    return <tbody id="tableBody">{body}</tbody>;
-}
-
-/* DataTable Component */
-function DataTable(props) {
-    console.log("In DataTable");
-    const labels = props.labels;
-    const data = props.data;
-    return <table id="myTable" className="table text-justify">
-
-        <TableHeader labels={labels} />
-        <TableBody labels={labels} data={data} />
-
-    </table>;
-}
 
 function Logout() {
     return <div style={{ position: 'absolute', right: '10px', top: '10px', width: '120px' }}>
@@ -65,7 +20,17 @@ function Logo() {
 
 }
 
-function CrmInput() {
+
+function newContactJSON() {
+    return {name:$('#userName').val(),
+            company:$('#userCompany').val(),
+            phone:$('#userPhone').val(),
+            email:$('#userEmail').val(),
+            };
+}
+
+
+function CrmInput(props) {
     return <div className="col-lg-3 inp">
 
         <input onKeyUp="searchFunction()" id="myInput" className="form-control mt-2" placeholder="search" />
@@ -85,7 +50,7 @@ function CrmInput() {
         <input className="form-control mb-3" placeholder="add e-mail" id="userEmail" />
         <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
 
-        <button onClick="addContact()" className="btn w-100 btn1">Add</button>
+        <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className="btn w-100 btn1">Add</button>
 
 
     </div>
@@ -103,7 +68,7 @@ function TopMenu() {
 
 function Modals() {
     return <div>
-        <div className="modal right fade" id="notes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div className="modal right fade" id="notes" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
 
@@ -127,14 +92,14 @@ function Modals() {
                                     <option value="red">Red</option>
                                 </select>
                             </div>
-                            <div className="col-6"> Change Date : <input className="form-control" type="date" name="date" maxlength="10" /></div>
+                            <div className="col-6"> Change Date : <input className="form-control" type="date" name="date" maxLength="10" /></div>
 
                         </div>
                         <br />
 
 
 
-                            Add Note Here : <textarea name="newnote" id="newnote" cols="50" rows="4" maxlength="500"
+                            Add Note Here : <textarea name="newnote" id="newnote" cols="50" rows="4" maxLength="500"
                             placeholder="Add note"></textarea> <br />
                         <div style={{ float: 'right', paddingRight: '50px', paddingTop: '10px' }}> <button type="submit" onClick="submitNote()">Create Entry</button> </div>
                         <br /><br />
@@ -146,7 +111,7 @@ function Modals() {
         </div>{/* <!-- modal --> */}
 
 
-        <div className="modal right fade" id="ledger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div className="modal right fade" id="ledger" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
 
@@ -162,7 +127,7 @@ function Modals() {
                         <form id="ledgerform">
 
                             <div className="row">
-                                <div className="col-6"> Date : <input className="form-control" type="date" name="date" maxlength="10" /></div>
+                                <div className="col-6"> Date : <input className="form-control" type="date" name="date" maxLength="10" /></div>
                                 <div className="col-6">
                                     Amount ($) : <input className="form-control" type="text" name="amount" />
                                 </div>
@@ -192,7 +157,7 @@ function Modals() {
 
             </div>{/* <!-- modal-content --> */}
         </div>{/* <!-- modal-dialog --> */}
-    </div >
+    </div>
 }
 
 function GreenStarFooter() {
@@ -201,20 +166,34 @@ function GreenStarFooter() {
 }
 
 function Crm() {
-
     /* State Variables */
-    const [firstLoad, setFirstLoad] = React.useState(true);
-    const [labels, setLabels] = React.useState(['Name', 'Company', 'Phone', 'Email', '']);
+    var initColumns = [['name','Name'], ['company','Company'], ['phone','Phone'], ['email','Email'], ['remove','']];
+    initColumns = initColumns.map(function(e) {return {'title':e[1], 'label':e[0]}});
+    const [columns, setColumns] = React.useState(initColumns);
     const [data, setData] = React.useState([]);
 
+    function addContact(resp) {
+        var newContact = newContactJSON();
+        newContact.id = resp.id;
+        newContact = contactFormat(newContact);
+        var newData = data;
+        newData.push(newContact);
+        setData(newData);
+    }
+
     /* Converts data entries to contacts */
-    function contact(e) {
+    function contactFormat(e) {
+        function shorten(s) {
+            if (s.length > 25) {return s.slice(0,25) + '...';}
+            else {return s;}
+        }
         e.name = <a href="/" onClick="">{e.name}</a>;
-        /*TODO linkify email, etc. */
+        e.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
+        e.remove = <a onClick="deleteContact(\'' + name + '\')" className="text-danger"><i className="fas fa-minus-circle"></i></a>;
         return e;
     }
     /* Setdata wrapper for contacts */
-    function setContacts(resp) { setData(resp.map(contact)); }
+    function setContacts(resp) { setData(resp.map(contactFormat)); }
 
     /* Initialize Contacts List */
     function init_contacts() { $.post('/load_contacts', {}, setContacts); }
@@ -227,11 +206,11 @@ function Crm() {
         <div className=" jum">
             <Logo />
             <div className="row">
-                <CrmInput />
+                <CrmInput addContact={addContact} />
                 <div className="col-lg-8">
                     <div id="container demo">
                         <TopMenu />
-                        <DataTable labels={labels} data={data} />
+                        <DataTable columns={columns} data={data} />
                     </div>
                 </div>
             </div>
