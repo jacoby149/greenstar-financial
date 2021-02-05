@@ -51,7 +51,7 @@ function CrmInput(props) {
         <input className="form-control mb-3" placeholder="add e-mail" id="userEmail" />
         <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
 
-        <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className="btn w-100 btn1">Add</button>
+        <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className={"btn w-100 btn1"}>Add</button>
 
 
     </div>
