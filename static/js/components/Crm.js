@@ -24,12 +24,14 @@ function Logo() {
 
 
 function newContactJSON() {
-    return {
+    var contact = {
         name: $('#userName').val(),
         company: $('#userCompany').val(),
         phone: $('#userPhone').val(),
         email: $('#userEmail').val(),
     };
+    console.log(contact);
+    return contact;
 }
 
 
@@ -182,9 +184,7 @@ function Crm() {
         var newContact = newContactJSON();
         newContact.id = resp.id;
         newContact = contactFormat(newContact);
-        var newData = data;
-        newData.push(newContact);
-        setData(newData);
+        setData(data.concat(newContact));
     }
 
     /* Converts data entries to contacts */
