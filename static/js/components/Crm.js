@@ -5,6 +5,7 @@ function Logout() {
     </div>
 }
 
+
 function Banner() {
     return <div className="logo">
         <br></br><br></br>
@@ -34,12 +35,20 @@ function newContactJSON() {
     return contact;
 }
 
+
 function CrmInput(props) {
+
+    /* Add a contact to the database, and alter the react state */
+    function addContact() {
+        $.post("/add_contact", newContactJSON(), props.addContact)
+    }
+
     return <div className="col-lg-3 inp">
 
-        <input onKeyUp="searchFunction()" id="myInput" className="form-control mt-2" placeholder="search" />
-        <span className="icon "><i className="fas fa-search"></i></span>
-
+        <div>
+            <input onKeyUp="searchFunction()" id="myInput" className="form-control mt-2" placeholder="search" />
+            <span className="icon "><i className="fas fa-search"></i></span>
+        </div>
         <h5 className="mt-2">Add New Contact</h5>
         <form id="contactForm">
             <input className="form-control mb-2 mt-3" placeholder="add name" id="userName" />
@@ -55,7 +64,7 @@ function CrmInput(props) {
 
             <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
         </form>
-        <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className="btn btn-success w-100 ">Add</button>
+        <button onClick={() => addContact()} className="btn btn-success w-100 ">Add</button>
 
 
     </div >

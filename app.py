@@ -314,8 +314,9 @@ def add_contact():
     company = request.form.get("company")
     phone = request.form.get("phone")
     email = request.form.get("email")
+    color = request.form.get("color")
     rolodex = session['rolodex']
-    insert_dict = {'name':name,'company':company,'phone':phone,'email':email,'rolodex':rolodex}
+    insert_dict = {'name':name,'company':company,'phone':phone,'email':email,'rolodex':rolodex,'color':color}
     contact_id = insert_query(mysql,'contacts',insert_dict)
     return jsonify({'id':contact_id})
 
