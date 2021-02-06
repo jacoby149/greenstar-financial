@@ -25,15 +25,14 @@ function Logo() {
 
 function newContactJSON() {
     var contact = {
-        name: $('#userName').val(),
-        company: $('#userCompany').val(),
-        phone: $('#userPhone').val(),
-        email: $('#userEmail').val(),
+        name: userName.value,
+        company: userCompany.value,
+        phone: userPhone.value,
+        email: userEmail.value,
+        color: "yellow"
     };
-    console.log(contact);
     return contact;
 }
-
 
 function CrmInput(props) {
     return <div className="col-lg-3 inp">
@@ -42,23 +41,24 @@ function CrmInput(props) {
         <span className="icon "><i className="fas fa-search"></i></span>
 
         <h5 className="mt-2">Add New Contact</h5>
+        <form id="contactForm">
+            <input className="form-control mb-2 mt-3" placeholder="add name" id="userName" />
+            <div id="nameAlert" className="alert alert-danger text-justify p-2 ">Please add name</div>
 
-        <input className="form-control mb-2 mt-3" placeholder="add name" id="userName" />
-        <div id="nameAlert" className="alert alert-danger text-justify p-2 ">Please add name</div>
+            <input className="form-control mb-3 mt-3" placeholder="add company" id="userCompany" />
+            <div id="companyAlert" className="alert alert-danger text-justify p-2 ">Please add company</div>
 
-        <input className="form-control mb-3 mt-3" placeholder="add company" id="userCompany" />
-        <div id="companyAlert" className="alert alert-danger text-justify p-2 ">Please add company</div>
+            <input className="form-control mb-3" placeholder="add phone" id="userPhone" />
+            <div id="phoneAlert" className="alert alert-danger text-justify p-2 ">Please add a valid number</div>
 
-        <input className="form-control mb-3" placeholder="add phone" id="userPhone" />
-        <div id="phoneAlert" className="alert alert-danger text-justify p-2 ">Please add a valid number</div>
+            <input className="form-control mb-3" placeholder="add e-mail" id="userEmail" />
 
-        <input className="form-control mb-3" placeholder="add e-mail" id="userEmail" />
-        <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
-
+            <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
+        </form>
         <button onClick={() => $.post("/add_contact", newContactJSON(), props.addContact)} className="btn btn-success w-100 ">Add</button>
 
 
-    </div>
+    </div >
 }
 
 function TopMenu() {
@@ -182,6 +182,7 @@ function Crm() {
 
     function addContact(resp) {
         var newContact = newContactJSON();
+        contactForm.reset();
         newContact.id = resp.id;
         newContact = contactFormat(newContact);
         setData(data.concat(newContact));
