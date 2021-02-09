@@ -221,10 +221,14 @@ function Crm() {
             if (s.length > 25) { return s.slice(0, 25) + '...'; }
             else { return s; }
         }
-        e.name = <a href="#" data-toggle="modal" data-target="#notes">{e.name}</a>;
-        e.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
-        e.remove = <a onClick={() => {deleteContact(e.id)}} className="text-danger"><i className="fas fa-minus-circle"></i></a>;
-        return e;
+    
+        /* Make a deep copy of e */
+        var formatted = {...e};
+
+        formatted.name = <a href="#" data-toggle="modal" data-target="#notes">{e.name}</a>;
+        formatted.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
+        formatted.remove = <a onClick={() => {deleteContact(e.id)}} className="text-danger"><i className="fas fa-minus-circle"></i></a>;
+        return formatted;
     }
 
     /* Initialize Contacts List */
