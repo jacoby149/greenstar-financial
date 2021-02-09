@@ -202,6 +202,11 @@ function Crm() {
     const [columns, setColumns] = React.useState(initColumns);
     const [data, setData] = React.useState([]);
 
+    /* Loads notes and ledges for a user */
+    function loadAll(id){
+        return
+    }
+
     function addContact(resp) {
         var newContact = newContactJSON();
         contactForm.reset();
@@ -225,7 +230,12 @@ function Crm() {
         /* Make a deep copy of e */
         var formatted = {...e};
 
-        formatted.name = <a href="#" data-toggle="modal" data-target="#notes">{e.name}</a>;
+        formatted.name = <a href="#" 
+            data-toggle="modal" 
+                data-target="#notes"
+                    onClick = {()=>loadAll(e.id)}>
+                            {e.name}
+                         </a>;
         formatted.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
         formatted.remove = <a onClick={() => {deleteContact(e.id)}} className="text-danger"><i className="fas fa-minus-circle"></i></a>;
         return formatted;
