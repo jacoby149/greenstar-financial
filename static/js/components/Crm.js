@@ -37,16 +37,19 @@ function newContactJSON() {
 
 
 function CrmInput(props) {
+    function searchFunction() {
+        console.log("search function");
+    }
 
     /* Add a contact to the database, and alter the react state */
-    function addContact() {
+    function triggerAddContact() {
         $.post("/add_contact", newContactJSON(), props.addContact)
     }
 
     return <div className="col-lg-3 inp">
 
         <div>
-            <input onKeyUp="searchFunction()" id="myInput" className="form-control mt-2" placeholder="search" />
+            <input onKeyUp={searchFunction} id="myInput" className="form-control mt-2" placeholder="search" />
             <span className="icon "><i className="fas fa-search"></i></span>
         </div>
         <h5 className="mt-2">Add New Contact</h5>
@@ -64,26 +67,30 @@ function CrmInput(props) {
 
             <div id="mailAlert" className="alert alert-danger text-justify p-2 ">Please add a valid e-mail</div>
         </form>
-        <button onClick={() => addContact()} className="btn btn-success w-100 ">Add</button>
+        <button onClick={() => triggerAddContact()} className="btn btn-success w-100 ">Add</button>
 
 
-    </div >
+    </div>
 }
 
 function TopMenu() {
     return <div className="options">
-        <button id="statusbutton" className="btn btn-success" onClick="toggleStatus()"> Viewing Notes </button>
+        <button id="statusbutton" className="btn btn-success" onClick={() => {toggleStatus()}}> Viewing Notes </button>
         &nbsp;
-    Green <input type="checkbox" onClick="statusFilter(this)" id="green" defaultChecked />
+    Green <input type="checkbox" onClick={() => statusFilter(this)} id="green" defaultChecked />
     &nbsp;
-    Yellow <input type="checkbox" onClick="statusFilter(this)" id="yellow" defaultChecked />
+    Yellow <input type="checkbox" onClick={() => statusFilter(this)} id="yellow" defaultChecked />
     &nbsp;
-    Red <input type="checkbox" id="red" onClick="statusFilter(this)" defaultChecked />
+    Red <input type="checkbox" id="red" onClick={() => statusFilter(this)} defaultChecked />
     </div>
 
 }
 
 function Modals() {
+    function submitLedger() {
+        console.log("submit ledger");
+    }
+
     return <div>
         <div className="modal right fade" id="notes" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div className="modal-dialog" role="document">
@@ -118,7 +125,7 @@ function Modals() {
 
                             Add Note Here : <textarea name="newnote" id="newnote" cols="50" rows="4" maxLength="500"
                             placeholder="Add note"></textarea> <br />
-                        <div style={{ float: 'right', paddingRight: '50px', paddingTop: '10px' }}> <button type="submit" onClick="submitNote()">Create Entry</button> </div>
+                        <div style={{ float: 'right', paddingRight: '50px', paddingTop: '10px' }}> <button type="submit" onClick={() => submitNote()}>Create Entry</button> </div>
                         <br /><br />
                         <div id="note_log"> </div>
                     </div>
@@ -163,7 +170,7 @@ function Modals() {
                                     Description : <input className="form-control" type="text" name="description" />
                                 </div>
                                 <div className="col-6" style={{ padding: '24px' }}>
-                                    <button type="button" onClick="submitLedger()">Create Entry</button>
+                                    <button type="button" onClick={submitLedger}>Create Entry</button>
                                 </div>
                             </div>
                             <br /><br />
@@ -182,6 +189,12 @@ function GreenStarFooter() {
 
 }
 
+function mprint(label, log) {
+    console.log(label + ":");
+    console.log(log);
+}
+
+
 function Crm() {
     /* State Variables */
     var initColumns = [['name', 'Name'], ['company', 'Company'], ['phone', 'Phone'], ['email', 'Email'], ['remove', '']];
@@ -193,8 +206,13 @@ function Crm() {
         var newContact = newContactJSON();
         contactForm.reset();
         newContact.id = resp.id;
-        newContact = contactFormat(newContact);
-        setData(data.concat(newContact));
+        let newData = [...data,newContact];
+        setData(newData);
+    }
+
+    function deleteContact(id) {
+        var filtered = data.filter(function(contact) { if (contact.id != id) {return contact;}});
+        $.post('/remove_contact', {id:id}, () => setData(filtered));
     }
 
     /* Converts data entries to contacts */
@@ -203,16 +221,14 @@ function Crm() {
             if (s.length > 25) { return s.slice(0, 25) + '...'; }
             else { return s; }
         }
-        e.name = <a href="/" onClick="">{e.name}</a>;
+        e.name = <a href="#" data-toggle="modal" data-target="#notes">{e.name}</a>;
         e.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
-        e.remove = <a onClick="deleteContact(\'' + name + '\')" className="text-danger"><i className="fas fa-minus-circle"></i></a>;
+        e.remove = <a onClick={() => {deleteContact(e.id)}} className="text-danger"><i className="fas fa-minus-circle"></i></a>;
         return e;
     }
-    /* Setdata wrapper for contacts */
-    function setContacts(resp) { setData(resp.map(contactFormat)); }
 
     /* Initialize Contacts List */
-    function init_contacts() { $.post('/load_contacts', {}, setContacts); }
+    function init_contacts() { $.post('/load_contacts', {}, setData); }
     React.useEffect(init_contacts, []);
 
     /* Main return statement */
@@ -226,7 +242,7 @@ function Crm() {
                 <div className="col-lg-8">
                     <div id="container demo">
                         <TopMenu />
-                        <DataTable columns={columns} data={data} />
+                        <DataTable columns={columns} data={data.map(contactFormat)} />
                     </div>
                 </div>
             </div>

@@ -367,11 +367,8 @@ def toggle_status():
 #Removing a contact from the DB and ...
 @app.route("/remove_contact", methods=["GET", "POST"])
 def remove_contact():
-    name = request.form.get('name')
-    company = request.form.get('company')
-    phone = request.form.get('phone')
-    email = request.form.get('email')
-    eq_dict = {'name':name,'company':company,'phone':phone,'email':email}
+    contact_id = request.form.get('id')
+    eq_dict = {'id':contact_id}
     insert_dict = {'archived': str(datetime.now()) }
     update_query(mysql,'contacts',eq_dict,insert_dict)    
     return "success"
