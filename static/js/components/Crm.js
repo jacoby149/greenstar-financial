@@ -86,6 +86,38 @@ function TopMenu() {
 
 }
 
+
+function Example() {
+  const [show, setShow] = React.useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  return (
+    <>
+      <button variant="primary" onClick={handleShow}>
+        Launch demo modal
+      </button>
+
+      <ReactModal show={show} onHide={handleClose} animation={false}>
+        <ReactModal.Header closeButton>
+          <ReactModal.Title>Modal heading</ReactModal.Title>
+        </ReactModal.Header>
+        <ReactModal.Body>Woohoo, you're reading this text in a modal!</ReactModal.Body>
+        <ReactModal.Footer>
+          <button variant="secondary" onClick={handleClose}>
+            Close
+          </button>
+          <button variant="primary" onClick={handleClose}>
+            Save Changes
+          </button>
+        </ReactModal.Footer>
+      </ReactModal>
+    </>
+  );
+}
+
+
 function Modals() {
     function submitLedger() {
         console.log("submit ledger");
@@ -246,7 +278,7 @@ function Crm() {
                     </div>
                 </div>
             </div>
-            <Modals />
+            <Example />
         </div>{/* <!-- modal --> */}
         <GreenStarFooter />
     </div>;
