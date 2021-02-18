@@ -83,105 +83,6 @@ function TopMenu() {
     &nbsp;
     Red <input type="checkbox" id="red" onClick={() => statusFilter(this)} defaultChecked />
     </div>
-
-}
-
-function Modals() {
-    function submitLedger() {
-        console.log("submit ledger");
-    }
-
-    return <div>
-        <div className="modal right fade" id="notes" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-
-                    <div className="modal-header" id="modalbanner">
-                        <h4 className="modal-title" id="myModalLabel"></h4>
-
-
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    </div>
-
-                    <div className="modal-body">
-
-
-                        <div className="row">
-                            <div className="col-6">
-                                Scheduled Status Change : <select name="recurring" className="form-control">
-                                    <option value="none">None Scheduled</option>
-                                    <option value="green">Green</option>
-                                    <option value="yellow">Yellow</option>
-                                    <option value="red">Red</option>
-                                </select>
-                            </div>
-                            <div className="col-6"> Change Date : <input className="form-control" type="date" name="date" maxLength="10" /></div>
-
-                        </div>
-                        <br />
-
-
-
-                            Add Note Here : <textarea name="newnote" id="newnote" cols="50" rows="4" maxLength="500"
-                            placeholder="Add note"></textarea> <br />
-                        <div style={{ float: 'right', paddingRight: '50px', paddingTop: '10px' }}> <button type="submit" onClick={() => submitNote()}>Create Entry</button> </div>
-                        <br /><br />
-                        <div id="note_log"> </div>
-                    </div>
-
-                </div>{/*<!-- modal-content -->*/}
-            </div>{/* <!-- modal-dialog --> */}
-        </div>{/* <!-- modal --> */}
-
-
-        <div className="modal right fade" id="ledger" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div className="modal-dialog" role="document">
-                <div className="modal-content">
-
-                    <div className="modal-header" id="modalbanner">
-                        <h4 className="modal-title" id="ledgerlabel"> Ledger </h4>
-
-
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    </div>
-
-                    <div className="modal-body">
-                        <form id="ledgerform">
-
-                            <div className="row">
-                                <div className="col-6"> Date : <input className="form-control" type="date" name="date" maxLength="10" /></div>
-                                <div className="col-6">
-                                    Amount ($) : <input className="form-control" type="text" name="amount" />
-                                </div>
-                                <div className="col-6">
-                                    Recurring? : <select name="recurring" className="form-control">
-                                        <option value="One">One Time</option>
-                                        <option value="Monthly">Monthly</option>
-                                        <option value="Yearly">Yearly</option>
-                                    </select>
-                                </div>
-                                <div className="col-6">
-                                    Check Number : <input className="form-control" type="text" name="check_number" />
-                                </div>
-                                <div className="col-6">
-
-                                    Description : <input className="form-control" type="text" name="description" />
-                                </div>
-                                <div className="col-6" style={{ padding: '24px' }}>
-                                    <button type="button" onClick={submitLedger}>Create Entry</button>
-                                </div>
-                            </div>
-                            <br /><br />
-                        </form>
-                    </div>
-                    <div id="ledger_log"> </div>
-                </div>
-
-            </div>{/* <!-- modal-content --> */}
-        </div>{/* <!-- modal-dialog --> */}
-    </div>
 }
 
 function GreenStarFooter() {
@@ -189,23 +90,17 @@ function GreenStarFooter() {
 
 }
 
-function mprint(label, log) {
-    console.log(label + ":");
-    console.log(log);
-}
-
 
 function Crm() {
-    /* State Variables */
+    
+    /* Data Table State Variables */
     var initColumns = [['name', 'Name'], ['company', 'Company'], ['phone', 'Phone'], ['email', 'Email'], ['remove', '']];
     initColumns = initColumns.map(function (e) { return { 'title': e[1], 'label': e[0] } });
     const [columns, setColumns] = React.useState(initColumns);
     const [data, setData] = React.useState([]);
 
-    /* Loads notes and ledges for a user */
-    function loadAll(id){
-        return
-    }
+    /* Current Contact State Variable */
+    const [contactID,setContactID] = React.useState(-1);
 
     function addContact(resp) {
         var newContact = newContactJSON();
@@ -233,7 +128,7 @@ function Crm() {
         formatted.name = <a href="#" 
             data-toggle="modal" 
                 data-target="#notes"
-                    onClick = {()=>loadAll(e.id)}>
+                    onClick = {()=>setContactID(e.id)}>
                             {e.name}
                          </a>;
         formatted.email = <a href={"mailto:" + e.email}>{shorten(e.email)}</a>;
@@ -260,7 +155,13 @@ function Crm() {
                     </div>
                 </div>
             </div>
-            <Modals />
+                <DataModal modalForm = {<NoteForm/>} 
+                            logs = { <Notes id={contactID}/> } 
+                />
+
+                <DataModal modalForm = {<LedgerForm/>} 
+                            logs = { <Ledger id = {contactID}/> }     
+                />
         </div>{/* <!-- modal --> */}
         <GreenStarFooter />
     </div>;
