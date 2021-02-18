@@ -68,7 +68,7 @@ function ModalHeader(){
 }
 
 function DataModal(props){
-    return  <div className="modal right fade" tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
+    return  <div className="modal right fade" id = {props.id} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <ModalHeader/>

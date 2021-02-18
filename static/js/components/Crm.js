@@ -157,10 +157,12 @@ function Crm() {
             </div>
                 <DataModal modalForm = {<NoteForm/>} 
                             logs = { <Notes id={contactID}/> } 
+                                id = {"notes"}
                 />
 
                 <DataModal modalForm = {<LedgerForm/>} 
-                            logs = { <Ledger id = {contactID}/> }     
+                            logs = { <Ledger id = {contactID}/> }
+                                id = {"ledger"}     
                 />
         </div>{/* <!-- modal --> */}
         <GreenStarFooter />
