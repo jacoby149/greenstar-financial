@@ -41,9 +41,18 @@ function CrmInput(props) {
         console.log("search function");
     }
 
+    function addContact(resp) {
+        const [data,setData] = props.hook;
+        var newContact = newContactJSON();
+        contactForm.reset();
+        newContact.id = resp.id;
+        let newData = [...data,newContact];
+        setData(newData);
+    }
+
     /* Add a contact to the database, and alter the react state */
     function triggerAddContact() {
-        $.post("/add_contact", newContactJSON(), props.addContact)
+        $.post("/add_contact", newContactJSON(), addContact)
     }
 
     return <div className="col-lg-3 inp">
@@ -90,33 +99,30 @@ function GreenStarFooter() {
 
 }
 
+function ContactTable(props){
 
-function Crm() {
-    
     /* Data Table State Variables */
     var initColumns = [['name', 'Name'], ['company', 'Company'], ['phone', 'Phone'], ['email', 'Email'], ['remove', '']];
     initColumns = initColumns.map(function (e) { return { 'title': e[1], 'label': e[0] } });
     const [columns, setColumns] = React.useState(initColumns);
-    const [data, setData] = React.useState([]);
+    const [data,setData] = props.dataHook;
+    const [contactID,setContactID] = props.idHook;
 
-    /* Current Contact State Variable */
-    const [contactID,setContactID] = React.useState(-1);
-
-    function addContact(resp) {
-        var newContact = newContactJSON();
-        contactForm.reset();
-        newContact.id = resp.id;
-        let newData = [...data,newContact];
-        setData(newData);
-    }
-
+    /* Deletes a contact */
     function deleteContact(id) {
-        var filtered = data.filter(function(contact) { if (contact.id != id) {return contact;}});
+
+        /* function to filter contact with the given id */
+        function f(contact) { if (contact.id != id) {return contact;}}
+        var filtered = data.filter(f);
+
+        /* Deletion of the contact */
         $.post('/remove_contact', {id:id}, () => setData(filtered));
     }
 
-    /* Converts data entries to contacts */
+
+    /* Properly formats a given contact in the data table. */
     function contactFormat(e) {
+
         function shorten(s) {
             if (s.length > 25) { return s.slice(0, 25) + '...'; }
             else { return s; }
@@ -136,6 +142,16 @@ function Crm() {
         return formatted;
     }
 
+    return <DataTable columns={columns} data={data.map(contactFormat)} />
+
+}
+
+function Crm() {
+    /* Contact Data */
+    const [data, setData] = React.useState([]);
+    /* Current Contact ID */
+    const [contactID,setContactID] = React.useState(-1);
+
     /* Initialize Contacts List */
     function init_contacts() { $.post('/load_contacts', {}, setData); }
     React.useEffect(init_contacts, []);
@@ -147,24 +163,37 @@ function Crm() {
         <div className=" jum">
             <Logo />
             <div className="row">
-                <CrmInput addContact={addContact} />
+                
+                {/* Search bar + inputs to add contacts. */}
+                <CrmInput hook = {[data,setData]}/>
+
                 <div className="col-lg-8">
                     <div id="container demo">
                         <TopMenu />
-                        <DataTable columns={columns} data={data.map(contactFormat)} />
+                        
+                        {/* Main table for viewing and removing contacts. */}
+                        <ContactTable 
+                            dataHook = {[data,setData]}
+                                idHook = {[contactID,setContactID]}
+                        />
+                    
                     </div>
                 </div>
             </div>
+                
+                {/* Notes Modal */}
                 <DataModal modalForm = {<NoteForm/>} 
                             logs = { <Notes id={contactID}/> } 
                                 id = {"notes"}
                 />
 
+                {/* Ledger Modal */}
                 <DataModal modalForm = {<LedgerForm/>} 
                             logs = { <Ledger id = {contactID}/> }
                                 id = {"ledger"}     
                 />
-        </div>{/* <!-- modal --> */}
+
+        </div>
         <GreenStarFooter />
     </div>;
 }

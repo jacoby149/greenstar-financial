@@ -1,6 +1,4 @@
 function Logs(props){
-    console.log("Logs")
-    console.log(props)
     const [log,setLog] = React.useState([]);
     function getLog(){
         if (props.id==-1) return;
