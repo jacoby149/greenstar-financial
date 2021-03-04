@@ -55,10 +55,23 @@ function NoteForm(){
             </div>
 }
 
-function ModalHeader(){
+function ModalHeaderText(props){
+    return(
+    <b style = {{fontSize:"20px"}}>
+        {props.contact.name + " "} 
+        <a className = 'statusbutton' 
+            onclick={props.toggleStatus}> 
+                &#9851;</a>
+    </b>
+    )
+
+}
+
+function ModalHeader(props){
     return  <div className="modal-header" id="modalbanner">
                 <h4 className="modal-title" id="myModalLabel"></h4>
 
+                <ModalHeaderText {...props}/>
 
                 <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span
                     aria-hidden="true">&times;</span></button>
@@ -71,7 +84,7 @@ function DataModal(props){
     return  <div className="modal right fade" id = {props.id} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
-                    <ModalHeader/>
+                    <ModalHeader {...props}/>
 
                     <div className="modal-body">
                         {props.modalForm}                        

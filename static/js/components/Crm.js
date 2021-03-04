@@ -160,6 +160,8 @@ function Crm() {
 
     /* Current Contact ID */
     const [contactID,setContactID] = React.useState(-1);
+    var contact = data.filter((e) => e.id == contactID );
+    contact = contact.length>0?contact[0]:{};
     
     /* Initialize Contacts List */
     function init_contacts() { $.post('/load_contacts', {}, setData); }
@@ -194,13 +196,15 @@ function Crm() {
             </div>
                 
                 {/* Notes Modal */}
-                <DataModal modalForm = {<NoteForm/>} 
+                <DataModal contact = {contact} 
+                    modalForm = {<NoteForm/>} 
                             logs = { <Notes id={contactID}/> } 
                                 id = {"notes"}
                 />
 
                 {/* Ledger Modal */}
-                <DataModal modalForm = {<LedgerForm/>} 
+                <DataModal contact = {contact}
+                    modalForm = {<LedgerForm/>} 
                             logs = { <Ledger id = {contactID}/> }
                                 id = {"ledger"}     
                 />
