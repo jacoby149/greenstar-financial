@@ -196,14 +196,14 @@ function Crm() {
             </div>
                 
                 {/* Notes Modal */}
-                <DataModal contact = {contact} 
+                <DataModal contact = {contact}  datahook = {[data,setData]}
                     modalForm = {<NoteForm/>} 
                             logs = { <Notes id={contactID}/> } 
                                 id = {"notes"}
                 />
 
                 {/* Ledger Modal */}
-                <DataModal contact = {contact}
+                <DataModal contact = {contact} datahook = {[data,setData]}
                     modalForm = {<LedgerForm/>} 
                             logs = { <Ledger id = {contactID}/> }
                                 id = {"ledger"}     

@@ -56,11 +56,25 @@ function NoteForm(){
 }
 
 function ModalHeaderText(props){
+
+    function newColor(color){
+        return color=="red"?"yellow":color=="yellow"?"green":"red"
+    }
+
+    function toggleStatus(){
+        console.log("toggling");
+        var newData = [...props.datahook[0]]
+        var newContact = newData.filter((e)=> e.id == props.contact.id)[0];
+        newContact.color = newColor(newContact.color);
+        console.log(newContact);
+        props.datahook[1](newData);
+    }
+
     return(
     <b style = {{fontSize:"20px"}}>
         {props.contact.name + " "} 
         <a className = 'statusbutton' 
-            onclick={props.toggleStatus}> 
+            onclick={toggleStatus}> 
                 &#9851;</a>
     </b>
     )
