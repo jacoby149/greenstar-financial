@@ -1,175 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <div w3-include-html="header.html"></div>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V96G09S6GZ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
 
-        gtag('config', 'G-V96G09S6GZ');
-    </script>
+    <head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-V96G09S6GZ"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
 
-    <title>Greenstar Group</title>
+            gtag('config', 'G-V96G09S6GZ');
+        </script>
 
-    <!-- Bootstrap core CSS -->
-    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <!-- Modal CSS -->
-    <link href="static/css/modal_home.css" rel="stylesheet">
+        <title>Greenstar Group</title>
 
-    <!-- Custom styles for this template -->
-    <link href="static/css/homepage.css" rel="stylesheet">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
-</head>
+        <!-- Modal CSS -->
+        <!--<link href="static/css/modal_home.css" rel="stylesheet">-->
 
-<body>
+        <!-- Custom styles for this template -->
+        <link href="static/css/homepage.css" rel="stylesheet">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-success gs-top-nav">
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-success gs-top-nav">
+            <div class="container">
+                <a class="navbar-brand" href="#"><img src="static/img/GreenstarBannerWhite.png" height="40px;"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <!--                <li class="nav-item">-->
+                        <!--                    <a class="nav-link" href="/">Home</a>-->
+                        <!--                </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Finance Software</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/crm_home">CRM Software</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/team_home">Our Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/modules">Log In</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Header -->
+        <header class="gs-center-header py-5 mb-5">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-lg-12">
+                        <h1 class="display-4 text-dark mt-5 mb-2">Custom Financial Software</h1>
+                        <p class="lead mb-5 text-dark-50"><i>Bringing the power of a large-firm tech department to small
+                                wealth management businesses.</i></p>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Page Content -->
         <div class="container">
-            <a class="navbar-brand" href="#"><img src="static/img/GreenstarBannerWhite.png" height="40px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <!--                <li class="nav-item">-->
-                    <!--                    <a class="nav-link" href="/">Home</a>-->
-                    <!--                </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Finance Software</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/crm_home">CRM Software</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/team_home">Our Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/modules">Log In</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Header -->
-    <header class="gs-center-header py-5 mb-5">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-lg-12">
-                    <h1 class="display-4 text-dark mt-5 mb-2">Custom Financial Software</h1>
-                    <p class="lead mb-5 text-dark-50"><i>Bringing the power of a large-firm tech department to small
-                            wealth management businesses.</i></p>
+            <div class="row">
+                <div class="col-md-8 mb-5">
+                    <h2>What We Do</h2>
+                    <hr>
+                    <p>Large wealth management corporations have full-time tech departments that work with their
+                        advisors to
+                        custom fit financial software to their specific needs.</p>
+                    <p>We are the premiere independent company that provides this same level of attention and one-on-one
+                        focus to smaller wealth management firms.</p>
+                    <p>Reach out to us today to set up a free initial consult!</p><br><br>
+                    <a class="btn btn-primary btn-lg" href="/login">Finance Login &raquo;</a>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h2>Contact Us</h2>
+                    <hr>
+                    <address>
+                        <strong>Greenstar Group</strong>
+                        <br>5300 Fifth Ave.
+                        <br>Pittsburgh, PA 15232
+                        <br>
+                    </address>
+                    <address>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>Jacob</span><br>
+                                    <a href="mailto:jacob@greenstargroup.org">jacob@greenstargroup.org</a><br>
+                                    (347) 209-2325
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Oliver</span><br>
+                                    <a href="mailto:oliver@greenstargroup.org">oliver@greenstargroup.org</a><br>
+                                    (814) 360-7508
+                                </td>
+                            </tr>
+                        </table>
+                    </address>
                 </div>
             </div>
-        </div>
-    </header>
+            <!-- /.row -->
 
-    <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-8 mb-5">
-                <h2>What We Do</h2>
-                <hr>
-                <p>Large wealth management corporations have full-time tech departments that work with their advisors to
-                    custom fit financial software to their specific needs.</p>
-                <p>We are the premiere independent company that provides this same level of attention and one-on-one
-                    focus to smaller wealth management firms.</p>
-                <p>Reach out to us today to set up a free initial consult!</p><br><br>
-                <a class="btn btn-primary btn-lg" href="/login">Finance Login &raquo;</a>
-            </div>
-            <div class="col-md-4 mb-5">
-                <h2>Contact Us</h2>
-                <hr>
-                <address>
-                    <strong>Greenstar Group</strong>
-                    <br>5300 Fifth Ave.
-                    <br>Pittsburgh, PA 15232
-                    <br>
-                </address>
-                <address>
-                    <table>
-                        <tr>
-                            <td>
-                                <span>Jacob</span><br>
-                                <a href="mailto:jacob@greenstargroup.org">jacob@greenstargroup.org</a><br>
-                                (347) 209-2325
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> &nbsp; </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Oliver</span><br>
-                                <a href="mailto:oliver@greenstargroup.org">oliver@greenstargroup.org</a><br>
-                                (814) 360-7508
-                            </td>
-                        </tr>
-                    </table>
-                </address>
-            </div>
-        </div>
-        <!-- /.row -->
-
-        <div class="row">
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <img class="card-img-top" src="static/img/teamwork-business.jpg" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">How It Works</h4>
-                        <p class="card-text">Learn more about what working with Greenstar will be like.</p>
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="static/img/teamwork-business.jpg" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">How It Works</h4>
+                            <p class="card-text">Learn more about what working with Greenstar will be like.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#teamwork">Find Out
+                                More!</button>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#teamwork">Find Out
-                            More!</button>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="static/img/promise.jpg" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Our Promise</h4>
+                            <p class="card-text">View our company mission and our pledge to our clients.</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#promise">Find Out
+                                More!</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="static/img/compliance.jpg" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Compliance</h4>
+                            <p class="card-text">We are in the process of gaining all requisite compliance
+                                certifications to
+                                deliver the safest, most reliable models to you and your team.</p>
+                        </div>
+                        <!--                <div class="card-footer">-->
+                        <!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
+                        <!--                </div>-->
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <img class="card-img-top" src="static/img/promise.jpg" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Our Promise</h4>
-                        <p class="card-text">View our company mission and our pledge to our clients.</p>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+
+        <!-- Modals -->
+        <div id="teamwork" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Work With Us</h4>
                     </div>
-                    <div class="card-footer">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#promise">Find Out
-                            More!</button>
+                    <div class="modal-body">
+                        <p>We work with you to discover what you like and don't like about your current software. We
+                            talk
+                            about what we are able to do for you, then build you a custom suite of tools catered to your
+                            needs.</p>
+                        <p>As we show you progress along the way, there will be no charge to you. Once you are satisfied
+                            with the product, then we will send the initial invoice and set up a monthly payment
+                            structure.
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <img class="card-img-top" src="static/img/compliance.jpg" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Compliance</h4>
-                        <p class="card-text">We are in the process of gaining all requisite compliance certifications to
-                            deliver the safest, most reliable models to you and your team.</p>
-                    </div>
-                    <!--                <div class="card-footer">-->
-                    <!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
-                    <!--                </div>-->
-                </div>
+
             </div>
         </div>
-        <!-- /.row -->
 
-    </div>
-    <!-- /.container -->
+
+        <div id="promise" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Our Promise</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Here at Greenstar we love to invest our time and services to help small businesses. It is our
+                            promise to deliver the same level of customization that large firms get to those who prefer
+                            a
+                            community-driven approach to financial health.</p>
+                        <p>We treat each client with the respect and one-on-one attention they deserve. Consider us your
+                            own
+                            personal software department.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </body>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
@@ -178,61 +254,5 @@
         </div>
         <!-- /.container -->
     </footer>
-
-
-    <!-- Modals -->
-    <div id="teamwork" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Work With Us</h4>
-                </div>
-                <div class="modal-body">
-                    <p>We work with you to discover what you like and don't like about your current software. We talk
-                        about what we are able to do for you, then build you a custom suite of tools catered to your
-                        needs.</p>
-                    <p>As we show you progress along the way, there will be no charge to you. Once you are satisfied
-                        with the product, then we will send the initial invoice and set up a monthly payment structure.
-                    </p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div id="promise" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Our Promise</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Here at Greenstar we love to invest our time and services to help small businesses. It is our
-                        promise to deliver the same level of customization that large firms get to those who prefer a
-                        community-driven approach to financial health.</p>
-                    <p>We treat each client with the respect and one-on-one attention they deserve. Consider us your own
-                        personal software department.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-
-    <!-- Bootstrap core JavaScript -->
-    <script src="static/js/jquery.min.js"></script>
-    <script src="static/js/bootstrap.bundle.min.js"></script>
-
-</body>
 
 </html>

@@ -82,9 +82,9 @@ function CrmInput(props) {
     </div>
 }
 
-function TopMenu() {
+function TopMenu(props) {
     return <div className="options">
-        <button id="statusbutton" className="btn btn-success" onClick={() => {toggleStatus()}}> Viewing Notes </button>
+        <button id="statusbutton" className="btn btn-success" onClick={props.toggleViewMode}> Viewing {props.viewMode} </button>
         &nbsp;
     Green <input type="checkbox" onClick={() => statusFilter(this)} id="green" defaultChecked />
     &nbsp;
@@ -133,7 +133,7 @@ function ContactTable(props){
 
         formatted.name = <a href="#" 
             data-toggle="modal" 
-                data-target="#notes"
+                data-target={"#" + props.viewMode}
                     onClick = {()=>setContactID(e.id)}>
                             {e.name}
                          </a>;
@@ -149,9 +149,18 @@ function ContactTable(props){
 function Crm() {
     /* Contact Data */
     const [data, setData] = React.useState([]);
+
+    /* view Mode */
+    const [viewMode,setViewMode] = React.useState("notes");
+    function toggleViewMode(){
+        if (viewMode == "notes"){
+            setViewMode("ledger");}
+        else{setViewMode("notes")}
+    }
+
     /* Current Contact ID */
     const [contactID,setContactID] = React.useState(-1);
-
+    
     /* Initialize Contacts List */
     function init_contacts() { $.post('/load_contacts', {}, setData); }
     React.useEffect(init_contacts, []);
@@ -169,12 +178,15 @@ function Crm() {
 
                 <div className="col-lg-8">
                     <div id="container demo">
-                        <TopMenu />
+                        <TopMenu
+                            viewMode = {viewMode}
+                                toggleViewMode = {toggleViewMode} />
                         
                         {/* Main table for viewing and removing contacts. */}
                         <ContactTable 
-                            dataHook = {[data,setData]}
-                                idHook = {[contactID,setContactID]}
+                            viewMode = {viewMode}
+                                dataHook = {[data,setData]}
+                                    idHook = {[contactID,setContactID]}
                         />
                     
                     </div>
