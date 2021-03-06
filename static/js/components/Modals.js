@@ -100,16 +100,27 @@ function ModalHeader(props){
 
 }
 
+function CRMForm(props){
+    if (props.mode == "notes"){return <NoteForm />}
+    else {return <LedgerForm />}
+}
+function CRMLogs(props){
+    if (props.mode == "notes"){return <Notes id={props.contact.id}/>}
+    else {return <Ledger id = {props.contact.id}/>}
+}
+
 function DataModal(props){
-    return  <div className="modal right fade" id = {props.id} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
+    return  <div className="modal right fade" id = {props.mode} tabIndex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div className="modal-dialog" role="document">
                 <div className="modal-content">
                     <ModalHeader {...props}/>
 
                     <div className="modal-body">
-                        {props.modalForm}                        
+
+                        <CRMForm {...props}/>
                         <br /><br />
-                        {props.logs}
+                        <CRMLogs {...props} />
+
                     </div>
 
                 </div>{/*<!-- modal-content -->*/}
