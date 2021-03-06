@@ -64,9 +64,15 @@ function ModalHeaderText(props){
     function toggleStatus(){
         console.log("toggling");
         var newData = [...props.datahook[0]]
-        var newContact = newData.filter((e)=> e.id == props.contact.id)[0];
-        newContact.color = newColor(newContact.color);
-        console.log(newContact);
+        /* Grab contact inside of c */
+        var c = newData.filter((e)=> e.id == props.contact.id)[0];
+        
+        /* Make API request */
+        $.post("/toggle_status",{id:props.contact.id,color:c.color});
+
+        /* Modify data */
+        c.color = newColor(c.color);
+        console.log(c);
         props.datahook[1](newData);
     }
 
@@ -74,7 +80,7 @@ function ModalHeaderText(props){
     <b style = {{fontSize:"20px"}}>
         {props.contact.name + " "} 
         <a className = 'statusbutton' 
-            onclick={toggleStatus}> 
+            onClick={toggleStatus}> 
                 &#9851;</a>
     </b>
     )
@@ -82,7 +88,7 @@ function ModalHeaderText(props){
 }
 
 function ModalHeader(props){
-    return  <div className="modal-header" id="modalbanner">
+    return  <div className={"modal-header " + props.contact.color} id="modalbanner">
                 <h4 className="modal-title" id="myModalLabel"></h4>
 
                 <ModalHeaderText {...props}/>
