@@ -1,219 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+    <head>
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-V96G09S6GZ"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-V96G09S6GZ"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
 
-        gtag('config', 'G-V96G09S6GZ');
-    </script>
+            gtag('config', 'G-V96G09S6GZ');
+        </script>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-    <title>Greenstar Group</title>
+        <title>Greenstar Group</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Bootstrap core CSS -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
-    <!-- Modal CSS -->
-    <link href="static/css/modal.css" rel="stylesheet">
+        <!-- Modal CSS -->
+        <link href="static/css/modal_home.css" rel="stylesheet">
 
-    <!-- Custom styles for this template -->
-    <link href="static/css/business-frontpage.css" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="static/css/homepage.css" rel="stylesheet">
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-success gs-top-nav">
-        <div class="container">
-            <a class="navbar-brand" href="#"><img src="static/img/GreenstarBannerWhite.png" height="40px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <!--                <li class="nav-item">-->
-                    <!--                    <a class="nav-link" href="/">Home</a>-->
-                    <!--                </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/finance_home">Finance Software</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">CRM Software</a>
-                        <span class="sr-only">(current)</span>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/team_home">Our Team</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/modules">Log In</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Header -->
-    <header class="gs-center-header py-5 mb-5">
-        <div class="container h-100">
-            <div class="row h-100 align-items-center">
-                <div class="col-lg-12">
-                    <h1 class="display-4 text-dark mt-5 mb-2">Greenstar Rolodex & Ledger</h1>
-                    <p class="lead mb-5 text-dark-50"><i>A simple database-backed CRM tool for your small business.</i>
-                    </p>
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-success gs-top-nav">
+            <div class="container">
+                <a class="navbar-brand" href="/finance_home"><img src="static/img/GreenstarBannerWhite.png"
+                        height="40px;"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                    aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto">
+                        <!--                <li class="nav-item">-->
+                        <!--                    <a class="nav-link" href="/">Home</a>-->
+                        <!--                </li>-->
+                        <li class="nav-item">
+                            <a class="nav-link" href="/finance_home">Finance Software</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">CRM Software</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/team_home">Our Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/modules">Log In</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </header>
+        </nav>
 
-    <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-            <div class="col-md-8 mb-5">
-                <h2>Rolodex</h2>
-                <hr>
-                <p>A digital version of the classic rolodex. Keep business contacts organized, write notes, and set
-                    statuses with the click of a button.</p>
-                <br>
-                <h2>Ledger</h2>
-                <hr>
-                <p>Perfect for keeping track of money flow for each client. Print digital receipts for each transaction
-                    and set reminders for your desired time period.</p>
-                <br>
-                <a class="btn btn-primary btn-lg" href="/crm">CRM Login &raquo;</a>
-
-<!--                <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#crm-gallery" href="#">View Gallery-->
-<!--                    &raquo;</a>-->
+        <!-- Header -->
+        <header class="gs-center-header py-5 mb-5">
+            <div class="container h-100">
+                <div class="row h-100 align-items-center">
+                    <div class="col-lg-12">
+                        <h1 class="display-4 text-dark mt-5 mb-2">Greenstar Rolodex & Ledger</h1>
+                        <p class="lead mb-5 text-dark-50"><i>A simple database-backed CRM tool for your small
+                                business.</i>
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-4 mb-5">
-                <h2>Contact Us</h2>
-                <hr>
-                <address>
-                    <strong>Greenstar Group</strong>
-                    <br>5300 Fifth Ave.
-                    <br>Pittsburgh, PA 15232
+        </header>
+
+        <!-- Page Content -->
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-8 mb-5">
+                    <h2>Rolodex</h2>
+                    <hr>
+                    <p>A digital version of the classic rolodex. Keep business contacts organized, write notes, and set
+                        statuses with the click of a button.</p>
                     <br>
-                </address>
-                <address>
-                    <table>
-                        <tr>
-                            <td>
-                                <span>Jacob</span><br>
-                                <a href="mailto:jacob@greenstargroup.org">jacob@greenstargroup.org</a><br>
-                                (347) 209-2325
+                    <h2>Ledger</h2>
+                    <hr>
+                    <p>Perfect for keeping track of money flow for each client. Print digital receipts for each
+                        transaction
+                        and set reminders for your desired time period.</p>
+                    <br>
+                    <a class="btn btn-primary btn-lg" href="/crm">CRM Login &raquo;</a>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td> &nbsp; </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span>Oliver</span><br>
-                                <a href="mailto:oliver@greenstargroup.org">oliver@greenstargroup.org</a><br>
-                                (814) 360-7508
-                            </td>
-                        </tr>
-                    </table>
-                </address>
-            </div>
-        </div>
-        <!-- /.row -->
+                    <!--                <a class="btn btn-primary btn-lg" data-toggle="modal" data-target="#crm-gallery" href="#">View Gallery-->
+                    <!--                    &raquo;</a>-->
+                </div>
+                <div class="col-md-4 mb-5">
+                    <h2>Contact Us</h2>
+                    <hr>
+                    <address>
+                        <strong>Greenstar Group</strong>
+                        <br>5300 Fifth Ave.
+                        <br>Pittsburgh, PA 15232
+                        <br>
+                    </address>
+                    <address>
+                        <table>
+                            <tr>
+                                <td>
+                                    <span>Jacob</span><br>
+                                    <a href="mailto:jacob@greenstargroup.org">jacob@greenstargroup.org</a><br>
+                                    (347) 209-2325
 
-        <div class="row">
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <a href="#" data-toggle="modal" data-target="#crm-gallery"><img class="card-img-top"
-                            src="static/img/rolodex-demo.png" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">Rolodex</h4>
-                        <p class="card-text">We initially made this for ourselves to keep track of our own
-                            correspondence. Upon showing it to friends, they were interested in using it as well. Many
-                            people prefer its simplicity to a large, expensive software such as Salesforce.</p>
-                    </div>
-                    <!--                <div class="card-footer">-->
-                    <!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
-                    <!--                </div>-->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td> &nbsp; </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>Oliver</span><br>
+                                    <a href="mailto:oliver@greenstargroup.org">oliver@greenstargroup.org</a><br>
+                                    (814) 360-7508
+                                </td>
+                            </tr>
+                        </table>
+                    </address>
                 </div>
             </div>
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <a href="#" data-toggle="modal" data-target="#crm-gallery"><img class="card-img-top"
-                            src="static/img/ledger-demo.png" alt=""></a>
-                    <div class="card-body">
-                        <h4 class="card-title">Ledger</h4>
-                        <p class="card-text">Functionality we added to our Rolodex per the request of a community leader
-                            who deals in donations. We made a quick and easy way to keep track of and print receipts for
-                            each and every transaction.</p>
-                    </div>
-                    <!--                <div class="card-footer">-->
-                    <!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
-                    <!--                </div>-->
-                </div>
-            </div>
-            <div class="col-md-4 mb-5">
-                <div class="card h-100">
-                    <img class="card-img-top" src="static/img/teamwork.jpg" alt="">
-                    <div class="card-body">
-                        <h4 class="card-title">Contact Us</h4>
-                        <p class="card-text">For more information and pricing for teams and organizations, please send
-                            us an email!</p>
-                    </div>
-                    <div class="card-footer">
-                        <a href="mailto:jacob@greenstargroup.org;oliver@greenstargroup.org"
-                            class="btn btn-primary">Contact Us</a>
+            <!-- /.row -->
+
+            <div class="row">
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <a href="#" data-toggle="modal" data-target="#crm-gallery"><img class="card-img-top"
+                                src="static/img/rolodex-demo.png" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">Rolodex</h4>
+                            <p class="card-text">We initially made this for ourselves to keep track of our own
+                                correspondence. Upon showing it to friends, they were interested in using it as well.
+                                Many
+                                people prefer its simplicity to a large, expensive software such as Salesforce.</p>
+                        </div>
+                        <!--                <div class="card-footer">-->
+                        <!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
+                        <!--                </div>-->
                     </div>
                 </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <a href="#" data-toggle="modal" data-target="#crm-gallery"><img class="card-img-top"
+                                src="static/img/ledger-demo.png" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">Ledger</h4>
+                            <p class="card-text">Functionality we added to our Rolodex per the request of a community
+                                leader
+                                who deals in donations. We made a quick and easy way to keep track of and print receipts
+                                for
+                                each and every transaction.</p>
+                        </div>
+                        <!--                <div class="card-footer">-->
+                        <!--                    <a href="#" class="btn btn-primary">Find Out More!</a>-->
+                        <!--                </div>-->
+                    </div>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <div class="card h-100">
+                        <img class="card-img-top" src="static/img/teamwork.jpg" alt="">
+                        <div class="card-body">
+                            <h4 class="card-title">Contact Us</h4>
+                            <p class="card-text">For more information and pricing for teams and organizations, please
+                                send
+                                us an email!</p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="mailto:jacob@greenstargroup.org;oliver@greenstargroup.org"
+                                class="btn btn-primary">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <!-- /.row -->
+            <!-- /.row -->
 
-    </div>
-    <!-- /.container -->
-
-    <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; Greenstar Group 2020</p>
         </div>
         <!-- /.container -->
-    </footer>
 
-
-    <div id="crm-gallery" class="modal fade" role="dialog">
-        <div class="modal-dialog" style="left:-16%;">
-
-            <div class="modal-content modal-gallery">
-                <div class="thumbnail-topbar"> Rolodex Frontpage </div>
-                <img class="ImgThumbnail" src="static/img/rolodex-demo.png">
-                <div class="thumbnail-separator"> Rolodex Notes </div>
-                <img class="ImgThumbnail" src="static/img/rolodex-notes.png">
-                <div class="thumbnail-separator"> Ledger Pane </div>
-                <img class="ImgThumbnail" src="static/img/ledger-demo.png">
-                <div class="thumbnail-endbar"> </div>
+        <!-- Footer -->
+        <footer class="py-5 bg-dark">
+            <div class="container">
+                <p class="m-0 text-center text-white">Copyright &copy; Greenstar Group 2020</p>
             </div>
+            <!-- /.container -->
+        </footer>
 
+
+        <div id="crm-gallery" class="modal fade" role="dialog">
+            <div class="modal-dialog" style="left:-16%;">
+
+                <div class="modal-content modal-gallery">
+                    <div class="thumbnail-topbar"> Rolodex Frontpage </div>
+                    <img class="ImgThumbnail" src="static/img/rolodex-demo.png">
+                    <div class="thumbnail-separator"> Rolodex Notes </div>
+                    <img class="ImgThumbnail" src="static/img/rolodex-notes.png">
+                    <div class="thumbnail-separator"> Ledger Pane </div>
+                    <img class="ImgThumbnail" src="static/img/ledger-demo.png">
+                    <div class="thumbnail-endbar"> </div>
+                </div>
+
+            </div>
         </div>
-    </div>
 
 
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 
-</body>
+    </body>
 
 </html>

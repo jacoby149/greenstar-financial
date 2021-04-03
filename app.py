@@ -279,21 +279,13 @@ def crm():
     else:
         return render_template('crm_password_page.html')
 
-
-#CRM React Dashboard
-@app.route("/crm_react", methods=["GET", "POST"])
-def crm_react():
-    if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('crm_react.html', **session)
-    else:
-        return render_template('crm_password_page.html')
-
 #Loading of contacts into the CRM dashboard
 @app.route("/load_contacts", methods=["GET", "POST"])
 def load_contacts():
     eq_dict = {'rolodex':session['rolodex'],'archived':("IS",None)}
     contacts = select_query(mysql,"contacts",eq_dict)
     return jsonify(contacts)
+
 
 #Loading all notes for a contact
 @app.route("/load_notes", methods=["GET", "POST"])
@@ -302,7 +294,8 @@ def load_notes():
     notes = select_query(mysql,"notes",eq_dict,'date')
     for n in notes:
         n["date"] = str(n["date"])
-    return json.dumps(notes)
+    return jsonify(notes)
+
 
 #Loading all ledger entries for a contact
 @app.route("/load_ledger", methods=["GET", "POST"])
@@ -311,7 +304,7 @@ def load_ledge():
     ledger = select_query(mysql,"ledger",eq_dict,'date')
     for l in ledger:
         l["date"] = str(l["date"])
-    return json.dumps(ledger)
+    return jsonify(ledger)
 
 
 #Adding a contact to the DB and ...
@@ -321,12 +314,12 @@ def add_contact():
     company = request.form.get("company")
     phone = request.form.get("phone")
     email = request.form.get("email")
+    color = request.form.get("color")
     rolodex = session['rolodex']
-    insert_dict = {'name':name,'company':company,
-            'phone':phone,'email':email,
-                'rolodex':rolodex}
-    #TODO get id from mysql python insert query
-    return json.dumps(insert_query(mysql,'contacts',insert_dict))
+    insert_dict = {'name':name,'company':company,'phone':phone,'email':email,'rolodex':rolodex,'color':color}
+    contact_id = insert_query(mysql,'contacts',insert_dict)
+    return jsonify({'id':contact_id})
+
 
 #Submitting a ledge for a contact
 @app.route("/add_note", methods=["GET", "POST"])
@@ -336,7 +329,8 @@ def add_notes():
     date = str(datetime.now())
     insert_dict = {'contact_id':contact_id,'note':note,'date':date}
     note_id = insert_query(mysql,'notes',insert_dict)
-    return json.dumps(note_id)
+    return jsonify(note_id)
+
 
 #Submitting a ledge for a contact
 @app.route("/add_ledge", methods=["GET", "POST"])
@@ -354,7 +348,8 @@ def add_ledge():
                 'date':date,'recurring':recurring} 
     
     ledge_id = insert_query(mysql,'ledger',insert_dict)
-    return json.dumps(ledge_id)
+    return jsonify(ledge_id)
+
 
 @app.route("/toggle_status", methods=["GET", "POST"])
 def toggle_status():
@@ -372,14 +367,12 @@ def toggle_status():
 #Removing a contact from the DB and ...
 @app.route("/remove_contact", methods=["GET", "POST"])
 def remove_contact():
-    name = request.form.get('name')
-    company = request.form.get('company')
-    phone = request.form.get('phone')
-    email = request.form.get('email')
-    eq_dict = {'name':name,'company':company,'phone':phone,'email':email}
+    contact_id = request.form.get('id')
+    eq_dict = {'id':contact_id}
     insert_dict = {'archived': str(datetime.now()) }
     update_query(mysql,'contacts',eq_dict,insert_dict)    
     return "success"
+
 
 # start flask
 if __name__ == "__main__":
