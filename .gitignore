@@ -16,3 +16,5 @@
 *.svg
 *.pyc
 plts/*.pdf
+/react/node_modules
+/react/.vscode
