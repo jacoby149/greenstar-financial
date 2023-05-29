@@ -110,8 +110,9 @@ def latex_matrix(C):
                 color = "{0,0,0}"
             else:
                 color = "{0,"+str(abs(j/2))+","+str(abs(j/4))+"}"
-        else :
+        else:
             color = "{"+str(abs(j))+",0,0}"
+        print("COLOR :",color)
         return "\\color[rgb]"+color+" "+str(j)+" \\color{black}"
 
 
