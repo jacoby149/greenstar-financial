@@ -1,11 +1,5 @@
-This is really cool.
-1. Get it working easy locally.
-    - Remove SQL from it [DONE]
-    - Remove the login functionality, [DONE] 
-    - Remove wealth manager account functionality [DONE]
-    - Just go straight the to the portfolio balancing page. [DONE]
-And.... Fix the reporting functionality!!!
-
+Yahoo Finance is outright unreliable...
+    Manually download the data for the 18 best tickers.
 Things that would be cool on a fork of the project.
 Do it with custom assets.
     - Remove the 18 assets menu.
