@@ -10,12 +10,11 @@ upload full packet images to s3 with id packet grade IN packets folder
 # main imports
 import os
 import json
-from flask import Flask, request, render_template, send_file, session,jsonify,redirect,send_from_directory #reload
+from flask import Flask, request, render_template, send_file,jsonify,redirect,send_from_directory #reload
 from flask_cors import CORS
 import sys
 import pandas as pd
 from datetime import date,datetime
-from query import *
 
 # display whole book
 pd.set_option('display.width', 260)
@@ -31,19 +30,9 @@ from operations import mprint
 # Initialize the Flask application
 app = Flask(__name__, template_folder="templates")
 cors = CORS(app)
-
-from flask_mysqldb import MySQL
   
-app.config['MYSQL_HOST'] = creds()['host']
-app.config['MYSQL_USER'] = creds()['user']
-app.config['MYSQL_PASSWORD'] = creds()['password']
-app.config['MYSQL_DB'] = creds()['database']
-app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
-
 print(app.config,flush=True)
  
-mysql = MySQL(app)
-
 # Secret key for passcodes
 app.secret_key = b'_5#y2L"g4Q8z\n\xec]/'
 
@@ -103,35 +92,7 @@ def team_home():
 
 @app.route("/modules", methods=["GET", "POST"])
 def load_home():
-    if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('index.html', **session)
-    else:
-        return render_template('password_page.html')
-    
-
-@app.route("/login", methods=["GET", "POST"])
-def login():
-    passcode = request.form.get("passcode")
-    eq_dict = {'passcode' : passcode}
-    resp = select_query(mysql,"clients",eq_dict)
-
-    print(passcode,"\n",resp,flush=True)
-    if (len(resp)>0):
-        client = resp[0]
-        session['logged_in'] = True
-        session['client'] = client["name"]
-        session['rolodex'] = client["rolodex"]
-        session['directory'] = client['directory_name']
-        session['image'] = "static/img/{}".format(client["logo"])
-        session['title'] = "{} Custom Algorithms - {}".format(client["firm"], client["header_title"])
-    return redirect("/modules")
-
-
-@app.route("/logout", methods=["GET", "POST"])
-def logout():
-    session.clear()
-    return redirect("/modules")
-
+    return render_template('index.html')
 
 def get_book(request):
     # get personal info
@@ -140,7 +101,7 @@ def get_book(request):
             'date': str(date.today()),
             'birthday': request.form.get('birthday'),
             'term': request.form.get('term'),
-            'firm': 'Provins',
+            'firm': 'Greenstar Group',
             'end_date': datetime.strptime(request.form.get('date-input'), '%Y-%m-%d').date(),
             }
 
@@ -241,141 +202,9 @@ def load_graphs(tickers=None):
 def make_report():
     book, info = get_book(request)
 
-    report.make_report(session['directory'])
+    report.make_report()
 
     return send_file("/app/pdfs/{} Report.pdf".format(info['name']))
-
-
-# ########################################
-# ########      CRM ROUTES       #########
-# ########################################
- 
-#Logging out of CRM
-@app.route("/crm_logout", methods=["GET", "POST"])
-def crm_logout():
-    session.clear()
-    return redirect("/crm")
-
-#Verify a submitted CRM login attempt
-@app.route("/crm_verify<name_var>", methods=["GET", "POST"])
-def crm_verify(name_var):
-    mprint("name var",name_var)
-    passcode = request.form.get("passcode")
-    eq_dict = {'passcode' : passcode}
-    resp = select_query(mysql,"clients",eq_dict)
-
-    print(passcode,"\n",resp,flush=True)
-    if (len(resp)>0):
-        client = resp[0]
-        session['logged_in'] = True
-        session['directory'] = client['directory_name']
-        session['rolodex'] = client["rolodex"]
-        session['client'] = client["name"]
-        session['image'] = "static/img/{}".format(client["logo"])
-    return redirect("/crm")
-
-#CRM Dashboard
-@app.route("/crm", methods=["GET", "POST"])
-def crm():
-    if 'logged_in' in session and session['logged_in'] == True:
-        return render_template('crm.html', **session)
-    else:
-        return render_template('crm_password_page.html')
-
-#Loading of contacts into the CRM dashboard
-@app.route("/load_contacts", methods=["GET", "POST"])
-def load_contacts():
-    eq_dict = {'rolodex':session['rolodex'],'archived':("IS",None)}
-    contacts = select_query(mysql,"contacts",eq_dict)
-    return jsonify(contacts)
-
-
-#Loading all notes for a contact
-@app.route("/load_notes", methods=["GET", "POST"])
-def load_notes():
-    eq_dict = {"contact_id" : request.form.get('id')}
-    notes = select_query(mysql,"notes",eq_dict,'date')
-    for n in notes:
-        n["date"] = str(n["date"])
-    return jsonify(notes)
-
-
-#Loading all ledger entries for a contact
-@app.route("/load_ledger", methods=["GET", "POST"])
-def load_ledge():
-    eq_dict = {"contact_id" : request.form.get('id')}
-    ledger = select_query(mysql,"ledger",eq_dict,'date')
-    for l in ledger:
-        l["date"] = str(l["date"])
-    return jsonify(ledger)
-
-
-#Adding a contact to the DB and ...
-@app.route("/add_contact", methods=["GET", "POST"])
-def add_contact():
-    name = request.form.get("name")
-    company = request.form.get("company")
-    phone = request.form.get("phone")
-    email = request.form.get("email")
-    color = request.form.get("color")
-    rolodex = session['rolodex']
-    insert_dict = {'name':name,'company':company,'phone':phone,'email':email,'rolodex':rolodex,'color':color}
-    contact_id = insert_query(mysql,'contacts',insert_dict)
-    return jsonify({'id':contact_id})
-
-
-#Submitting a ledge for a contact
-@app.route("/add_note", methods=["GET", "POST"])
-def add_notes():
-    contact_id = request.form.get("id")
-    note = request.form.get("note")    
-    date = str(datetime.now())
-    insert_dict = {'contact_id':contact_id,'note':note,'date':date}
-    note_id = insert_query(mysql,'notes',insert_dict)
-    return jsonify(note_id)
-
-
-#Submitting a ledge for a contact
-@app.route("/add_ledge", methods=["GET", "POST"])
-def add_ledge():
-
-    contact_id = request.form.get('id')
-    amount = request.form.get('amount')
-    check_number = request.form.get('check_number')
-    description = request.form.get('description')
-    date = request.form.get('date')
-    recurring = request.form.get('recurring')
-    
-    insert_dict = {'contact_id':contact_id,'amount':amount,
-            'check_number':check_number,'description':description,
-                'date':date,'recurring':recurring} 
-    
-    ledge_id = insert_query(mysql,'ledger',insert_dict)
-    return jsonify(ledge_id)
-
-
-@app.route("/toggle_status", methods=["GET", "POST"])
-def toggle_status():
-    contact_id = request.form.get('id')
-    color = request.form.get('color')
-    new_color = "green"
-    if color == "green":new_color = "red"
-    if color == "red":new_color = "yellow"
-    eq_dict = {'id':contact_id}
-    change_dict = {'color': new_color }
-    update_query(mysql,'contacts',eq_dict,change_dict)    
-    return "success"
-
-
-#Removing a contact from the DB and ...
-@app.route("/remove_contact", methods=["GET", "POST"])
-def remove_contact():
-    contact_id = request.form.get('id')
-    eq_dict = {'id':contact_id}
-    insert_dict = {'archived': str(datetime.now()) }
-    update_query(mysql,'contacts',eq_dict,insert_dict)    
-    return "success"
-
 
 # start flask
 if __name__ == "__main__":

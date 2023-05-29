@@ -14,3 +14,4 @@ This is really cool.
     - Make a button to load in your current portfolio from Alpaca to compare against.
     - Button to trigger Alpaca API to rebalance your portfolio automatically.
     - Make it so rebalancing is only possible if you have reviewed and approve the rebalance.
+4. Redirect the CRM functionality to crm.web10.app...

@@ -110,7 +110,7 @@ def latex_matrix(C):
                 color = "{0,0,0}"
             else:
                 color = "{0,"+str(abs(j/2))+","+str(abs(j/4))+"}"
-        elif j < 0:
+        else :
             color = "{"+str(abs(j))+",0,0}"
         return "\\color[rgb]"+color+" "+str(j)+" \\color{black}"
 
@@ -194,12 +194,13 @@ def pickle_dump(red, blue, C, book, info):
 
 
 
-def make_report(client='demo'):
+def make_report(client='GreenStarGroup'):
     # get variables as designed above, passed from markowitz
     with open("report_variables.pickle", 'rb') as pickle_file:
         report_variables = pickle.load(pickle_file)
 
-    template = 'Clients/{}/report.tex'.format(client)
+    print(report_variables)
+    template = 'WealthManagers/{}/report.tex'.format(client)
 
     env = make_env(loader=FileSystemLoader('.'))
     tpl = env.get_template(template)
