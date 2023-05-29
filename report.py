@@ -194,13 +194,12 @@ def pickle_dump(red, blue, C, book, info):
 
 
 
-def make_report(client='GreenStarGroup'):
+def make_report(client='greenstar'):
     # get variables as designed above, passed from markowitz
     with open("report_variables.pickle", 'rb') as pickle_file:
         report_variables = pickle.load(pickle_file)
 
-    print(report_variables)
-    template = 'WealthManagers/{}/report.tex'.format(client)
+    template = 'managers/{}/report.tex'.format(client)
 
     env = make_env(loader=FileSystemLoader('.'))
     tpl = env.get_template(template)

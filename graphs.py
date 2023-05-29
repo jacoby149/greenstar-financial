@@ -241,7 +241,7 @@ def d3dymo(plt, points, labels):
     plugins.connect(plt.gcf(), tooltip)
 
 
-def frontier(red, blue, wheat, ribs, extend):
+def frontier(red, blue, wheat, ribs):
     # Percentage plot rather than decimal plot
     s = 100
     ms = 2
@@ -299,14 +299,6 @@ def frontier(red, blue, wheat, ribs, extend):
     points = plt.plot(riskys[:lo+1], retys[:lo+1], 'gold',markersize=ms, alpha=1)
     points = plt.plot(riskys[lo:med+1], retys[lo:med+1], 'darkorange',markersize=ms,alpha=.8)
     points = plt.plot(riskys[med:], retys[med:], 'r',markersize=ms,alpha=.6)
-
-    maxx = 18
-    dist = maxx - riskys[-1]
-    risk_extension = [riskys[-1],maxx]
-    ret_extension = [retys[-1],retys[-1]+ dist*.1 ]
-    points = plt.plot(risk_extension, ret_extension, 'black',markersize=ms,alpha=.6)
-
-
 
     # plot slider-selected recommended portfolio
     plt.plot(red['risk'] * s,red['ret'] * s,'o',color='red',zorder=3,markersize=ms*1.6)
