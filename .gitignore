@@ -17,3 +17,4 @@ plts/*.pdf
 /react/node_modules
 /react/.vscode
 *.pyc
+pdfs/*.pdf
