@@ -18,7 +18,7 @@ It asks the following question :
 
 It then suggests a rebalancing of your assets based on your risk-return appetite.
 
-It then generates a multi page report for you to understand the recommendation.
+It then generates a <a href="/pdfs/examples/John Doe Report.pdf">multi page report</a> for you to understand the recommendation.
 
 
 
