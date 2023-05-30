@@ -50,7 +50,7 @@ docker-compose up --build
 
 ### 4. Run Optimizer + Adjust Risk - Return
 
-![ReportGen]![Run Markowitz](/documentation_gifs/Run Markowitz.gif)(C:\Users\jacks\OneDrive\Documents\GitHub\greenstar-financial\documentation_gifs\ReportGen.gif
+![Run Markowitz](/documentation_gifs/Run Markowitz.gif)
 
 
 
