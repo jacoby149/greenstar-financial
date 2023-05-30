@@ -4,6 +4,24 @@
 
 
 
+## What is Greenstar?
+
+This is an open source software working off of yahoo finance data. 
+
+It analyses your financial portfolio, and gives recommendations + reporting on how to rebalance your portfolio.
+
+It does this looking at the bigger picture, the 18 asset classes.
+
+It asks the following question :
+
+> How much do you have invested in each of the 18 asset classes?
+
+It then suggests a rebalancing of your assets based on your risk-return appetite.
+
+It then generates a multi page report for you to understand the recommendation.
+
+
+
 ## How to use
 
 
