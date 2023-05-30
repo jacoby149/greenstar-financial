@@ -68,7 +68,7 @@ Your portfolio will be made of some breakdown of the 18 asset classes, i.e. if y
 
 After you fill out the form, hit the Run Computation button. If you are running it for the first time, it might take longer. Once the Frontier Chart shows up, you can click on the curve, and click the Run Computation button again to get recommendations tuned to your risk return appetite.
 
-![Run Markowitz](/documentation_gifs/Run Markowitz.gif)
+![Run Markowitz](/documentation_gifs/RunMarkowitz.gif)
 
 #### Efficient Frontier Chart
 
