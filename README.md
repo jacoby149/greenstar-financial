@@ -68,6 +68,8 @@ Your portfolio will be made of some breakdown of the 18 asset classes, i.e. if y
 
 After you fill out the form, hit the Run Computation button. If you are running it for the first time, it might take longer. Once the Frontier Chart shows up, you can click on the curve, and click the Run Computation button again to get recommendations tuned to your risk return appetite.
 
+![Run Markowitz](/documentation_gifs/Run Markowitz.gif)
+
 #### Efficient Frontier Chart
 
 The software generates an interactive efficient frontier chart, generated via. convex optimization over the covariances / returns of all of the asset classes. The chart shows generic portfolios as gold dots, your current portfolio as a blue dot, and the optimized suggestion as a red dot. You can click on the interactive efficient frontier curve and re run the computation to adjust the suggestion, you will see the red dot move to where you clicked after the computation.
@@ -83,10 +85,6 @@ You will see an overview of all of the daily data of the asset classes since 201
 #### Monte Carlo Line Chart + Bell Curves
 
 You will see a line graph that is the result of a Monte Carlo simulation showing your improvement in expected returns, and additionally a bell curve chart illustrating the improvement of your current portfolio. A narrower bell indicates that a portfolio is less risky, while the position of the bell indicates how much expected return their is.
-
-
-
-![Run Markowitz](/documentation_gifs/Run Markowitz.gif)
 
 
 
