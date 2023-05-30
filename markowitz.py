@@ -45,7 +45,7 @@ solvers.options['show_progress'] = False
 def yahoo_assets(tickers, info):
     # mprint("TICKERS",tickers)
     end_date = info['end_date']
-    start_date = date(2007, 12, 19)
+    start_date = date(2013, 12, 19)
 
     tickers = " ".join(tickers)
     filename = "csv/yfinance" + str(end_date) + tickers + ".csv"
