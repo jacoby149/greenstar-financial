@@ -1,4 +1,4 @@
-FROM python:3.5-buster
+FROM --platform=linux/x86_64 python:3.7-buster
 WORKDIR /app
 RUN apt-get update
 RUN apt-get -y install sudo
